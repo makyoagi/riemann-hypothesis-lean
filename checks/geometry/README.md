@@ -34,6 +34,23 @@ inhabited. The explicit divisor used in the construction has surface type
 class `Q`. The replacement below uses a different divisor and proves the full
 predicate for `Q D := IsKitOf (st D)` on the three production routes.
 
+## Reproducing the empty-slot dependency control
+
+After building `Main` on this branch, run the control against the ablated proof.
+Its expected result is exit 1 with `riemannHypothesis reaches the empty-slot lemma GlobalTheory.Mem.Top.DivRec.divEx_prov`.
+The recorded SHA-256 identifies the exact file retrieved from the original run.
+[Tested control](controls/rh-divex-prov-ablation-control.lean) · [Verification record](verification.txt)
+
+```sh
+lake env bash -eu <<'SH'
+checks="$PWD/checks/geometry"
+out=$(mktemp -d)
+export LEAN_PATH="$out:$LEAN_PATH"
+lean -R "$checks" -o "$out/ProofDependencies.olean" "$checks/ProofDependencies.lean"
+lean "$checks/controls/rh-divex-prov-ablation-control.lean"
+SH
+```
+
 ## Replacement divisors and the fixed row core
 
 `CoreLevel.lean` checks `A = 1` directly for the core in `prm0`, `prm1`
