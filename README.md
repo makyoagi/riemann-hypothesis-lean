@@ -22,6 +22,8 @@ The production construction assigns the formula `hExpl6` through `setDiv`. Lean 
 
 The original seed admits no word-indexed bundle. On the explicit flag model used by the release every normalized arithmetic height is zero, even after the formula is installed. Lean also exhibits two complete families with the same sections and component heights, but different stored heights on inhabited rows. Their error allowances differ. Equality with the arithmetic height of a specified word-indexed bundle at the production normalization remains open. [Original witness calculation](checks/geometry/OriginalBundleHeight.lean) · [Two complete families](checks/geometry/FamilyNormalization.lean#L118)
 
+At the original production normalization, twisting a modeled component of nonzero degree by the word’s level prime recovers the finite-place term exactly. Agreement with the full assigned height still requires a base self-intersection and equality of the archimedean sums across words. [Word-indexed bundle and fixed-normalization calculation](checks/geometry/README.md#a-level-prime-twist-at-the-production-normalization)
+
 The recorded builds and kernel replays ran on one Linux machine. Independent reproduction is pending.
 
 [Reproduce the original, modified, and stronger-geometry checks](checks/geometry/README.md)

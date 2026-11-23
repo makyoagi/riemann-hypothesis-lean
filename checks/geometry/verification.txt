@@ -568,3 +568,36 @@ Kernel declaration path of length 1: GeometryAudit.ProductionReads.closed_divEx 
 Kernel declaration path of length 1: GeometryAudit.ProductionReads.production_geometry → GeometryAudit.ProductionReads.production_reads
 riemannHypothesis axioms: [propext, Classical.choice, Quot.sound]
 GlobalTheory.Mem.Top.DivRec.divEx_prov is absent from all 1487763 declarations reachable from riemannHypothesis
+
+Fixed production normalization and the level-prime section metric
+Lean 4.33.1, Mathlib 0df444a360eaa60ab8c11dca51a86af692955474.
+One machine, a fresh output directory, and the compiled strengthened imports. Leanchecker replayed each of the three new proof modules. Lean executed the dependency assertion separately.
+
+8cd1aaa8120fe91870117a3a78e7946c1556fc3438d066ba2144c34916ae7bd0  LevelPrimeHeight.lean
+'GeometryAudit.LevelPrimeHeight.height_on_model' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.LevelPrimeHeight.height_without_model' depends on axioms: [propext, Classical.choice, Quot.sound]
+LevelPrimeHeight Lean exit 0
+b66c07967f6a3231e9216a059dfb937164b29010550cf060b2192f0a592521d1  ProductionLevelHeight.lean
+'GeometryAudit.ProductionLevelHeight.theta_weight_fixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.ProductionLevelHeight.obstructed_component' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.ProductionLevelHeight.residual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.ProductionLevelHeight.agreement_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+ProductionLevelHeight Lean exit 0
+82c14f3d25140b142e6abff025c422a8e389e658349db3ff6330addd5f1b5a55  ArchWeightTest.lean
+'GeometryAudit.ArchWeightTest.arch_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.ArchWeightTest.eq_iff_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.ArchWeightTest.eq_iff_logOm' depends on axioms: [propext, Classical.choice, Quot.sound]
+ArchWeightTest Lean exit 0
+replaying LevelPrimeHeight
+LevelPrimeHeight leanchecker exit 0
+replaying ProductionLevelHeight
+ProductionLevelHeight leanchecker exit 0
+replaying ArchWeightTest
+ArchWeightTest leanchecker exit 0
+
+55557e3cc31b3eaa45c7d1c350c2fa4ca46cd1640d6082f971bdaa04dc038406  LevelHeightDependencies.lean
+Formalism.BasicNotions.DV.hExpl6 absent from 111154 declarations reachable from GeometryAudit.ProductionLevelHeight.height
+Formalism.MainNotions.FamP.Csz absent from 111154 declarations reachable from GeometryAudit.ProductionLevelHeight.height
+Formalism.MainNotions.FamP.h_eq absent from 111154 declarations reachable from GeometryAudit.ProductionLevelHeight.height
+GlobalTheory.EX.OB.setDiv absent from 111154 declarations reachable from GeometryAudit.ProductionLevelHeight.height
+LevelHeightDependencies Lean exit 0
