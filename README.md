@@ -1,8 +1,12 @@
 # Does the RH proof need `anyGeometry := True`?
 
-The geometric field can be removed. In this experiment, Lean rebuilt all 5,691 affected modules and still accepted the original `riemannHypothesis : RiemannHypothesis` against Mathlib's definition. The proof of `LamAre` for the same divisor is still required.
+The geometric field can be removed. On this branch, `anygeometry-ablation`, Lean rebuilt all 5,691 affected modules and still accepted the original `riemannHypothesis : RiemannHypothesis` against Mathlib's definition. The proof of `LamAre` for the same divisor is still required. [Ablation results](checks/geometry/verification.txt)
 
-This fork tests one objection to the formalization by Levent Alpöge with Claude. The original Lean source is credited to them. The changes in this fork are the removal experiment and its checks. [Upstream mirror at the tested revision](https://github.com/CocoSgt/riemann-hypothesis-lean/tree/7cbf7a0c32fca1badf05931879a37c3f8a2b03b4)
+**Does the stronger proof still use the empty-slot lemma?** The `production-geometry` branch requires the geometric condition on all three production routes. Lean rebuilt all 4,330 affected modules and checked that the unchanged RH theorem reaches the replacement divisor's section-map proof, `production_reads`. The check followed references in the types and values of all **1,487,763 reachable declarations** and found no path to the empty-slot lemma `GlobalTheory.Mem.Top.DivRec.divEx_prov`. The identical assertion on this ablation detected the lemma. Both branches report exactly `propext`, `Classical.choice`, and `Quot.sound`. [Production branch and reproduction instructions](https://github.com/makyoagi/riemann-hypothesis-lean/tree/production-geometry/checks/geometry) · [Recorded results for both branches](https://github.com/makyoagi/riemann-hypothesis-lean/blob/e88ea417d844d50d96fe9a313826ec6f817dac24/checks/geometry/verification.txt#L338)
+
+The production construction assigns the formula `hExpl6` through `setDiv`. Its identification with an independently defined arithmetic height remains open. All recorded builds ran on one machine. Independent reproduction is pending. [Height check](https://github.com/makyoagi/riemann-hypothesis-lean/blob/e88ea417d844d50d96fe9a313826ec6f817dac24/checks/geometry/HeightInterface.lean)
+
+This fork tests one objection to the formalization by Levent Alpöge with Claude. The original Lean source is credited to them. [Upstream mirror at the tested revision](https://github.com/CocoSgt/riemann-hypothesis-lean/tree/7cbf7a0c32fca1badf05931879a37c3f8a2b03b4)
 
 ## What Lean checked
 
