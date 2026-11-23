@@ -4,12 +4,14 @@ Jenny Lorraine Nielsen traces `geoCl anyGeometry` in the released proof by Leven
 
 The removal experiment settles whether this particular field is necessary. After deleting both `anyGeometry` and `OAt.geo`, Lean still checked the unchanged `riemannHypothesis : RiemannHypothesis` against Mathlib’s definition with the same three axioms. That refutes the claim that the proof needs this field. Nielsen’s separate question about identifying the assigned height with an independent arithmetic height remains open. The two branches below give the evidence, and `main` contains the original Lean source for comparison. [Removal and axiom checks](https://github.com/makyoagi/riemann-hypothesis-lean/blob/a7c4411d36ecfd01570551116fb11251c27a2322/checks/geometry/verification.txt#L23)
 
+Both branches’ recorded builds and kernel replays ran on one Linux machine. Independent reproduction is pending.
+
 ## Which branch should I use?
 
 | Question | Result | Evidence |
 | --- | --- | --- |
 | Does the RH proof need the `True` field? | On `anygeometry-ablation`, the divisor carries the existing `LamAre` proof. All 5,691 affected modules compiled. Lean checked the same RH theorem with the same three axioms. | [Ablation branch](https://github.com/makyoagi/riemann-hypothesis-lean/tree/anygeometry-ablation) · [Recorded build and axiom check](https://github.com/makyoagi/riemann-hypothesis-lean/blob/a7c4411d36ecfd01570551116fb11251c27a2322/checks/geometry/verification.txt#L5) |
-| What happens when the proof requires geometry? | On `production-geometry`, all three RH routes use a replacement divisor with section maps satisfying `Reads`. On every row before the last, at least one component has a boundary point where all its sections vanish. On the last row every component has empty boundary. Identifying the assigned formula `hExpl6` with an independent arithmetic height remains open. | [Production branch](https://github.com/makyoagi/riemann-hypothesis-lean/tree/production-geometry) · [Boundary theorems and replay output](https://github.com/makyoagi/riemann-hypothesis-lean/blob/10aa768d6d36883569d784881b12b796b0fe1f58/checks/geometry/verification.txt#L356) |
+| What happens when the proof requires geometry? | **Lean rebuilt all 4,330 affected modules and checked the unchanged RH theorem against Mathlib with the same three axioms.** On `production-geometry`, all three RH routes use a replacement divisor with section maps satisfying `Reads`. On every row before the last, at least one component has a boundary point where all its sections vanish. On the last row every component has empty boundary. Identifying the assigned formula `hExpl6` with an independent arithmetic height remains open. | [Production branch](https://github.com/makyoagi/riemann-hypothesis-lean/tree/production-geometry) · [RH build and axiom check](https://github.com/makyoagi/riemann-hypothesis-lean/blob/11bca1a57d63793317ac6519582f7a9c42fa240d/checks/geometry/verification.txt#L317-L333) · [Boundary theorems and replay output](https://github.com/makyoagi/riemann-hypothesis-lean/blob/10aa768d6d36883569d784881b12b796b0fe1f58/checks/geometry/verification.txt#L356) |
 
 ## How to check it
 
