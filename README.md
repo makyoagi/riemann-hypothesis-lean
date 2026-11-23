@@ -1,6 +1,6 @@
 # Does the Lean proof of RH need `anyGeometry := True`?
 
-Jenny Lorraine Nielsen traces `geoCl anyGeometry` in the released proof by Levent Alpöge with Claude (§2). In §13 and Appendix A she argues that the route to RH depends on the vacuous inputs she identifies. [Nielsen, *The Invalidity of Alpöge’s Proof of the Riemann Hypothesis*](https://philpapers.org/rec/NIEIOT-2)
+Jenny Lorraine Nielsen traces `geoCl anyGeometry` in the released proof by Levent Alpöge with Claude (§2). In §13 and Appendix A she argues that the route to RH depends on the vacuous inputs she identifies. [Nielsen, *The Invalidity of Alpöge’s Proof of the Riemann Hypothesis*](https://philpapers.org/rec/NIEIOT-2) · [ORCID iD 0000-0003-3841-2257](https://orcid.org/0000-0003-3841-2257)
 
 The removal experiment settles whether this particular field is necessary. After deleting both `anyGeometry` and `OAt.geo`, Lean still checked the unchanged `riemannHypothesis : RiemannHypothesis` against Mathlib’s definition with the same three axioms. That refutes the claim that the proof needs this field. Nielsen’s separate question about identifying the assigned height with an independent arithmetic height remains open. The two branches below give the evidence, and `main` contains the original Lean source for comparison. [Removal and axiom checks](https://github.com/makyoagi/riemann-hypothesis-lean/blob/a7c4411d36ecfd01570551116fb11251c27a2322/checks/geometry/verification.txt#L23)
 
