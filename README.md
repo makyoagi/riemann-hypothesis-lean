@@ -1,3 +1,37 @@
+# Does the Lean proof of RH need `anyGeometry := True`?
+
+Lean still checks the same theorem about Mathlib's `RiemannHypothesis` after deleting `anyGeometry`. The second experiment asks what the family's actual section maps prove about its geometry and height. This fork documents both experiments on the Lean formalization by Levent Alpöge with Claude. `main` contains the original Lean source for comparison.
+
+## Which branch should I use?
+
+| Question | Result | Evidence |
+| --- | --- | --- |
+| Does the RH proof need the `True` field? | On `anygeometry-ablation`, the divisor carries the existing `LamAre` proof. All 5,691 affected modules compiled. Lean checked the same RH theorem with the same three axioms. | [Ablation branch](https://github.com/makyoagi/riemann-hypothesis-lean/tree/anygeometry-ablation) · [Recorded build and axiom check](https://github.com/makyoagi/riemann-hypothesis-lean/blob/a7c4411d36ecfd01570551116fb11251c27a2322/checks/geometry/verification.txt#L5) |
+| What happens when the proof requires geometry? | On `production-geometry`, all three RH routes use a replacement divisor with section maps satisfying `Reads`. On every row before the last, at least one component has a boundary point where all its sections vanish. On the last row every component has empty boundary. Identifying the assigned formula `hExpl6` with an independent arithmetic height remains open. | [Production branch](https://github.com/makyoagi/riemann-hypothesis-lean/tree/production-geometry) · [Boundary theorems and replay output](https://github.com/makyoagi/riemann-hypothesis-lean/blob/10aa768d6d36883569d784881b12b796b0fe1f58/checks/geometry/verification.txt#L356) |
+
+## How to check it
+
+To reproduce the removal test, build the ablation branch and run its two checks.
+
+```sh
+git clone --branch anygeometry-ablation https://github.com/makyoagi/riemann-hypothesis-lean.git
+cd riemann-hypothesis-lean
+lake exe cache get
+lake build Main
+lake env lean checks/geometry/CheckRH.lean
+lake env lean checks/geometry/CheckAblatedMain.lean
+```
+
+The last two commands check the statement against Mathlib, verify removal of `anyGeometry` and `OAt.geo` from the compiled proof environment, and confirm the exact axiom set of `propext`, `Classical.choice`, and `Quot.sound`. Both branches use Lean 4.33.1 and the same pinned Mathlib revision. [Full ablation instructions](https://github.com/makyoagi/riemann-hypothesis-lean/blob/anygeometry-ablation/checks/geometry/README.md)
+
+For the stronger experiment, run `git switch production-geometry` in that clone. The branch guide gives separate commands to check the dependency path from RH to the section maps and to replay the height and boundary proofs. [RH dependency check](https://github.com/makyoagi/riemann-hypothesis-lean/blob/production-geometry/checks/geometry/README.md#joining-the-geometry-to-the-production-parameters) · [Height and boundary checks](https://github.com/makyoagi/riemann-hypothesis-lean/blob/production-geometry/checks/geometry/README.md#the-boundary-on-the-production-rows)
+
+---
+
+## Original mirror README
+
+The upstream mirror's description and instructions follow as published.
+
 # Riemann Hypothesis in Lean — by Levent Alpöge (with Claude)
 
 > **The proof in this repository is the work of [Levent Alpöge](https://alpo.ge/).**
