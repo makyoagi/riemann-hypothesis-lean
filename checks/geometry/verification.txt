@@ -1,0 +1,35 @@
+Pinned mirror commit 7cbf7a0c32fca1badf05931879a37c3f8a2b03b4
+Mathlib 0df444a360eaa60ab8c11dca51a86af692955474
+Lean 4.33.1
+
+Affected modules compiled from source. Unaffected imports used the pinned cache.
+FINAL 5691/5691; failed []
+
+Original Main
+7cbf7a0c32fca1badf05931879a37c3f8a2b03b4
+0df444a360eaa60ab8c11dca51a86af692955474
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+def RiemannHypothesis : Prop :=
+  ∀ (s : ℂ) (_ : riemannZeta s = 0) (_ : ¬∃ n : ℕ, s = -2 * (n + 1)) (_ : s ≠ 1), s.re = 1 / 2
+
+def RiemannHypothesis : Prop :=
+∀ (s : ℂ), riemannZeta s = 0 → (¬∃ n, s = -2 * (↑n + 1)) → s ≠ 1 → s.re = 1 / 2
+riemannHypothesis : RiemannHypothesis
+'riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Original declaration comparison
+Matched names, universes, types and bodies for 1451 declarations in 192 original modules.
+
+Modified Main
+def RiemannHypothesis : Prop :=
+∀ (s : ℂ), riemannZeta s = 0 → (¬∃ n, s = -2 * (↑n + 1)) → s ≠ 1 → s.re = 1 / 2
+riemannHypothesis : RiemannHypothesis
+'riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+Checks in the modified environment
+Absent from the Main environment: GlobalTheory.Mem.Top.Bl.anyGeometry
+Absent from the Main environment: GlobalTheory.Mem.Top.Bl.OAt.geo
+Checked exact axiom set: [propext, Classical.choice, Quot.sound]
+
+Kernel replay of modified Main with imported modules trusted
+replaying Main

@@ -1,3 +1,25 @@
+# Does the RH proof need `anyGeometry := True`?
+
+The geometric field can be removed. In this experiment, Lean rebuilt all 5,691 affected modules and still accepted the original `riemannHypothesis : RiemannHypothesis` against Mathlib's definition. The proof of `LamAre` for the same divisor is still required.
+
+This fork tests one objection to the formalization by Levent Alpöge with Claude. The original Lean source is credited to them. The changes in this fork are the removal experiment and its checks. [Upstream mirror at the tested revision](https://github.com/CocoSgt/riemann-hypothesis-lean/tree/7cbf7a0c32fca1badf05931879a37c3f8a2b03b4)
+
+## What Lean checked
+
+- In the original source, for fixed rows and divisor, the closed record with `anyGeometry` is equivalent to carrying the existing `LamAre` proof. [Lean equivalence and inverse laws](checks/geometry/original/BaselineEquivalence.lean)
+- On this branch the RH construction uses `OAt none`, a record with just `LamAre`. Both `anyGeometry` and the original `OAt.geo` are absent from the environment that imports `Main`. [Witness check](checks/geometry/AblatedWitness.lean) · [Environment check](checks/geometry/CheckAblatedMain.lean)
+- The unchanged final theorem checks against Mathlib's explicit statement about zeta zeros. Its axioms are `propext`, `Classical.choice`, and `Quot.sound`. The rebuild used pinned cached imports outside the affected modules. [Statement check](checks/geometry/CheckRH.lean) · [Recorded verification](checks/geometry/verification.txt)
+
+A separate test asks what happens if the stronger `geoOf Q` is required. It implies an inhabited surface, whereas the divisor used here has surface type `Empty`. A construction satisfying that stronger condition would need a different witness. [Stronger geometry check](checks/geometry/StrongGeometry.lean)
+
+[Reproduce the original, modified, and stronger-geometry checks](checks/geometry/README.md)
+
+---
+
+## Original mirror README
+
+The text below is preserved from the upstream revision.
+
 # Riemann Hypothesis in Lean — by Levent Alpöge (with Claude)
 
 > **The proof in this repository is the work of [Levent Alpöge](https://alpo.ge/).**
