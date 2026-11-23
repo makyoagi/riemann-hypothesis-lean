@@ -4,7 +4,7 @@ The geometric field can be removed. On this branch, `anygeometry-ablation`, Lean
 
 **Does the stronger proof still use the empty-slot lemma?** The `production-geometry` branch requires the geometric condition on all three production routes. Lean rebuilt all 4,330 affected modules and checked that the unchanged RH theorem reaches the replacement divisor's section-map proof, `production_reads`. The check followed references in the types and values of all **1,487,763 reachable declarations** and found no path to the empty-slot lemma `GlobalTheory.Mem.Top.DivRec.divEx_prov`. The identical assertion on this ablation detected the lemma. Both branches report exactly `propext`, `Classical.choice`, and `Quot.sound`. [Production branch and reproduction instructions](https://github.com/makyoagi/riemann-hypothesis-lean/tree/production-geometry/checks/geometry) · [Recorded results for both branches](https://github.com/makyoagi/riemann-hypothesis-lean/blob/e88ea417d844d50d96fe9a313826ec6f817dac24/checks/geometry/verification.txt#L338)
 
-The production construction assigns the formula `hExpl6` through `setDiv`. Its identification with an independently defined arithmetic height remains open. All recorded builds ran on one machine. Independent reproduction is pending. [Height check](https://github.com/makyoagi/riemann-hypothesis-lean/blob/e88ea417d844d50d96fe9a313826ec6f817dac24/checks/geometry/HeightInterface.lean)
+All recorded builds ran on one machine. Independent reproduction is pending.
 
 This fork tests one objection to the formalization by Levent Alpöge with Claude. The original Lean source is credited to them. [Upstream mirror at the tested revision](https://github.com/CocoSgt/riemann-hypothesis-lean/tree/7cbf7a0c32fca1badf05931879a37c3f8a2b03b4)
 
@@ -17,6 +17,14 @@ This fork tests one objection to the formalization by Levent Alpöge with Claude
 The original divisor has surface type `Empty`, while `geoOf Q` requires an inhabited surface. A different divisor now satisfies both `LamAre` and the full geometric condition for the stage kit class `Q D := IsKitOf (st D)`. Lean checked the section maps, their lattice and norm comparisons, and the strengthened `DivEx` obligation on all three production routes. The RH build above uses the ablated construction. [Original witness obstruction](checks/geometry/StrongGeometry.lean) · [Production reading and geometric divisor](checks/geometry/ProductionReads.lean) · [Strengthened divisor obligation](checks/geometry/StrongDivEx.lean)
 
 [Reproduce the original, modified, and stronger-geometry checks](checks/geometry/README.md)
+
+## Does the height comparison hold by reflexivity?
+
+**Nielsen’s claim in §8 that the height comparison holds by reflexivity is false.** The assignment `setDiv` makes the stored height equal to `hExpl6` by `rfl`. The upper bound uses a separate arithmetic estimate on the row data. Lean exhibits an inhabited row where the defining equation still holds and the upper bound fails after the size constant is increased at the original error allowance. [Nielsen, §§7–8](https://philpapers.org/rec/NIEIOT-2) · [Inhabited counterexample](https://github.com/makyoagi/riemann-hypothesis-lean/blob/513ce34324c281b08691e204d2948233ab79bbcc/checks/geometry/RealizedHeight.lean)
+
+With the component-height module `HeightShare` blocked, the original and strengthened sources each rebuilt all 69 affected modules. `RHWithoutHeightShare` passed and the kernel replayed `Main` on both, with the same three RH axioms. The identical check failed on the unpatched strengthened build because it imported `HeightShare`. [Both builds and matched control](https://github.com/makyoagi/riemann-hypothesis-lean/blob/513ce34324c281b08691e204d2948233ab79bbcc/checks/geometry/verification.txt#L481-L512)
+
+**On the last row every component has empty boundary. Identifying the assigned formula `hExpl6` with an independent arithmetic height remains open.** On an allowed strengthened family at its original size constant, every fixed component’s level-prime twist misses the assigned height on at least one of two words. [Last-row boundary result](https://github.com/makyoagi/riemann-hypothesis-lean/blob/10aa768d6d36883569d784881b12b796b0fe1f58/checks/geometry/verification.txt#L356) · [Bundle counterexample](https://github.com/makyoagi/riemann-hypothesis-lean/blob/513ce34324c281b08691e204d2948233ab79bbcc/checks/geometry/ProductionHeightObstruction.lean)
 
 ---
 
