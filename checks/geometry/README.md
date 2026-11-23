@@ -56,7 +56,8 @@ through their types and values. The check fails if that set contains
 reachable declarations and the assertion passed. Running the same assertion
 against the ablation's compiled `Main` exited with the error
 `riemannHypothesis reaches the empty-slot lemma GlobalTheory.Mem.Top.DivRec.divEx_prov`.
-Both runs used the previously built imports. [Recorded results](verification.txt#L338)
+Both runs used the previously built imports. The control source is the file
+retrieved from the original run. [Tested ablation control](controls/rh-divex-prov-ablation-control.lean) · [Recorded results and SHA-256](verification.txt#L347)
 
 The recorded incremental build starts with the verified ablation cache and
 recompiles every module affected by the joined changes. A fresh source

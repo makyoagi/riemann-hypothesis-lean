@@ -345,9 +345,10 @@ JoinedRH.lean against the production Main from 3f06629e5       exit 0
   All 69 source hashes matched the tested inputs.
 
 Same assertion against the ablated Main from d9177c4c8         exit 1 (expected)
+  Tested source: checks/geometry/controls/rh-divex-prov-ablation-control.lean
+  SHA-256 0ac85a4ff71b1852840e196eb9aade2985c2c1e9a9ecb2f8ffb4468bffad2c04
+  The file was copied from the original Linux run directory. Its SHA-256 matched before and after transfer.
   rh-divex-prov-ablation-control.lean:6:0: error: riemannHypothesis reaches the empty-slot lemma GlobalTheory.Mem.Top.DivRec.divEx_prov
-  To isolate this control, use the ablation's compiled imports and the same
-  ProofDependencies.olean. Import Main and ProofDependencies, open Lean Elab Command,
-  and evaluate the final run_cmd block from JoinedRH.lean verbatim.
+  Run this file against the ablation's compiled Main with ProofDependencies.olean on LEAN_PATH.
 
 All recorded runs used one machine. Independent reproduction is pending.
