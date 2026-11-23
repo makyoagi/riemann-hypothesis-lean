@@ -36,6 +36,7 @@ theorem UpperTheory.haar_decomposition_norm_one_gl2 :
   haveI : IsProbabilityMeasure ν₀ := ⟨by simpa using Measure.haarMeasure_self (K₀ := (⊤ : TopologicalSpace.PositiveCompacts (AdelicGLn.integralFiniteGL K 2)))⟩
   let ν : Measure (AdelicGLn.integralFiniteGL K 2) := ν₀.inv
   haveI hνp : IsProbabilityMeasure ν := Measure.isProbabilityMeasure_map measurable_inv.aemeasurable
+  have : SFinite ν := @instSFiniteOfSigmaFinite _ _ ν (IsFiniteMeasure.toSigmaFinite ν)
   have hνo : ν.IsOpenPosMeasure := continuous_inv.isOpenPosMeasure_map inv_surjective
   have hνr : ∀ d, MeasurePreserving (· * d) ν ν := fun d => measurePreserving_mul_right ν d
 
