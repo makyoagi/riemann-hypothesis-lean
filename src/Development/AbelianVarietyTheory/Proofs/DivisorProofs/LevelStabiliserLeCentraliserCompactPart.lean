@@ -98,6 +98,7 @@ theorem stab_le_cptPart : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     have hKx : IsCompact ((globLev S (KL n)).map (MulAut.conj x).toMonoidHom : Set (finU E n)) := by
       rw [Subgroup.coe_map, hcf]
       exact hKc.image (by fun_prop)
+    set_option synthInstance.maxHeartbeats 400000 in
     exact hKx.closure_of_subset fun s hs => Subgroup.zpowers_le.2 htK hs
   · have hUo : IsOpen ((globLev S K').map (MulAut.conj x).toMonoidHom : Set (finU E n)) := by
       rw [hconj]
