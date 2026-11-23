@@ -34,10 +34,10 @@ def SeriesExistList : Prop := AllSt fun _ _ _ _ _ P x => SettingsLevel hL x → 
 
 def ModuliPointsExistList : Prop := AllSt fun _ _ _ _ _ P x => SeriesLevel hL x → ∃ x' : St P, Nonempty (StrictHenselianAcyclic hL x') ∧ (ListSt cDep x → ListSt cDep x')
 
-def SFinl : Prop := AllSt fun K _ _ _ w P x => ∀ (l : LC hL x) (S : SExt) (Γ : GeoP), ListSt cDep x →
+def SFinl : Prop := AllSt fun K _ _ _ w P x => ∀ (l : LC hL x) (S : SExt) (Γ : Option GeoP), ListSt cDep x →
   ∃ (Z : w.Lt) (v : Lv3 (prmR (NEl hL cDep) S Γ).s K w Z), v.Wt = P.Wt ∧ Kept l.c.ch v.nch
 
-def SecondNl : Prop := ∀ (S : SExt) (Γ : GeoP), Pass KPx (IsBuiltE (prmR (NEl hL cDep) S Γ).s) fun K B f T =>
+def SecondNl : Prop := ∀ (S : SExt) (Γ : Option GeoP), Pass KPx (IsBuiltE (prmR (NEl hL cDep) S Γ).s) fun K B f T =>
   ∃ w : ColW B f T, Start K B f T w ∧ Has3 (prmR (NElg hL cDep) S Γ).s K B f T w
 
 end GlobalTheory.HeightCounting.Up

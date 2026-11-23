@@ -68,7 +68,7 @@ end Copy
 
 set_option maxHeartbeats 4000000 in
 
-theorem oAt_setDiv : ∀ (Γ : GeoP) (K : Ctx) (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T) (Z : w.Lt) (Wt : Set B.places.Pl) (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V) (h : B.Word → ℝ) (O : Obj2 (w.D Z)) (O' : Obj2 (w.D (Db.setDivZ Z N h))), O' = O.tr N h → ∀ (t : RowsT K w Z Wt O.p0) (t' : RowsT K w (Db.setDivZ Z N h) Wt O'.p0), R3.Rw.RowsSame t t' → OAt (geoCl Γ) t O.X → Nonempty (OAt (geoCl Γ) t' O'.X) := by
+theorem oAt_setDiv : ∀ (Γ : Option GeoP) (K : Ctx) (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T) (Z : w.Lt) (Wt : Set B.places.Pl) (N : ∀ u, Submodule (𝓞 B.LL) (Z.V.div.Nu u).V) (h : B.Word → ℝ) (O : Obj2 (w.D Z)) (O' : Obj2 (w.D (Db.setDivZ Z N h))), O' = O.tr N h → ∀ (t : RowsT K w Z Wt O.p0) (t' : RowsT K w (Db.setDivZ Z N h) Wt O'.p0), R3.Rw.RowsSame t t' → OAt (closeGeometry Γ) t O.X → Nonempty (OAt (closeGeometry Γ) t' O'.X) := by
   intro Γ K B f T w Z Wt N h O O' hO t t' hs hp
   have hOX : O'.X = (by with_unfolding_all exact ((divTr (D := w.D Z) N h O.X) :)) := by subst hO; exact (by with_unfolding_all exact ((Eq.refl (divTr (D := w.D Z) N h O.X)) :))
   clear hO
@@ -102,10 +102,13 @@ theorem oAt_setDiv : ∀ (Γ : GeoP) (K : Ctx) (B : Base) (f : Fr B.toPre) (T : 
   change HEq R' _ at hR
   have hR2 := eq_of_heq hR
   subst hR2
-  refine ⟨⟨?_, ?_⟩⟩
-  · exact (by with_unfolding_all exact ((GeoCl.step (Γ := Γ) (D := (w.st Z).toD7) N h hp.geo) :))
-  · exact (by with_unfolding_all exact ((lamAre_copy (a := ⟨Z.W, Z.V, Z.S, Z.N, Z.G⟩) N h (iK := t.r.z.alg) t.r.z.R t.r.z.F t.r.Z O.X
-      (((divTr (D := w.D Z) N h O.X))) (((HEq.refl O.X.logLam))) (X0' := (p0')) (Y' := (Y')) ((Zr')) ((hj)) hp.lam) : _))
+  have hl := lamAre_copy (a := ⟨Z.W, Z.V, Z.S, Z.N, Z.G⟩) N h (iK := t.r.z.alg) t.r.z.R t.r.z.F t.r.Z O.X
+    (divTr (D := w.D Z) N h O.X) (HEq.refl O.X.logLam) (X0' := p0') (Y' := Y') Zr' hj (OAt.lam hp)
+  cases Γ with
+  | none => exact ⟨⟨hl⟩⟩
+  | some P =>
+    refine ⟨⟨?_, hl⟩⟩
+    exact (by with_unfolding_all exact ((GeoCl.step (Γ := P) (D := (w.st Z).toD7) N h (GeometricAt.geo hp)) :))
 
 end GlobalTheory.Mem.OxMove
 

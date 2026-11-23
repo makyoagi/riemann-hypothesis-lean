@@ -34,10 +34,10 @@ def SeriesExistGrid : Prop := AllSt fun _ _ _ _ _ P x => SettingsLevel hL x → 
 
 def ModuliPointsExistGrid : Prop := AllSt fun _ _ _ _ _ P x => SeriesLevel hL x → ∃ x' : St P, Nonempty (StrictHenselianAcyclic hL x') ∧ (GridSt x → GridSt x')
 
-def SFing : Prop := AllSt fun K _ _ _ w P x => ∀ (l : LC hL x) (S : SExt) (Γ : GeoP), GridSt x →
+def SFing : Prop := AllSt fun K _ _ _ w P x => ∀ (l : LC hL x) (S : SExt) (Γ : Option GeoP), GridSt x →
   ∃ (Z : w.Lt) (v : Lv3 (prmR (NEc hL) S Γ).s K w Z), v.Wt = P.Wt ∧ Kept l.c.ch v.nch
 
-def SecondNg : Prop := ∀ (S : SExt) (Γ : GeoP), Pass KPx (IsBuiltE (prmR (NEc hL) S Γ).s) fun K B f T =>
+def SecondNg : Prop := ∀ (S : SExt) (Γ : Option GeoP), Pass KPx (IsBuiltE (prmR (NEc hL) S Γ).s) fun K B f T =>
   ∃ w : ColW B f T, Start K B f T w ∧ Has3 (prmR (NEcg hL) S Γ).s K B f T w
 
 end GlobalTheory.HeightCounting.Up

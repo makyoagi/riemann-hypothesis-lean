@@ -19,7 +19,7 @@ theorem rowE_dcPt_linked {hL : GlobalTheory.Published.LocalLanglandsGL} (p : Prm
   rw [hP]
   exact (GlobalTheory.Mem.R3.rowConditions_at_companion_from_readings _ _ _ _ _ _ _ _ _ w.x).2.2.1
 
-theorem at_hDcPtG : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : GeoP),
+theorem at_hDcPtG : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : Option GeoP),
     RL.At (prmR N S Γ) R1.DecompositionConditionAtBundlePoints := by
   intro hL N S Γ
   exact At.of_row (RowE.row (rowE_dcPt_linked _ _))

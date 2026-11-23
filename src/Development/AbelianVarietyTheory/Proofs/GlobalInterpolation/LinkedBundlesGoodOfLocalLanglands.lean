@@ -67,7 +67,7 @@ def GoodRec : V4.Slot := fun _ X _ _ _ => Formalism.BasicNotions.GoodFTAll X.toD
 set_option maxHeartbeats 2000000 in
 
 theorem eventually_goodRec (h1 : GlobalTheory.GLq.Green) (h2 : GlobalTheory.Published.ZelevinskyPolynomialRing) (h3 : GlobalTheory.Published.DepthZeroInertia)
-    (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : GeoP)
+    (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : Option GeoP)
     (hN : ∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c →
       Nonempty (GlobalTheory.HeightCounting.Up.NEb hL K B f T w Z Wt p0 t nch n xd c)) :
     GroupRetwisting.LargeBaseConditionG KPx (IsBuiltE (prmR N S Γ).s) GoodRec := by
@@ -84,14 +84,14 @@ theorem row_goodRec {hL : GlobalTheory.Published.LocalLanglandsGL} (p : Prm hL) 
   RowE.row (RowE.of_all fun _ _ β _ _ _ q _ => q.2)
 
 theorem row_good_atAll : GlobalTheory.GLq.Green → GlobalTheory.Published.ZelevinskyPolynomialRing → GlobalTheory.Published.DepthZeroInertia →
-    ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : GeoP),
+    ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : Option GeoP),
     (∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c →
       Nonempty (GlobalTheory.HeightCounting.Up.NEb hL K B f T w Z Wt p0 t nch n xd c)) →
     RL.At (prmR N S Γ) fun Q L => Row Q L (AtAll fun D _ _ (_ : Bundle _ _ _) => Formalism.BasicNotions.GoodFTAll D) :=
   fun h1 h2 h3 hL N S Γ hN => LgModel.rowL_of_good (eventually_goodRec h1 h2 h3 hL N S Γ hN) (row_goodRec _)
 
 theorem row_good : GlobalTheory.GLq.Green → GlobalTheory.Published.ZelevinskyPolynomialRing → GlobalTheory.Published.DepthZeroInertia →
-    ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : GeoP),
+    ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : Option GeoP),
     (∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c →
       Nonempty (GlobalTheory.HeightCounting.Up.NEb hL K B f T w Z Wt p0 t nch n xd c)) →
     RL.At (prmR N S Γ) (fun Q L => Row Q L (AtAll fun D _ _ (_ : Bundle _ _ _) => Formalism.BasicNotions.GoodFTAll D)) ∧

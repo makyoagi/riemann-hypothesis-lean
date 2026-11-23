@@ -15,18 +15,18 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.Mem.LiteralAutomorphy
 
-def witDropA {hL : GlobalTheory.Published.LocalLanglandsGL} {N : NExt hL} {S : SExt} {Γ : GeoP} {A : AtP} {K : Ctx} {B : Base}
+def witDropA {hL : GlobalTheory.Published.LocalLanglandsGL} {N : NExt hL} {S : SExt} {Γ : Option GeoP} {A : AtP} {K : Ctx} {B : Base}
     {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z : w.Lt} {O : Obj2 (w.D Z)}
     (x : Wit (prmR (NEa hL N A) S Γ).s K w Z O) : Wit (prmR N S Γ).s K w Z O :=
   { x with nx := ⟨x.nx.1, x.nx.2.1⟩ }
 
-theorem movable_NEa {hL : GlobalTheory.Published.LocalLanglandsGL} {N : NExt hL} {S : SExt} {Γ : GeoP} (A : AtP)
+theorem movable_NEa {hL : GlobalTheory.Published.LocalLanglandsGL} {N : NExt hL} {S : SExt} {Γ : Option GeoP} (A : AtP)
     (hs : PositionMv (prmR N S Γ).s) : PositionMv (prmR (NEa hL N A) S Γ).s := by
   intro K B f T w Z O x Nd h O' hO' col n
   obtain ⟨t, hobj, hrx, ⟨c⟩, hsx, hox⟩ := hs K B f T w Z O (witDropA x) Nd h O' hO' col n
   exact ⟨t, hobj, hrx, ⟨⟨c.1, c.2, x.nx.2.2⟩⟩, hsx, hox⟩
 
-theorem exBL_NEa : HypA → HypH → PrM → ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (Γ : GeoP) (A : AtP),
+theorem exBL_NEa : HypA → HypH → PrM → ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (Γ : Option GeoP) (A : AtP),
     (∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c →
       Nonempty (GlobalTheory.HeightCounting.Up.NEb hL K B f T w Z Wt p0 t nch n xd c)) →
     PositionMv (prmR N SExt.none Γ).s →

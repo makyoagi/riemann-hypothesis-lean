@@ -38,7 +38,7 @@ theorem largeBasePropertyG_memberProperty {P : LayP hL} (h : AtMem hL P) (Q : V4
 
 section
 
-variable {N : NExt hL} {S : SExt} {Γ : GeoP} {P : LayP hL}
+variable {N : NExt hL} {S : SExt} {Γ : Option GeoP} {P : LayP hL}
 
 theorem exists_wit_of_heq (hN : OverNE N) {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z : w.Lt} {D : D7}
     (hP : ∀ w Z Wt p0 t nch n xd c, Nonempty (NE hL K B f T w Z Wt p0 t nch n xd c) → Nonempty (RXs t) → ColPin w →
@@ -104,13 +104,13 @@ theorem lg1_of_entryPred_at_target {KP : BaseP} {Q Q' : V4.Slot} {Bd : BdT} {Lk 
     Lg1 KP Q Q' fun U => RowE U Lk E :=
   ⟨fun _ _ _ _ _ => True, largeBaseProperty_true, EvP.mono (fun _ _ _ t β q c b l => t β q.1 c b l) h⟩
 
-theorem lg1_entryPred_of_atMem_witMv {N : NExt hL} {S : SExt} {Γ : GeoP} {P : LayP hL} (h : AtMem hL P) (hN : OverNE N)
+theorem lg1_entryPred_of_atMem_witMv {N : NExt hL} {S : SExt} {Γ : Option GeoP} {P : LayP hL} (h : AtMem hL P) (hN : OverNE N)
     (H : WitMv (prmR N S Γ).s) {r : ∀ D : D7, Obj D → Prop}
     (hr : ∀ K (q : WPt (prmR N S Γ).s K), EntC q.x.ker → AtWit (p := prmR N S Γ) P q → r (q.w.D q.Z) q.O) {Bd : BdT} (Lk : LkT Bd) :
     Lg1 KPx (IsBuiltE (prmR N S Γ).s) (IsGoodE (prmR N S Γ).s) fun U => RowE U Lk fun _ D O _ _ => r D O :=
   linkedBundleProperty_after_largeBaseCoreProperty (largeBasePropertyG_memberProperty h _) (rowE_memPosition hN H hr Lk)
 
-theorem lg1_entryPred_of_atMem_D7 {N : NExt hL} {S : SExt} {Γ : GeoP} {r : D7 → Prop}
+theorem lg1_entryPred_of_atMem_D7 {N : NExt hL} {S : SExt} {Γ : Option GeoP} {r : D7 → Prop}
     (h : AtMem hL fun _ _ _ _ w Z _ _ _ _ _ _ => r (w.D Z)) (hN : OverNE N) (H : WitMv (prmR N S Γ).s) {Bd : BdT} (Lk : LkT Bd) :
     Lg1 KPx (IsBuiltE (prmR N S Γ).s) (IsGoodE (prmR N S Γ).s) fun U => RowE U Lk fun _ D _ _ _ => r D :=
   lg1_entryPred_of_atMem_witMv h hN H (r := fun D _ => r D) (fun _ _ _ t => t) Lk

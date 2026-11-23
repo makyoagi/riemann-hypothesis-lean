@@ -20,7 +20,7 @@ theorem row (p : Prm hL) (Q : V4.Slot) : R1.PeriodAdmissibilityAtBundlePoints Q 
   have := congrArg (fun s : Σ (D : D7) (O : Obj D), Bundle D O c => R1.P_hPA s.1 s.2.1 c s.2.2) he
   exact cast this.symm (of_wit w)
 
-theorem at_linked : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : GeoP),
+theorem at_linked : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : Option GeoP),
     RL.At (prmR N S Γ) R1.PeriodAdmissibilityAtBundlePoints :=
   fun _ N S Γ => At.of_row (row (prmR N S Γ) _)
 

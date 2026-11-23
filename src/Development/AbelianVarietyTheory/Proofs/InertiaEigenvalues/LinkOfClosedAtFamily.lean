@@ -45,8 +45,8 @@ open GlobalTheory.HeightCounting.Up GlobalTheory.Mem.SRe GlobalTheory.Mem.R3.Rw
 
 set_option maxHeartbeats 4000000 in
 
-theorem movable_pin (hL : GlobalTheory.Published.LocalLanglandsGL) (cDep : ℝ) (Γ : GeoP) :
-    PositionMv (prmR (NEl hL cDep) SExt.none (geoCl Γ)).s := by
+theorem movable_pin (hL : GlobalTheory.Published.LocalLanglandsGL) (cDep : ℝ) (Γ : Option GeoP) :
+    PositionMv (prmR (NEl hL cDep) SExt.none (closeGeometry Γ)).s := by
   intro K B f T w Z O x N h O' hO' col n
   obtain ⟨t', hs, hgeo, hpk, hobj, hrx⟩ := GlobalTheory.T.rows_pass_to_moved_divisionLatticesHeights K B f T w Z x.Wt O x.what₂ N h O' hO'
   obtain ⟨nch', xd', -, hnx, -, -, hmv⟩ := GlobalTheory.T.exists_kept_choice_upper_lattice hL K B f T w Z x.Wt Z.S N h O.nch O.xd
@@ -68,9 +68,9 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Number
 theorem main : GlobalTheory.NLink.Hypotheses₂ → PrN → GlobalTheory.NRows.HypothesesX → SerN → GlobalTheory.Published.DepthZeroWild → GlobalTheory.Published.DepthZeroSupport → LocalFiniteness → LocalTateDuality → LocalEulerChar → ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (cDep : ℝ), RL.At (prm1 hL cDep) (fun Q L => R1.PredicateAtBundlePoints Q L fun 𝒞 => Formalism.MainNotions.Closed 𝒞 fun Fm _ => GlobalTheory.NLink.BoundAtTwoAndThreeForFamily Fm) → RL.At (prm1 hL cDep) (fun Q L => R1.PredicateAtBundlePoints Q L fun 𝒞 => Formalism.MainNotions.Closed 𝒞 fun Fm _ => Formalism.MainNotions.LinkN Fm) := by
   intro hP prN hX serN dzw dzs lf ltd lec hL cDep hAt
   have hF := GlobalTheory.T.facts_at_membership prN hX serN dzw dzs lf ltd lec hL
-  have hW : WitMv (prmR (NEl hL cDep) SExt.none (geoCl anyGeometry)).s :=
-    GlobalTheory.T.witnesses_pass_along_set_division _ (movable_pin hL cDep anyGeometry)
-  exact GlobalTheory.T.residual_at_of_nonempty_exceptional hP hX.ht prN dzw dzs hL (NEl hL cDep) SExt.none (geoCl anyGeometry) hW
+  have hW : WitMv (prmR (NEl hL cDep) SExt.none none).s :=
+    GlobalTheory.T.witnesses_pass_along_set_division _ (movable_pin hL cDep none)
+  exact GlobalTheory.T.residual_at_of_nonempty_exceptional hP hX.ht prN dzw dzs hL (NEl hL cDep) SExt.none none hW
     (fun _ _ _ _ _ _ _ _ _ _ _ _ _ e => ⟨e.1⟩) hF hAt
 
 end GlobalTheory.NLink.Final

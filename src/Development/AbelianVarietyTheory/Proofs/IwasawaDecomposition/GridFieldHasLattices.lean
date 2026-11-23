@@ -68,7 +68,7 @@ end GlobalTheory.Mem.LiteralAutomorphy.GridRow
 
 namespace GlobalTheory.Mem.LiteralAutomorphy.GridRow
 
-theorem rowE_hasGrid_fld : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (CF : ℝ) (N : NExt hL) (S : SExt) (Γ : GeoP), (∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c → Nonempty (GlobalTheory.HeightCounting.Up.NEl hL CF K B f T w Z Wt p0 t nch n xd c)) → RowE (IsGoodE (prmR (NEa hL N (GridA CF)) S Γ).s) (IsLinked (prmR (NEa hL N (GridA CF)) S Γ)) fun _ D O c b => ∀ t : b.Comparison₂, (b.part t).pt.Ties → GlobalTheory.BigTop.Fun.HasGrid @GlobalTheory.BigTop.Fun.Fld (b.part t).pt CF := by
+theorem rowE_hasGrid_fld : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (CF : ℝ) (N : NExt hL) (S : SExt) (Γ : Option GeoP), (∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c → Nonempty (GlobalTheory.HeightCounting.Up.NEl hL CF K B f T w Z Wt p0 t nch n xd c)) → RowE (IsGoodE (prmR (NEa hL N (GridA CF)) S Γ).s) (IsLinked (prmR (NEa hL N (GridA CF)) S Γ)) fun _ D O c b => ∀ t : b.Comparison₂, (b.part t).pt.Ties → GlobalTheory.BigTop.Fun.HasGrid @GlobalTheory.BigTop.Fun.Fld (b.part t).pt CF := by
   intro hL CF N S Γ hN
   refine ((GlobalTheory.Mem.LiteralAutomorphy.TwAtLink.twists_at_linked hL (prmR (NEa hL N (GridA CF)) S Γ) (IsGoodE (prmR (NEa hL N (GridA CF)) S Γ).s)).and
     ((rowE_pinned_grid hL CF N S Γ hN).and (rowE_full_grid hL CF N S Γ))).imp fun κ K β c b _ _ _ H t ht => ?_

@@ -135,7 +135,7 @@ theorem enl_refl (B : Base) : Enl B B := ⟨rfl, rfl, rfl, subset_rfl⟩
 
 theorem avPrimes_st (Z Z' : w.Lt) : avPrimes (w.st Z).toD7 = avPrimes (w.st Z').toD7 := rfl
 
-theorem exists_seed {hL : GlobalTheory.Published.LocalLanglandsGL} {cDep : ℝ} {S : SExt} {Γ : GeoP} {Z : w.Lt} {c : V4.Core K (w.st Z) f T}
+theorem exists_seed {hL : GlobalTheory.Published.LocalLanglandsGL} {cDep : ℝ} {S : SExt} {Γ : Option GeoP} {Z : w.Lt} {c : V4.Core K (w.st Z) f T}
     (b : Built (prmR (NEo hL cDep) S Γ).s K w Z c) (e : ExportAt (w.st Z).toD7 c.O.nch c.O.xd) :
     ∃ (P : Pre2 K w) (x : St P) (_ : LC hL x), (ListSt cDep x ∧ SatU P) ∧ ∀ A, Nonempty (Seed (Dof x) A) := by
   obtain ⟨P, x, l, hl, hW, hk⟩ := b.nx.2.2.down
@@ -169,13 +169,13 @@ theorem goodO_of (hP : PrN) {hL : GlobalTheory.Published.LocalLanglandsGL} {B' :
   rw [e2] at hz
   exact hT.1 v₂ z hz
 
-theorem has3_of {hL : GlobalTheory.Published.LocalLanglandsGL} {cDep : ℝ} (hP : PrN) (S : SExt) (Γ : GeoP) {B' : Base} {f' : Fr B'.toPre}
+theorem has3_of {hL : GlobalTheory.Published.LocalLanglandsGL} {cDep : ℝ} (hP : PrN) (S : SExt) (Γ : Option GeoP) {B' : Base} {f' : Fr B'.toPre}
     {T' : TwDat B'} {w' : ColW B' f' T'} (h : Enl B B') {P : Pre2 K w} (x : St P) {A} (σ : Seed (Dof x) A)
     (hA : ∀ i, avD (Dof x) (avDesign (Dof x)) i ⊆ A i) (hT : TwFrom (w.st x.o.Z) σ h T') {P' : Pre2 K w'}
     (hW : ∀ v', plUnder h v' ∈ P.Wt ↔ v' ∈ P'.Wt) {y : St P'} (l : StrictHenselianAcyclic hL y) (hc : Carried (Dof x) (Dof y)) (hl : ListSt cDep y ∧ SatU P')
     (ck : ∀ s : B'.places.Pl → (Dof y).ntw.Tw, (∀ v, ∃ b, ReadsAt (D := Dof y) (s v) b v) → (∀ v, s (B'.places.conj v) = s v) →
       ∃ c : StC l.mt l.b T'.k T'.psi, c.ch.twI = s)
-    (fin : ∀ (l : LC hL y) (S : SExt) (Γ : GeoP), (ListSt cDep y ∧ SatU P') →
+    (fin : ∀ (l : LC hL y) (S : SExt) (Γ : Option GeoP), (ListSt cDep y ∧ SatU P') →
       ∃ (Z : w'.Lt) (v : Lv3 (prmR (NEo hL cDep) S Γ).s K w' Z), v.Wt = P'.Wt ∧ Kept l.c.ch v.nch) :
     Has3 (prmR (NEog hL cDep) S Γ).s K B' f' T' w' := by
   have eT : (Dof x).ntw.Tw = (Dof y).ntw.Tw := (same_basic hc.exp.gal hc.exp.set hc.exp.frm).1

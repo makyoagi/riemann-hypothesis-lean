@@ -27,7 +27,7 @@ open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.E
 
 namespace GlobalTheory.Fc.S0.StageU
 
-theorem nonempty_hyps_of_classicalTheoremsUE : S0.HypothesesUE → S0.RowRat → ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (cDep : ℝ) (A : GroupRetwisting.AtP), EvLgG A → RL.At (prm1 hL cDep) (fun Q L => R1.PredicateAtBundlePoints Q L fun 𝒞 => Formalism.MainNotions.Closed 𝒞 fun Fm _ => GlobalTheory.NLink.BoundAtTwoAndThreeForFamily Fm) → RL.At (prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none (geoCl anyGeometry)) S0.FunctorialityCondition → RL.At (prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none (geoCl anyGeometry)) S0.CovolumeBound' → Nonempty (Hyps S0.NL DRS) := by
+theorem nonempty_hyps_of_classicalTheoremsUE : S0.HypothesesUE → S0.RowRat → ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (cDep : ℝ) (A : GroupRetwisting.AtP), EvLgG A → RL.At (prm1 hL cDep) (fun Q L => R1.PredicateAtBundlePoints Q L fun 𝒞 => Formalism.MainNotions.Closed 𝒞 fun Fm _ => GlobalTheory.NLink.BoundAtTwoAndThreeForFamily Fm) → RL.At (prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none none) S0.FunctorialityCondition → RL.At (prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none none) S0.CovolumeBound' → Nonempty (Hyps S0.NL DRS) := by
   intro P hR hL cDep A hA hN hF hL3
   obtain ⟨hP, hMem, hEx⟩ := GlobalTheory.T.linked_bundle_construction_exists P hR hL cDep A hA
   obtain ⟨_, prN, serN, _⟩ := GlobalTheory.T.local_langlands_hypotheses_of_literature P.litN P.toHypothesesX
@@ -35,10 +35,10 @@ theorem nonempty_hyps_of_classicalTheoremsUE : S0.HypothesesUE → S0.RowRat →
   have hO := GlobalTheory.T.open_first_parameters_of_hypothesesUE P hL cDep
   have hNrow := GlobalTheory.NLink.Final.main P.nLink prN P.toHypothesesX serN P.depthZeroWild' P.depthZeroSupport'
     P.localFiniteness P.localTateDuality P.localEulerChar hL cDep hN
-  have hmono := GlobalTheory.Glob.open_and_linked_of_stronger_extension hL (GlobalTheory.HeightCounting.Up.NEl hL cDep) (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none (geoCl anyGeometry)
+  have hmono := GlobalTheory.Glob.open_and_linked_of_stronger_extension hL (GlobalTheory.HeightCounting.Up.NEl hL cDep) (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none none
     (fun _ _ _ _ _ _ _ _ _ _ _ _ _ x => ⟨x.1.1⟩)
   have hO' := hmono.2 hO
-  have hN' : RL.At (prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none (geoCl anyGeometry)) (fun Q L => R1.PredicateAtBundlePoints Q L S0.NL) :=
+  have hN' : RL.At (prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none none) (fun Q L => R1.PredicateAtBundlePoints Q L S0.NL) :=
     hmono.1 (fun 𝒜 _ => S0.NL (Cp.D3 3 𝒜)) hNrow
   have hAll := GlobalTheory.Fc.AllAtMemberStage0.allRows_of_open0 P.globalArtinReciprocity P.siegelWeilUnitaryConvergent2 P.discreteSeriesCover
     P.harishChandraModules P.cuspRapidDecay P.casselmanWallach P.discreteSeriesClassification hOL.1 hOL.2

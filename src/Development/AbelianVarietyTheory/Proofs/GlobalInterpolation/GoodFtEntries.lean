@@ -90,7 +90,7 @@ theorem ties_of_built (hG : GlobalTheory.GLq.Green) (hZ : GlobalTheory.Published
   rw [e1]
   exact ties_at_wit hG hZ hDZ q (hp K q)
 
-theorem row_lab_of_good : GlobalTheory.GLq.Green → GlobalTheory.Published.ZelevinskyPolynomialRing → GlobalTheory.Published.DepthZeroInertia → ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : GeoP), (∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c → ∀ k, c.a.nt.A.grp.ζ k = @GlobalTheory.GLq.LabelDatum.gen _ ⟨c.a.nt.D.host.g_prime k⟩ (@GlobalTheory.Mem.TypePl.labDat (c.a.nt.D.host.g k) ⟨c.a.nt.D.host.g_prime k⟩)) → RL.At (prmR N S Γ) (fun Q Lk => Row Q Lk (AtAll fun D _ _ _ => GoodFTAll D)) → RL.At (prmR N S Γ) RL.LabelCondition := by
+theorem row_lab_of_good : GlobalTheory.GLq.Green → GlobalTheory.Published.ZelevinskyPolynomialRing → GlobalTheory.Published.DepthZeroInertia → ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : Option GeoP), (∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c → ∀ k, c.a.nt.A.grp.ζ k = @GlobalTheory.GLq.LabelDatum.gen _ ⟨c.a.nt.D.host.g_prime k⟩ (@GlobalTheory.Mem.TypePl.labDat (c.a.nt.D.host.g k) ⟨c.a.nt.D.host.g_prime k⟩)) → RL.At (prmR N S Γ) (fun Q Lk => Row Q Lk (AtAll fun D _ _ _ => GoodFTAll D)) → RL.At (prmR N S Γ) RL.LabelCondition := by
   intro hG hZ hDZ hL N S Γ hN ⟨R, hR, hrow⟩
   refine ⟨R, hR, hrow.imp fun 𝒜 σ s hA eps Fm hc x hx i => ?_⟩
   obtain ⟨κ, -, -, t⟩ := s Fm hc
@@ -106,11 +106,11 @@ theorem row_lab_ev_of_good (hG : GlobalTheory.GLq.Green) (hZ : GlobalTheory.Publ
   exact ⟨x0, fun x hx h0 i => ties_of_built hG hZ hDZ hp (t x hx i).1 (h x hx h0 i)⟩
 
 theorem row_lab_labelCondition_of_localLanglands (hG : GlobalTheory.GLq.Green) (hZ : GlobalTheory.Published.ZelevinskyPolynomialRing) (hDZ : GlobalTheory.Published.DepthZeroInertia)
-    (hL : GlobalTheory.Published.LocalLanglandsGL) (S : SExt) (Γ : GeoP) :
+    (hL : GlobalTheory.Published.LocalLanglandsGL) (S : SExt) (Γ : Option GeoP) :
     RL.At (prmR (NE hL) S Γ) (fun Q Lk => Row Q Lk (AtAll fun D _ _ _ => GoodFTAll D)) → RL.At (prmR (NE hL) S Γ) RL.LabelCondition :=
   row_lab_of_good hG hZ hDZ hL (NE hL) S Γ fun _ _ _ _ _ _ _ _ _ _ _ _ _ m => m.zeta
 
-theorem row_lab_of_layer : GlobalTheory.GLq.Green → GlobalTheory.Published.ZelevinskyPolynomialRing → GlobalTheory.Published.DepthZeroInertia → ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : GeoP), (∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c → Nonempty (GlobalTheory.HeightCounting.Up.NEb hL K B f T w Z Wt p0 t nch n xd c)) → RL.At (prmR N S Γ) (fun Q L => Row Q L (AtAll fun D _ _ (_ : Bundle _ _ _) => Formalism.BasicNotions.GoodFTAll D)) → RL.At (prmR N S Γ) RL.LabelCondition :=
+theorem row_lab_of_layer : GlobalTheory.GLq.Green → GlobalTheory.Published.ZelevinskyPolynomialRing → GlobalTheory.Published.DepthZeroInertia → ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : Option GeoP), (∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c → Nonempty (GlobalTheory.HeightCounting.Up.NEb hL K B f T w Z Wt p0 t nch n xd c)) → RL.At (prmR N S Γ) (fun Q L => Row Q L (AtAll fun D _ _ (_ : Bundle _ _ _) => Formalism.BasicNotions.GoodFTAll D)) → RL.At (prmR N S Γ) RL.LabelCondition :=
   fun hG hZ hDZ hL N S Γ hN =>
     row_lab_of_good hG hZ hDZ hL N S Γ fun K B f T w Z Wt p0 t nch n xd c m =>
       (hN K B f T w Z Wt p0 t nch n xd c m).elim fun e => e.1.zeta

@@ -21,11 +21,11 @@ theorem kept_refl {D : D7} (c : NChoice D) : Kept c c :=
 theorem kept_withLoc {D : D7} (L : LocAll (lay0 D)) (c : NChoice D) : Kept c (chL L c) :=
   ⟨by constructor <;> rfl, by constructor <;> rfl, by constructor <;> rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl, HEq.rfl⟩
 
-def levelThreeIndependentOfChoices {N : NExt hL} {S S' : SExt} {Γ Γ' : GeoP} {Z : w.Lt} (v : Lv3 (prmR N S Γ).s K w Z) : Lv3 (prmR N S' Γ').s K w Z :=
+def levelThreeIndependentOfChoices {N : NExt hL} {S S' : SExt} {Γ Γ' : Option GeoP} {Z : w.Lt} (v : Lv3 (prmR N S Γ).s K w Z) : Lv3 (prmR N S' Γ').s K w Z :=
   { g := v.g, coh := v.coh, Wt := v.Wt, p0 := v.p0, what₂ := v.what₂, rx := v.rx, nch := v.nch, n := v.n, xd := v.xd, chiT := v.chiT,
     nx := v.nx }
 
-theorem third_level_of_good_twists {S : SExt} {Γ : GeoP} (h : Has3 (prmR (NEg hL) S Γ).s K B f T w) : Has3 (prmR (NEb hL) S Γ).s K B f T w :=
+theorem third_level_of_good_twists {S : SExt} {Γ : Option GeoP} (h : Has3 (prmR (NEg hL) S Γ).s K B f T w) : Has3 (prmR (NEb hL) S Γ).s K B f T w :=
   let ⟨Z, ⟨v⟩⟩ := h
   ⟨Z, ⟨⟨⟨v.g, v.coh, v.Wt, v.p0, v.what₂, v.rx⟩, v.nch, v.n, v.xd, v.chiT, ⟨v.nx.1, v.nx.2.1⟩⟩⟩⟩
 
@@ -100,7 +100,7 @@ theorem eta_zero {x : St P} (l : LA hL x) (j : ℕ) (v : B.places.Pl) (h1 : 1 �
   exact h
 
 theorem chain (h0 : StepW Start HasBare) (hA : SA hL) (hM : SMt) (hR : SRat hL) (hC : SCusp hL) (b0 : SettingsFormsExist hL) (b1 : SeriesExist hL)
-    (b2 : SB2 hL) (hc : SC hL) (hF : SFin hL) (S : SExt) (Γ : GeoP) : StepW Start (Has3 (prmR (NEb hL) S Γ).s) := by
+    (b2 : SB2 hL) (hc : SC hL) (hF : SFin hL) (S : SExt) (Γ : Option GeoP) : StepW Start (Has3 (prmR (NEb hL) S Γ).s) := by
   refine (h0.and (StepW.and hA (StepW.and hM (StepW.and hR (StepW.and hC (StepW.and b0 (StepW.and b1 (StepW.and b2
     (StepW.and hc hF))))))))).trans (StepW.of_all ?_)
   rintro K B f T w - - ⟨⟨P, x, hx, -⟩, hA, hM, hR, hC, b0, b1, b2, hc, hF⟩

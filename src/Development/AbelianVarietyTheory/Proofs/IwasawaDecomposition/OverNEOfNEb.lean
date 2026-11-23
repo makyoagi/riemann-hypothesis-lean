@@ -17,7 +17,7 @@ theorem overNE_of_NEb {N : NExt hL}
     GlobalTheory.NRows.AtPt.OverNE N :=
   fun K B f T w Z Wt p0 t nch n xd c h => (hN K B f T w Z Wt p0 t nch n xd c h).elim fun x => ⟨x.1⟩
 
-theorem atMem_at_wit : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : GeoP), WitMv (prmR N S Γ).s →
+theorem atMem_at_wit : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : Option GeoP), WitMv (prmR N S Γ).s →
     (∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c → Nonempty (NEb hL K B f T w Z Wt p0 t nch n xd c)) →
     (∀ p : LayP hL, AtMem hL p → RL.At (prmR N S Γ) fun Q L => RowE Q L fun κ D O _ _ => ∃ K : Ctx, κ.Of K ∧ O.L.sc = K.s ∧
       Val K.C K.cD K.ch O.L ∧ ∃ q : WPt (prmR N S Γ).s K, q.Is D O ∧

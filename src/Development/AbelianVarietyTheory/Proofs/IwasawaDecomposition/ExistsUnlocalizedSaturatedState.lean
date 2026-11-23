@@ -34,10 +34,10 @@ def NEo : NExt hL := fun K B f T w Z Wt p0 t nch n xd c => NEl hL cDep K B f T w
 
 def NEog : NExt hL := fun K B f T w Z Wt p0 t nch n xd c => NEo hL cDep K B f T w Z Wt p0 t nch n xd c × PLift (GoodO (w.D Z) nch xd)
 
-def SFino : Prop := AllSt fun K _ _ _ w P x => ∀ (l : LC hL x) (S : SExt) (Γ : GeoP), (ListSt cDep x ∧ SatU P) →
+def SFino : Prop := AllSt fun K _ _ _ w P x => ∀ (l : LC hL x) (S : SExt) (Γ : Option GeoP), (ListSt cDep x ∧ SatU P) →
   ∃ (Z : w.Lt) (v : Lv3 (prmR (NEo hL cDep) S Γ).s K w Z), v.Wt = P.Wt ∧ Kept l.c.ch v.nch
 
-def SecondNo : Prop := ∀ (S : SExt) (Γ : GeoP), Pass KPx (IsBuiltE (prmR (NEo hL cDep) S Γ).s) fun K B f T =>
+def SecondNo : Prop := ∀ (S : SExt) (Γ : Option GeoP), Pass KPx (IsBuiltE (prmR (NEo hL cDep) S Γ).s) fun K B f T =>
   ∃ w : ColW B f T, Start K B f T w ∧ Has3 (prmR (NEog hL cDep) S Γ).s K B f T w
 
 end Slot

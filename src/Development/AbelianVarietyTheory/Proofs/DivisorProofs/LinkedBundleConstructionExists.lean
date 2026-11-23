@@ -25,10 +25,10 @@ set_option maxHeartbeats 1000000 in
 theorem member_bundles_large_ue : S0.HypothesesUE → S0.RowRat →
     ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (cDep : ℝ) (A : GroupRetwisting.AtP), EvLgG A →
       StandardLattice.SiegelMassRatioCM ∧
-      MemberE (prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none (geoCl anyGeometry)).s ∧
-      ExBL KPx (IsBuiltE (prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none (geoCl anyGeometry)).s)
-        (IsGoodE (prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none (geoCl anyGeometry)).s)
-        (IsLinked (prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none (geoCl anyGeometry))) := by
+      MemberE (prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none none).s ∧
+      ExBL KPx (IsBuiltE (prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none none).s)
+        (IsGoodE (prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none none).s)
+        (IsLinked (prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) A) SExt.none none)) := by
   intro P hR hL cDep A hEv
   have sw := P.siegelWeilUnitaryConvergent2
   have hA := GlobalTheory.T.archimedean_inputs_imply P.globalArtinReciprocity P.cMCurveGoodOutsidePrimeSt P.weberRayFieldSt
@@ -48,11 +48,11 @@ theorem member_bundles_large_ue : S0.HypothesesUE → S0.RowRat →
     P.cuspRapidDecay P.harishChandraFinite P.cuspTraceClass P.dixmierMalliavinFactorisation
     P.flathFactorisation P.pseudoCoefficientUpq P.harishChandraCharacters
     P.langlandsClassification P.labesseWaldspurger P.zelevinskyPolynomialRing P.geometricLemma
-    P.greenCuspidal hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) SExt.none (geoCl anyGeometry)
+    P.greenCuspidal hL (GlobalTheory.HeightCounting.Up.NEo hL cDep) SExt.none none
   obtain ⟨hE, -, -, hL', hN⟩ := GlobalTheory.T.local_langlands_hypotheses_of_literature P.litN P.toHypothesesX
   exact ⟨hA.a18,
     GlobalTheory.T.member_preserved_large_grid hL _ _ _ A hEv (GlobalTheory.T.member_built_linked_geometric hA hE hH hW hL hN cDep hM).1,
     GlobalTheory.T.built_linked_large_grid hA hH hPM hL _ _ A (fun _ _ _ _ _ _ _ _ _ _ _ _ _ x => ⟨x.1.1⟩)
-      (GlobalTheory.T.movable_geometric hL cDep anyGeometry)⟩
+      (GlobalTheory.T.movable_geometric hL cDep none)⟩
 
 end GlobalTheory.Fc.StageOneU

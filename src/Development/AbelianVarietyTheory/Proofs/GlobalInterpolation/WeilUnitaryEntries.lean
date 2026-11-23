@@ -101,7 +101,7 @@ end GlobalTheory.Fc.RL.DefSide
 
 theorem GlobalTheory.Fc.RL.at_row_df : GlobalTheory.Published.WeilRepresentationUnitaryPair → GlobalTheory.Published.DiscreteSeriesExists →
     GlobalTheory.Published.HarishChandraFinite → GlobalTheory.Published.CuspRapidDecay →
-    ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : GeoP), RL.At (prmR N S Γ) RL.DifferentialCondition :=
+    ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : Option GeoP), RL.At (prmR N S Γ) RL.DifferentialCondition :=
   fun _ _ _ _ _ N S Γ => GlobalTheory.Fc.RL.DefSide.row_df (prmR N S Γ)
 
 end

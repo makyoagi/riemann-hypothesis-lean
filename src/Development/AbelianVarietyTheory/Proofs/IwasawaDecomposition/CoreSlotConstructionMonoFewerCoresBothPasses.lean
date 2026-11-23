@@ -19,25 +19,25 @@ namespace GlobalTheory.HeightCounting.Up
 
 variable {hL : GlobalTheory.Published.LocalLanglandsGL}
 
-theorem builtE_of_nExt {N N' : NExt hL} {S : SExt} {Γ : GeoP}
+theorem builtE_of_nExt {N N' : NExt hL} {S : SExt} {Γ : Option GeoP}
     (hN : ∀ K B f T w Z Wt p0 t nch n xd c, N' K B f T w Z Wt p0 t nch n xd c → Nonempty (N K B f T w Z Wt p0 t nch n xd c))
     (K : Ctx) (B : Base) (f : Fr B.toPre) (T : TwDat B) (w : ColW B f T) (Z : w.Lt) (c : V4.Core K (w.st Z) f T)
     (h : BuiltE (prmR N' S Γ).s K B f T w Z c) : BuiltE (prmR N S Γ).s K B f T w Z c := by
   obtain ⟨b, hb⟩ := h
   exact ⟨{ b with nx := ⟨b.nx.1, Classical.choice (hN _ _ _ _ _ _ _ _ _ _ _ _ _ b.nx.2)⟩ }, hb⟩
 
-noncomputable def witOfNExt {N N' : NExt hL} {S : SExt} {Γ : GeoP}
+noncomputable def witOfNExt {N N' : NExt hL} {S : SExt} {Γ : Option GeoP}
     (hN : ∀ K B f T w Z Wt p0 t nch n xd c, N' K B f T w Z Wt p0 t nch n xd c → Nonempty (N K B f T w Z Wt p0 t nch n xd c))
     {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z : w.Lt} {O : Obj2 (w.D Z)}
     (x : Wit (prmR N' S Γ).s K w Z O) : Wit (prmR N S Γ).s K w Z O :=
   { x with nx := ⟨x.nx.1, Classical.choice (hN _ _ _ _ _ _ _ _ _ _ _ _ _ x.nx.2)⟩ }
 
-noncomputable def wptOfNExt {N N' : NExt hL} {S : SExt} {Γ : GeoP}
+noncomputable def wptOfNExt {N N' : NExt hL} {S : SExt} {Γ : Option GeoP}
     (hN : ∀ K B f T w Z Wt p0 t nch n xd c, N' K B f T w Z Wt p0 t nch n xd c → Nonempty (N K B f T w Z Wt p0 t nch n xd c))
     {K : Ctx} (q : WPt (prmR N' S Γ).s K) : WPt (prmR N S Γ).s K :=
   ⟨q.B, q.f, q.T, q.w, q.Z, q.O, witOfNExt hN q.x⟩
 
-theorem bwit_of_nExt {N N' : NExt hL} {S : SExt} {Γ : GeoP}
+theorem bwit_of_nExt {N N' : NExt hL} {S : SExt} {Γ : Option GeoP}
     (hN : ∀ K B f T w Z Wt p0 t nch n xd c, N' K B f T w Z Wt p0 t nch n xd c → Nonempty (N K B f T w Z Wt p0 t nch n xd c))
     {K : Ctx} (q : WPt (prmR N' S Γ).s K) {c : ℝ} (b : GlobalTheory.Fc.Bundle (q.w.D q.Z) q.O c) (h : BWit q b) :
     Nonempty (BWit (wptOfNExt hN q) b) := by
@@ -69,7 +69,7 @@ end GlobalTheory.HeightCounting.Up
 
 namespace GlobalTheory.HeightCounting.Up
 
-theorem rows_of_stronger_nExt : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N N' : NExt hL) (S : SExt) (Γ : GeoP), (∀ K B f T w Z Wt p0 t nch n xd c, N' K B f T w Z Wt p0 t nch n xd c → Nonempty (N K B f T w Z Wt p0 t nch n xd c)) → (∀ K X f T c, IsBuiltE (prmR N' S Γ).s K X f T c → IsBuiltE (prmR N S Γ).s K X f T c) ∧ (∀ K X f T c, IsGoodE (prmR N' S Γ).s K X f T c → IsGoodE (prmR N S Γ).s K X f T c) ∧ (∀ K β c b, IsLinked (prmR N' S Γ) K β c b → IsLinked (prmR N S Γ) K β c b) ∧ ∀ (M : FamClass → Prop) (DR : GlobalTheory.Fc.R1.DefT), GlobalTheory.Fc.AllRows KPx (IsBuiltE (prmR N S Γ).s) (IsGoodE (prmR N S Γ).s) (IsLinked (prmR N S Γ)) M DR → GlobalTheory.Fc.AllRows KPx (IsBuiltE (prmR N' S Γ).s) (IsGoodE (prmR N' S Γ).s) (IsLinked (prmR N' S Γ)) M DR := by
+theorem rows_of_stronger_nExt : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N N' : NExt hL) (S : SExt) (Γ : Option GeoP), (∀ K B f T w Z Wt p0 t nch n xd c, N' K B f T w Z Wt p0 t nch n xd c → Nonempty (N K B f T w Z Wt p0 t nch n xd c)) → (∀ K X f T c, IsBuiltE (prmR N' S Γ).s K X f T c → IsBuiltE (prmR N S Γ).s K X f T c) ∧ (∀ K X f T c, IsGoodE (prmR N' S Γ).s K X f T c → IsGoodE (prmR N S Γ).s K X f T c) ∧ (∀ K β c b, IsLinked (prmR N' S Γ) K β c b → IsLinked (prmR N S Γ) K β c b) ∧ ∀ (M : FamClass → Prop) (DR : GlobalTheory.Fc.R1.DefT), GlobalTheory.Fc.AllRows KPx (IsBuiltE (prmR N S Γ).s) (IsGoodE (prmR N S Γ).s) (IsLinked (prmR N S Γ)) M DR → GlobalTheory.Fc.AllRows KPx (IsBuiltE (prmR N' S Γ).s) (IsGoodE (prmR N' S Γ).s) (IsLinked (prmR N' S Γ)) M DR := by
   intro hL N N' S Γ hN
   have hB : ∀ K X f T c, IsBuiltE (prmR N' S Γ).s K X f T c → IsBuiltE (prmR N S Γ).s K X f T c :=
     positionOf_mono (builtE_of_nExt hN)

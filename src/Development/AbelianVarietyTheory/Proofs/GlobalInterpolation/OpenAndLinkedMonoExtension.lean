@@ -9,7 +9,7 @@ open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.E
 
 namespace GlobalTheory.Glob
 
-theorem open_and_linked_of_stronger_extension : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N N' : NExt hL) (S : SExt) (Γ : GeoP), (∀ K B f T w Z Wt p0 t nch n xd c, N' K B f T w Z Wt p0 t nch n xd c → Nonempty (N K B f T w Z Wt p0 t nch n xd c)) → (∀ H : ∀ 𝒜 : FamClass, RawSel Bundle 𝒜 → Prop, RL.At (prmR N S Γ) (fun Q L => Row Q L H) → RL.At (prmR N' S Γ) (fun Q L => Row Q L H)) ∧ (S0.Open0 (prmR N S Γ) → S0.Open0 (prmR N' S Γ)) := by
+theorem open_and_linked_of_stronger_extension : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N N' : NExt hL) (S : SExt) (Γ : Option GeoP), (∀ K B f T w Z Wt p0 t nch n xd c, N' K B f T w Z Wt p0 t nch n xd c → Nonempty (N K B f T w Z Wt p0 t nch n xd c)) → (∀ H : ∀ 𝒜 : FamClass, RawSel Bundle 𝒜 → Prop, RL.At (prmR N S Γ) (fun Q L => Row Q L H) → RL.At (prmR N' S Γ) (fun Q L => Row Q L H)) ∧ (S0.Open0 (prmR N S Γ) → S0.Open0 (prmR N' S Γ)) := by
   intro hL N N' S Γ hN
   obtain ⟨hB, hG, hLk, -⟩ := GlobalTheory.HeightCounting.Up.rows_of_stronger_nExt hL N N' S Γ hN
   have m : ∀ H : ∀ 𝒜 : FamClass, RawSel Bundle 𝒜 → Prop, RL.At (prmR N S Γ) (fun Q L => Row Q L H) → RL.At (prmR N' S Γ) (fun Q L => Row Q L H) :=

@@ -62,7 +62,7 @@ theorem lv3_of_third_alt_alt (hW : GlobalTheory.Published.WeilRepresentationUnit
     (hR : RowsAt P)
     (hE : _root_.GlobalTheory.CoefDuty.AutomorphicSideExists l.a.A l.mt.M l.c.ch l.c.tp.tup → _root_.GlobalTheory.CoefDuty.ForcedByAutomorphicSemisimpleData l.a.A l.mt.M l.c.ch l.c.tp.tup fun D' =>
       GlobalTheory.CoefDuty.Large D' ∧ ∀ j v, 1 ≤ j → j ≤ (Dof x).R.m → ∀ v' : D'.what₂.places.Pl, HEq v' v → D'.what₂.etaJ j v' = P.q.eta j v)
-    (hX : ∃ xd : ThData (Dof x), XdAll xd) (S : SExt) (Γ : GeoP) (N : _root_.GlobalTheory.Mem.Top.Bl.NormChoiceExtension hL)
+    (hX : ∃ xd : ThData (Dof x), XdAll xd) (S : SExt) (Γ : Option GeoP) (N : _root_.GlobalTheory.Mem.Top.Bl.NormChoiceExtension hL)
     (hN : ∀ Z p t nch n xd c, _root_.GlobalTheory.HeightCounting.Up.extensionWithLaw hL K B f T w Z P.Wt p t nch n xd c →
       (∀ cDep : ℝ, ListSt cDep x → ListPin (w.st Z).toD7 t.r.z.R.toRealDat.toLevCh cDep K.s.b) →
       Nonempty (N K B f T w Z P.Wt p t nch n xd c)) :

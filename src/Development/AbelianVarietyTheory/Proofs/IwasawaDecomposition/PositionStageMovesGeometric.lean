@@ -36,7 +36,7 @@ theorem kept_trans {D D' D'' : D7} {c : NChoice D} {c' : NChoice D'} {c'' : NCho
   · cases s1; cases s2; constructor <;> (apply HEq.trans <;> assumption)
   · cases f1; cases f2; constructor <;> (apply HEq.trans <;> assumption)
 
-theorem movable_prmR_nel : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (cDep : ℝ) (Γ : GeoP), PositionMv (prmR (NEo hL cDep) SExt.none (geoCl Γ)).s := by
+theorem movable_prmR_nel : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (cDep : ℝ) (Γ : Option GeoP), PositionMv (prmR (NEo hL cDep) SExt.none (closeGeometry Γ)).s := by
   intro hL cDep Γ
   intro K B f T w Z O x N h O' hO' col n
   obtain ⟨t', hs, hgeo, hpk, hobj, hrx⟩ := GlobalTheory.T.rows_pass_to_moved_divisionLatticesHeights K B f T w Z x.Wt O x.what₂ N h O' hO'

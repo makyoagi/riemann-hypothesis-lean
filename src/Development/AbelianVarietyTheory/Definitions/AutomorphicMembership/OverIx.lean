@@ -16,8 +16,6 @@ abbrev GeoP : Type 1 := ∀ D : D7, Formalism.L2.Pj.Core D → DivX D → Prop
 def geoOf (Q : ∀ D : D7, GlobalTheory.ShFam.KitClass D) : GeoP := fun D J X =>
   (∃ c : ℕ, 0 < c ∧ GlobalTheory.ShFam.IsGeoOf (Q D) J c X) ∧ GlobalTheory.ShFam.Pad.HasTrueSurf X
 
-def anyGeometry : GeoP := fun _ _ _ => True
-
 section Reading
 
 open Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Rows Formalism.IndefR Formalism.IndefR.Links
@@ -41,12 +39,28 @@ end Reading
 
 variable {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B}
 
-structure OAt (Γ : GeoP) {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl} {p0 : BaseLevelRowSide (w.D Z)} (t : RowsT K w Z Wt p0)
+structure GeometricAt (Γ : GeoP) {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl} {p0 : BaseLevelRowSide (w.D Z)} (t : RowsT K w Z Wt p0)
     (X : DivX (w.D Z)) : Type 1 where
   geo : Γ (w.st Z).toD7 t.r.z.core.toCore X
   lam : LamAre t.r.Z X
 
-def OX (Γ : GeoP) : OComponent₂ := fun _ _ _ _ _ _ _ O t => OAt Γ t O.X
+variable {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl} {p0 : BaseLevelRowSide (w.D Z)}
+
+structure LamAt (t : RowsT K w Z Wt p0) (X : DivX (w.D Z)) : Type 1 where
+  lam : LamAre t.r.Z X
+
+def OAt (Γ : Option GeoP) (t : RowsT K w Z Wt p0) (X : DivX (w.D Z)) : Type 1 :=
+  match Γ with
+  | none => LamAt t X
+  | some P => GeometricAt P t X
+
+theorem OAt.lam {Γ : Option GeoP} {t : RowsT K w Z Wt p0} {X : DivX (w.D Z)}
+    (o : OAt Γ t X) : LamAre t.r.Z X := by
+  cases Γ with
+  | none => exact LamAt.lam o
+  | some P => exact GeometricAt.lam o
+
+def OX (Γ : Option GeoP) : OComponent₂ := fun _ _ _ _ _ _ _ O t => OAt Γ t O.X
 
 end GlobalTheory.Mem.Top.Bl
 

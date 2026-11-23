@@ -20,7 +20,7 @@ structure Parameters (hL : _root_.UpperTheory.Zero.LLC.RecTExists) : Type 2 wher
   R : RPosition
   N : _root_.GlobalTheory.Mem.Top.Bl.NormChoiceExtension hL
   S : SExt
-  Γ : GeoP
+  Γ : Option GeoP
 variable {hL : _root_.UpperTheory.Zero.LLC.RecTExists}
 @[reducible] def Parameters.s (p : _root_.GlobalTheory.Mem.Top.Bl.Parameters hL) : Slots := ⟨p.R, _root_.GlobalTheory.Mem.Top.Bl.normChoiceOfExtension hL p.N, SXE p.S, OX p.Γ⟩
 def WPt.core_data_of_point {p : _root_.GlobalTheory.Mem.Top.Bl.Parameters hL} {K : Ctx} (q : WPt p.s K) : _root_.GlobalTheory.Mem.Top.Bl.NormChoiceCore hL q.x.what₂ q.x.n := q.x.nx.1
@@ -58,7 +58,7 @@ structure RecordCompatibleExtended {p : _root_.GlobalTheory.Mem.Top.Bl.Parameter
   std : GlobalTheory.Svd.StdAt q.w.I q.w.l q.w.l0 q.Z q.O R.T.ker
   rd : GlobalTheory.Pdv.StdRd q.w.I q.w.l q.Z R.T.ker
 def ReciprocityLinkage (p : _root_.GlobalTheory.Mem.Top.Bl.Parameters hL) : GlobalTheory.Fc.LkT _root_.GlobalTheory.Mem.Top.Bl.BoundaryReciprocity := linkOf (𝒮 := p.s) (Bd := _root_.GlobalTheory.Mem.Top.Bl.BoundaryReciprocity) fun _ q _ R => _root_.GlobalTheory.Mem.Top.Bl.RecordCompatibleExtended (p := p) q R
-@[reducible] def parametersOfExtension (N : _root_.GlobalTheory.Mem.Top.Bl.NormChoiceExtension hL) (S : SExt) (Γ : GeoP) : _root_.GlobalTheory.Mem.Top.Bl.Parameters hL := ⟨RX, N, S, Γ⟩
+@[reducible] def parametersOfExtension (N : _root_.GlobalTheory.Mem.Top.Bl.NormChoiceExtension hL) (S : SExt) (Γ : Option GeoP) : _root_.GlobalTheory.Mem.Top.Bl.Parameters hL := ⟨RX, N, S, Γ⟩
 end GlobalTheory.Mem.Top.Bl
 end
 end

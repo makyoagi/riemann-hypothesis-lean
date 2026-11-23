@@ -13,7 +13,7 @@ namespace GlobalTheory.HeightCounting.UpPin
 
 theorem steps_pin : ∀ hL : GlobalTheory.Published.LocalLanglandsGL, ∀ cDep : ℝ, (SettingsFormsExistList hL cDep → SettingsFormsExist hL) ∧ (SeriesExistList hL cDep → SeriesExist hL) ∧
     (ModuliPointsExistList hL cDep → SB2 hL) ∧ (StepW Start HasBare → SA hL → SMt → SRat hL → SCusp hL → SettingsFormsExistList hL cDep → SeriesExistList hL cDep →
-      ModuliPointsExistList hL cDep → SC hL → SFinl hL cDep → ∀ (S : SExt) (Γ : GeoP), StepW Start (Has3 (prmR (NEl hL cDep) S Γ).s)) := by
+      ModuliPointsExistList hL cDep → SC hL → SFinl hL cDep → ∀ (S : SExt) (Γ : Option GeoP), StepW Start (Has3 (prmR (NEl hL cDep) S Γ).s)) := by
   intro hL cDep
   refine ⟨fun h => h.trans (StepW.of_all ?_), fun h => h.trans (StepW.of_all ?_), fun h => h.trans (StepW.of_all ?_), ?_⟩
   · intro K B f T w _ _ H P x l

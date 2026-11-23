@@ -212,7 +212,7 @@ theorem lv3_of_third (hW : GlobalTheory.Published.WeilRepresentationUnitaryPair)
     (hR : RowsAt P)
     (hE : GlobalTheory.CoefDuty.BuiltEx l.a.A l.mt.M l.c.ch l.c.tp.tup → GlobalTheory.CoefDuty.EvO l.a.A l.mt.M l.c.ch l.c.tp.tup fun D' =>
       GlobalTheory.CoefDuty.Large D' ∧ ∀ j v, 1 ≤ j → j ≤ (Dof x).R.m → ∀ v' : D'.what₂.places.Pl, HEq v' v → D'.what₂.etaJ j v' = P.q.eta j v)
-    (hX : ∃ xd : ThData (Dof x), XdAll xd) (S : SExt) (Γ : GeoP) (N : NExt hL)
+    (hX : ∃ xd : ThData (Dof x), XdAll xd) (S : SExt) (Γ : Option GeoP) (N : NExt hL)
     (hN : ∀ Z p t nch n xd c, NEb hL K B f T w Z P.Wt p t nch n xd c →
       (∀ cDep : ℝ, ListSt cDep x → ListPin (w.st Z).toD7 t.r.z.R.toRealDat.toLevCh cDep K.s.b) →
       Nonempty (N K B f T w Z P.Wt p t nch n xd c)) :

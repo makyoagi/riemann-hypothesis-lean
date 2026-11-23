@@ -15,5 +15,5 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.HeightCounting.Up GlobalTheory.Mem.SRe GlobalTheory.Mem.R3.Rw
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.movable_geometric : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (cDep : ℝ) (Γ : GeoP), PositionMv (prmR (NEo hL cDep) SExt.none (geoCl Γ)).s := by
+theorem _root_.GlobalTheory.T.movable_geometric : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (cDep : ℝ) (Γ : Option GeoP), PositionMv (prmR (NEo hL cDep) SExt.none (closeGeometry Γ)).s := by
   first | exact @GlobalTheory.HeightCounting.Up.movable_prmR_nel | exact GlobalTheory.HeightCounting.Up.movable_prmR_nel | (intros; apply GlobalTheory.HeightCounting.Up.movable_prmR_nel <;> assumption)

@@ -201,15 +201,15 @@ theorem lamAre_heq {K : Ctx} {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl} 
   obtain rfl := eq_of_heq h
   exact hX
 
-theorem divEx_prov (𝒮 : Slots) (hOx : 𝒮.Ox = OX anyGeometry) : DivEx 𝒮 :=
+theorem divEx_prov (𝒮 : Slots) (hOx : 𝒮.Ox = OX none) : DivEx 𝒮 :=
   StepW.of_all fun _ _ _ _ w _ _ hpin Z l =>
     let ⟨Y, h1, h2, h3, h4⟩ := exists_divT w hpin.some Z l
     ⟨Y, h1, h2, h3, fun O t hX hp ht => by
       rw [hOx]
-      exact ⟨⟨trivial, lamAre_heq hp ht (hX ▸ h4)⟩⟩⟩
+      exact ⟨⟨lamAre_heq hp ht (hX ▸ h4)⟩⟩⟩
 
 theorem divEx_of_ox : GlobalTheory.NT.RayField → GlobalTheory.Published.PrincipalIdealSt → GlobalTheory.Published.CMCurveGoodOutsidePrimeSt → ∀ 𝒮 : Slots,
-    𝒮.Ox = OX anyGeometry → DivEx 𝒮 :=
+    𝒮.Ox = OX none → DivEx 𝒮 :=
   fun _ _ _ 𝒮 hOx => divEx_prov 𝒮 hOx
 
 end GlobalTheory.Mem.Top.DivRec

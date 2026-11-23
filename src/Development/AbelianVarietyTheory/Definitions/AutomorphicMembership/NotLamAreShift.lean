@@ -149,14 +149,14 @@ end Reading
 variable {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z : w.Lt} {Wt : Set B.places.Pl}
   {p0 : BaseLevelRowSide (w.D Z)}
 
-theorem oAt_any (t : RowsT K w Z Wt p0) (h : R3.Lam3 t.r.Z) (X : DivX (w.D Z)) :
-    ∃ l, Nonempty (OAt anyGeometry t ((GlobalTheory.ShFam.Pad.SurfSt.of X).put (setLam X l))) := by
+theorem oAt_lam (t : RowsT K w Z Wt p0) (h : R3.Lam3 t.r.Z) (X : DivX (w.D Z)) :
+    ∃ l, Nonempty (OAt none t ((GlobalTheory.ShFam.Pad.SurfSt.of X).put (setLam X l))) := by
   obtain ⟨cOf, h1, -⟩ := h
-  exact ⟨_, ⟨trivial, lamAre_set t.r.Z cOf (fun σ _ => overIx_of_via (fun i c => (h1 i c).2) σ) X _⟩⟩
+  exact ⟨_, ⟨⟨lamAre_set t.r.Z cOf (fun σ _ => overIx_of_via (fun i c => (h1 i c).2) σ) X _⟩⟩⟩
 
 theorem oAt_geoOf (Q) (t : RowsT K w Z Wt p0) (h : R3.Lam3 t.r.Z) {c : ℕ} (hc : 0 < c) (X : DivX (w.st Z).toD7)
     (hX : GlobalTheory.ShFam.IsGeoOf (Q _) t.r.z.core.toCore c X) :
-    ∃ l, Nonempty (OAt (geoOf Q) t (GlobalTheory.ShFam.Pad.surfSt.put (setLam X l))) := by
+    ∃ l, Nonempty (OAt (some (geoOf Q)) t (GlobalTheory.ShFam.Pad.surfSt.put (setLam X l))) := by
   obtain ⟨cOf, h1, -⟩ := h
   exact ⟨_, ⟨geoOf_set hc hX _, lamAre_set t.r.Z cOf (fun σ _ => overIx_of_via (fun i c => (h1 i c).2) σ) X _⟩⟩
 

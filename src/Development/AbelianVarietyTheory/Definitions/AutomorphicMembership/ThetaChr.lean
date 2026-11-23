@@ -27,7 +27,7 @@ structure Prm (hL : GlobalTheory.Published.LocalLanglandsGL) : Type 2 where
   R : RPosition
   N : NExt hL
   S : SExt
-  Γ : GeoP
+  Γ : Option GeoP
 
 variable {hL : GlobalTheory.Published.LocalLanglandsGL}
 
@@ -114,7 +114,7 @@ def LinkR (p : Prm hL) : GlobalTheory.Fc.LkT BdRec := linkOf (𝒮 := p.s) (Bd :
 
 def RecExE (p : Prm hL) : Prop := GlobalTheory.Fc.ExB (IsGoodE p.s) (LinkR p)
 
-@[reducible] def prmR (N : NExt hL) (S : SExt) (Γ : GeoP) : Prm hL := ⟨RX, N, S, Γ⟩
+@[reducible] def prmR (N : NExt hL) (S : SExt) (Γ : Option GeoP) : Prm hL := ⟨RX, N, S, Γ⟩
 
 end GlobalTheory.Mem.Top.Bl
 

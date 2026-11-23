@@ -12,7 +12,7 @@ open Formalism.BasicNotions Formalism.MainNotions GlobalTheory.EX GlobalTheory.E
 
 namespace GlobalTheory.Fc.StageOne
 
-theorem rowFun_at_gridA : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.HarishChandraModules → GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.CasselmanWallach → GlobalTheory.NT.RayField → GlobalTheory.BigTop.Fun.Fun0Fit @GlobalTheory.BigTop.Fun.Fld → ∃ CF0 : ℝ, ∀ CF, CF0 ≤ CF → ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : GeoP), (∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c → Nonempty (GlobalTheory.HeightCounting.Up.NEl hL CF K B f T w Z Wt p0 t nch n xd c)) → S0.Open0 (prmR (NEa hL N (GridA CF)) S Γ) → RL.At (prmR (NEa hL N (GridA CF)) S Γ) S0.FunctorialityCondition := by
+theorem rowFun_at_gridA : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Published.HarishChandraModules → GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.CasselmanWallach → GlobalTheory.NT.RayField → GlobalTheory.BigTop.Fun.Fun0Fit @GlobalTheory.BigTop.Fun.Fld → ∃ CF0 : ℝ, ∀ CF, CF0 ≤ CF → ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : Option GeoP), (∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c → Nonempty (GlobalTheory.HeightCounting.Up.NEl hL CF K B f T w Z Wt p0 t nch n xd c)) → S0.Open0 (prmR (NEa hL N (GridA CF)) S Γ) → RL.At (prmR (NEa hL N (GridA CF)) S Γ) S0.FunctorialityCondition := by
   intro hDS hHC hCR hCW hRay hFun
   obtain ⟨CF0, hCF⟩ := GlobalTheory.Fc.Ind.evWC_fun_of_fun0Fit @GlobalTheory.BigTop.Fun.Fld hFun
   refine ⟨CF0, fun CF hle hL N S Γ hN o => ?_⟩

@@ -120,7 +120,7 @@ end Constructions₂
 
 theorem at_selJ : GlobalTheory.Published.WeilRepresentationUnitaryPair → GlobalTheory.Published.DiscreteSeriesExists → GlobalTheory.Published.DiscreteSeriesCover →
     GlobalTheory.Published.HarishChandraModules → GlobalTheory.Published.CasselmanWallach → GlobalTheory.Published.HarishChandraFinite → GlobalTheory.Published.CuspRapidDecay →
-    ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : GeoP), RL.At (prmR N S Γ) R1.PeriodAdmissibilityAtBundlePoints →
+    ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : Option GeoP), RL.At (prmR N S Γ) R1.PeriodAdmissibilityAtBundlePoints →
     RL.At (prmR N S Γ) R1.DecompositionConditionAtBundlePoints → RL.At (prmR N S Γ) RL.Row_tie → RL.At (prmR N S Γ) R1.JSelectionAtBundlePoints :=
   fun _ _ h1 h2 h3 h4 h5 _ _ _ _ _ _ hT =>
     at_atAll (A := HasTie) (R := R1.P_selJ) (fun _ _ _ _ w ht => selJ_of_wit ⟨h1, h2, h3, h4, h5⟩ w (Classical.choice ht)) hT

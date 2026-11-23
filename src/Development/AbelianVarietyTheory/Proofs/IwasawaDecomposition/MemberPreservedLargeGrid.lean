@@ -10,7 +10,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 namespace GlobalTheory.Mem.LiteralAutomorphy
 
-variable {hL : GlobalTheory.Published.LocalLanglandsGL} {N : NExt hL} {S : SExt} {Γ : GeoP} {A : AtP}
+variable {hL : GlobalTheory.Published.LocalLanglandsGL} {N : NExt hL} {S : SExt} {Γ : Option GeoP} {A : AtP}
 
 def builtA_drop {K : Ctx} {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z : w.Lt} {c : V4.Core K (w.st Z) f T}
     (b : Built (prmR (NEa hL N A) S Γ).s K w Z c) : Built (prmR N S Γ).s K w Z c :=
@@ -36,7 +36,7 @@ theorem isGoodE_prmA_iff (K X f T c) :
   · rintro ⟨⟨w, Z, c', ⟨⟨b, hb⟩, g⟩, he⟩, a⟩
     exact ⟨w, Z, c', ⟨⟨builtA_add b a, hb⟩, g⟩, he⟩
 
-theorem memberE_prmR_NEa : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : GeoP) (A : AtP), EvLgG A →
+theorem memberE_prmR_NEa : ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (S : SExt) (Γ : Option GeoP) (A : AtP), EvLgG A →
     MemberE (prmR N S Γ).s → MemberE (prmR (NEa hL N A) S Γ).s := by
   intro hL N S Γ A hA ⟨hB, h1, hE, h2⟩
   refine ⟨hB, ?_, ?_, ?_⟩
