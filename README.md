@@ -14,7 +14,11 @@ This fork tests one objection to the formalization by Levent Alpöge with Claude
 
 The original divisor has surface type `Empty`, while `geoOf Q` requires an inhabited surface. A different divisor now satisfies both `LamAre` and the full geometric condition for the stage kit class `Q D := IsKitOf (st D)`. Lean checked the section maps, their lattice and norm comparisons, and the strengthened `DivEx` obligation on all three production routes. The 5,691-module run above used the ablated construction. The `production-geometry` branch supplies the stronger divisor to the closing lemmas through `GeoCl.base` and transports it through `setDiv` with `GeoCl.step`. [Original witness obstruction](checks/geometry/StrongGeometry.lean) · [Production reading and geometric divisor](checks/geometry/ProductionReads.lean) · [Strengthened divisor obligation](checks/geometry/StrongDivEx.lean)
 
-The height check proves the divisor link using bounds on the assigned height. Both the link and this proof are independent of the particular formula `hExpl6` in their declaration dependencies. The construction still assigns `hExpl6` through `setDiv`. Identifying that formula with an independently defined arithmetic height remains open. The recorded builds and kernel replays ran on one Linux machine. Independent reproduction is pending. [Height interface](checks/geometry/HeightInterface.lean)
+The divisor link uses bounds on the assigned height. Both the link and its proof are independent of the particular formula `hExpl6` in their declaration dependencies. The construction assigns `hExpl6` through `setDiv`. [Height interface](checks/geometry/HeightInterface.lean)
+
+**Can the family's section metric recover that height?** On every production row `1 ≤ j < m`, at least one component has a boundary point where all the row sections vanish. On that component the section metric admits no induced arithmetic model, and Lean proves `B.h = 0` by the library's fallback definition. On the final row `j = m`, every component has empty boundary. Base-point-freeness on that row and equality with `hExpl6` remain open. [Boundary proof](checks/geometry/ProductionBoundary.lean) · [Height argument and verification](checks/geometry/README.md#the-boundary-on-the-production-rows)
+
+The recorded builds and kernel replays ran on one Linux machine. Independent reproduction is pending.
 
 [Reproduce the original, modified, and stronger-geometry checks](checks/geometry/README.md)
 

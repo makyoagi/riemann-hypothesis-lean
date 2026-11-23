@@ -352,3 +352,50 @@ Same assertion against the ablated Main from d9177c4c8         exit 1 (expected)
   Run this file against the ablation's compiled Main with ProofDependencies.olean on LEAN_PATH.
 
 All recorded runs used one machine. Independent reproduction is pending.
+
+Family section metric and production-row boundaries
+
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+ad3c3480c7721713ccdab67e3f047467611a8aa573d4c8bcd0647915ae12157d  ProductionHeightCandidates.lean
+'GeometryAudit.ProductionHeight.component_presentation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.ProductionHeight.component_height_after_setDiv' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'GeometryAudit.ProductionHeight.word_map_height_le_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.ProductionHeight.formula_strictMono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.ProductionHeight.constant_unique_of_height_match' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+replaying ProductionHeightCandidates
+Lean compilation and leanchecker replay both exited 0.
+
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+e7bf126902e3895bc94d4f2d0b2f0c27bba4330c03febdc900e39ca958a0e033  FamilyComponentIntersection.lean
+'GeometryAudit.FamilyComponentIntersection.componentData_height' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'GeometryAudit.FamilyComponentIntersection.model_formula_of_bpf' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'GeometryAudit.FamilyComponentIntersection.boundary_is_base_point' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'GeometryAudit.FamilyComponentIntersection.not_bpf_of_boundary' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'GeometryAudit.FamilyComponentIntersection.height_at_nonempty_boundary' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+replaying FamilyComponentIntersection
+Lean compilation and leanchecker replay both exited 0.
+
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+9cec6527c6115ee5468f9baf681f5ef4a114be3aca94219d73a159ce44f66246  ProductionBoundary.lean
+'GeometryAudit.ProductionBoundary.row_empty_iff_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.ProductionBoundary.row_empty_iff_proper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.ProductionBoundary.terminal_boundary_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.ProductionBoundary.earlier_signature' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.ProductionBoundary.earlier_boundary_nonempty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.ProductionBoundary.earlier_row_obstruction' depends on axioms: [propext, Classical.choice, Quot.sound]
+replaying ProductionBoundary
+Lean compilation and leanchecker replay both exited 0.

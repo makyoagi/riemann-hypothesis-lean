@@ -90,6 +90,36 @@ Both walks excluded `Formalism.BasicNotions.DV.hExpl6`. The production
 construction still assigns that formula in `setDiv`. An identification with
 an independently defined arithmetic height remains open.
 
+## The boundary on the production rows
+
+Fix the family's component divisor, Hermitian lattice and section map. If the sections generate the divisor's line bundle at every point, `model_formula_of_bpf` identifies the component height with the normalized arithmetic self-intersection of an induced model. The boundary determines where this argument can apply. [Component and model formula](FamilyComponentIntersection.lean)
+
+| Production row | What Lean proves | Consequence for the section metric |
+| --- | --- | --- |
+| `1 ≤ j < m` | At least one flag component has a boundary point. The proof constructs an isotropic lattice vector and a degeneration whose closed point lies on the row's boundary. | On that component, `Reads` forces all sections to vanish at the point. They fail to generate there, the metric has no induced model, and the library assigns `B.h = 0` as its fallback. |
+| `j = m` | The signature has `q = 0`. The open immersion covers the compactification, so every flag component has empty boundary. | Applying the model formula still requires proving that the sections generate at every interior point. |
+
+`earlier_row_obstruction` rules out this self-intersection argument across all production rows with the given sections. Whether an independently defined arithmetic height equals the assigned word formula `hExpl6` remains open. [Row theorems](ProductionBoundary.lean) · [Compiler and kernel output](verification.txt#L356)
+
+To reproduce the boundary check from the repository root, run the following with the pinned toolchain and Mathlib cache. Lake first builds the project imports used by the three audit files. Lean then compiles the files in dependency order and replays each module.
+
+```sh
+lake env bash -eu -o pipefail <<'SH'
+checks=checks/geometry
+modules=(ProductionHeightCandidates FamilyComponentIntersection ProductionBoundary)
+for module in "${modules[@]}"; do
+  awk '$1 == "import" && $2 != "ProductionHeightCandidates" &&
+       $2 != "FamilyComponentIntersection" { print "+" $2 }' "$checks/$module.lean"
+done | sort -u | xargs lake build
+out=$(mktemp -d)
+export LEAN_PATH="$out:$LEAN_PATH"
+for module in "${modules[@]}"; do
+  lean -R "$checks" -o "$out/$module.olean" "$checks/$module.lean"
+  leanchecker --verbose "$module"
+done
+SH
+```
+
 ## Replacement divisors and the fixed row core
 
 `CoreLevel.lean` checks `A = 1` directly for the core in `prm0`, `prm1`
