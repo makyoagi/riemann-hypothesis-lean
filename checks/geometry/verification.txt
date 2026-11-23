@@ -1,3 +1,5 @@
+Original and ablation receipts (through audit commit d9177c4c87d7fc2ccfb8d94728f80de9f618ff1b)
+
 Pinned mirror commit 7cbf7a0c32fca1badf05931879a37c3f8a2b03b4
 Mathlib 0df444a360eaa60ab8c11dca51a86af692955474
 Lean 4.33.1
@@ -244,3 +246,93 @@ Negative control, controls/FamilyLatticeAttempt.lean                exit 1
   Source SHA-256 f38865041f5f3e4a89977391b39ebae586f9498b8ca6d1488864cf50126369c8
   FamilyLaws.family_points_and_lattices discharges this comparison
   using the two-model theorem and classical choice as reported above.
+
+Production geometry branch, height interface
+
+Compiler   Lean 4.33.1, Linux, against the pinned ablation imports above.
+ProofDependencies.lean                                            exit 0
+  Source SHA-256 d18aa3167af952d02c2757e6b3ab640c74fe1c0c97d669042e43b5a348784014
+HeightInterface.lean                                              exit 0
+  Source SHA-256 7987bac48a73d7b17555bc3b96bd3934329337661da5f59b920343ebac7f26f2
+  Formalism.MainNotions.LinkDIV_at: 74359 reachable declarations, Formalism.BasicNotions.DV.hExpl6 absent
+  GeometryAudit.Height.link_of_bounds: 74371 reachable declarations, Formalism.BasicNotions.DV.hExpl6 absent
+  'GeometryAudit.Height.link_of_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+  leanchecker --verbose ProofDependencies HeightInterface             exit 0
+  replaying HeightInterface
+  replaying ProofDependencies
+
+Joined production parameters, negative control
+
+controls/EmptyProductionSlot.lean                                 exit 1 (expected)
+  Source SHA-256 6b7c948532c5e3c9d58ea91c474a2e31d4d6b9d2b24d247ab7816cd1bfdb86bc
+  checks/geometry/controls/EmptyProductionSlot.lean:7:22: error: Application type mismatch
+  Lean expected (prm0 hL).s.Ox = OX none as the second argument of DivRec.divEx_prov.
+
+Joined production parameters, positive checks
+
+The 34 witness library modules passed with the new parameters on the pinned Linux host.
+ProductionParameterChecks.lean                                     exit 0
+  Source SHA-256 a1ef8279c255a337f13aba895615da628b0b69176bcffb0d787af6a93a49ac6b
+  The Ox equations for prm0, prm1, and prmA reduce to the closure of geoOf by rfl.
+  The empty witness works for a slot explicitly reset to OX none.
+  The same expression at the actual prm0 slot fails. closed_divEx proves the goal.
+StrongDivEx.lean (includes closed_divEx)                            exit 0
+  Source SHA-256 6877d6e107c0cc2e80500ca4c0691ccd0c6f10de76520d55cd43668d7916206f
+
+The focused run covered the 321 modules in the affected import chains of all
+initial production and witness edits. All 321 passed.
+The alternative closing lemma present in the RH proof term directly references
+GlobalTheory.Mem.Top.Closing.divEx_geometry, which references
+GeometryAudit.ProductionReads.closed_divEx, then production_geometry, then production_reads.
+Each of these four consecutive references is present in a checked declaration.
+
+During the full build, LevelStabiliserLeCentraliserCompactPart.lean first failed at
+line 101 in stab_le_cptPart when instance search for R1Space (finU E n) reached its
+20,000-heartbeat limit. Retrying the same closure_of_subset expression with
+set_option synthInstance.maxHeartbeats 400000 scoped to that line compiled.
+The theorem type and the source expression passed to exact are identical.
+
+Source manifest: checks/geometry/production-sources.sha256 (69 files)
+  SHA-256 23d9ed5dbcc954258e22f9d13e910838df79f01e08c4f67cce621c4fb86af17a
+  All manifest entries checked against the Linux build tree.
+  src/Main.lean SHA-256 017645ca448f2fd1f6fd5c4c2cb2c6e96e472725be13f6e180ca6e1574360939,
+  identical to the pinned original. The joined search path also reproduced the height results above.
+
+Separate exact-module kernel replay (Linux, pinned Lean 4.33.1)
+  56 production and witness modules: 56 exits 0
+  LevelStabiliserLeCentraliserCompactPart after the local timeout change: exit 0
+  Each process called replayFromImports from the toolchain's LeanChecker module.
+  This checks each module's declarations in the kernel with its imports loaded.
+
+HaarDecompositionNormOneGl2.lean first reached the typeclass heartbeat limit at
+the two uses of SFinite ν (original lines 59 and 63). The proof already establishes
+IsProbabilityMeasure ν. The local SFinite proof uses Mathlib's IsFiniteMeasure.toSigmaFinite
+and instSFiniteOfSigmaFinite. The theorem statement and the measure ν are unchanged.
+The repaired Haar lemma passed exact-module kernel replay (exit 0), bringing the total
+to all 58 edited or newly integrated modules with successful separate replays.
+
+Final joined RH run, same pinned Linux host
+
+FINAL 4330/4330; failed []
+4330 affected oleans with successful source-build receipts; 170892 unchanged project oleans share their baseline inode.
+
+CheckRH.lean    exit 0
+def RiemannHypothesis : Prop :=
+∀ (s : ℂ), riemannZeta s = 0 → (¬∃ n, s = -2 * (↑n + 1)) → s ≠ 1 → s.re = 1 / 2
+riemannHypothesis : RiemannHypothesis
+'riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+ProductionParameterChecks.lean    exit 0
+
+JoinedRH.lean    exit 0
+Kernel declaration path of length 15: riemannHypothesis → rhOfAll → allChi → UpperTheory.FinalTheorems.everyCharacter → UpperTheory.FinalTheorems.everyCharacter_of_row → UpperTheory.LiteratureTheorems.every_character_of_literature_of_vWin → UpperTheory.Lit.every_character_of_theta_integrals_local_matching → UpperTheory.Lit.nonempty_hyps_definite_side_of_closed_bound → GlobalTheory.Fc.S0.StageU.hypotheses_nonempty_of_unramified_exponents_alt → GlobalTheory.T.large_unramified_exponent_bundles_exist_alt → GlobalTheory.Fc.StageOneU.member_bundles_large_unramified_exponents_alt → GlobalTheory.T.member_exists_baseLattice_alt → GlobalTheory.Mem.Top.Bl.exists_baseLattice_of_prime_alt → GlobalTheory.Mem.Top.Bl.exists_baseLattice_of_pair_alt → GlobalTheory.Mem.Top.Closing.memberE_closing_alt_alt → GlobalTheory.Mem.Top.Closing.divEx_geometry
+Kernel declaration path of length 1: GlobalTheory.Mem.Top.Closing.divEx_geometry → GeometryAudit.ProductionReads.closed_divEx
+Kernel declaration path of length 1: GeometryAudit.ProductionReads.closed_divEx → GeometryAudit.ProductionReads.production_geometry
+Kernel declaration path of length 1: GeometryAudit.ProductionReads.production_geometry → GeometryAudit.ProductionReads.production_reads
+riemannHypothesis axioms: [propext, Classical.choice, Quot.sound]
+
+leanchecker --verbose Main    exit 0
+replaying Main
+
+All recorded runs used one machine. Independent reproduction is pending.

@@ -2,15 +2,19 @@
 
 The geometric field can be removed. In this experiment, Lean rebuilt all 5,691 affected modules and still accepted the original `riemannHypothesis : RiemannHypothesis` against Mathlib's definition. The proof of `LamAre` for the same divisor is still required.
 
-This fork tests one objection to the formalization by Levent Alpöge with Claude. The original Lean source is credited to them. The changes in this fork are the removal experiment and its checks. [Upstream mirror at the tested revision](https://github.com/CocoSgt/riemann-hypothesis-lean/tree/7cbf7a0c32fca1badf05931879a37c3f8a2b03b4)
+The stronger run also passed. On `production-geometry`, all three production slots require the transported geometric condition. Lean rebuilt all 4,330 affected modules, and the unchanged RH theorem reaches the replacement divisor and its section-map proof through the closing lemma. [Proof-path check](checks/geometry/JoinedRH.lean) · [Compiler and kernel output](checks/geometry/verification.txt)
+
+This fork tests one objection to the formalization by Levent Alpöge with Claude. The original Lean source is credited to them. The fork contains the ablation and the production geometry experiment. [Upstream mirror at the tested revision](https://github.com/CocoSgt/riemann-hypothesis-lean/tree/7cbf7a0c32fca1badf05931879a37c3f8a2b03b4)
 
 ## What Lean checked
 
 - In the original source, for fixed rows and divisor, the closed record with `anyGeometry` is equivalent to carrying the existing `LamAre` proof. [Lean equivalence and inverse laws](checks/geometry/original/BaselineEquivalence.lean)
-- On this branch the RH construction uses `OAt none`, a record with just `LamAre`. Both `anyGeometry` and the original `OAt.geo` are absent from the environment that imports `Main`. [Witness check](checks/geometry/AblatedWitness.lean) · [Environment check](checks/geometry/CheckAblatedMain.lean)
+- On the `anygeometry-ablation` branch the RH construction uses `OAt none`, a record with just `LamAre`. Both `anyGeometry` and the original `OAt.geo` are absent from the environment that imports `Main`. [Witness check](checks/geometry/AblatedWitness.lean) · [Environment check](checks/geometry/CheckAblatedMain.lean)
 - The unchanged final theorem checks against Mathlib's explicit statement about zeta zeros. Its axioms are `propext`, `Classical.choice`, and `Quot.sound`. The rebuild used pinned cached imports outside the affected modules. [Statement check](checks/geometry/CheckRH.lean) · [Recorded verification](checks/geometry/verification.txt)
 
-The original divisor has surface type `Empty`, while `geoOf Q` requires an inhabited surface. A different divisor now satisfies both `LamAre` and the full geometric condition for the stage kit class `Q D := IsKitOf (st D)`. Lean checked the section maps, their lattice and norm comparisons, and the strengthened `DivEx` obligation on all three production routes. The RH build above uses the ablated construction. [Original witness obstruction](checks/geometry/StrongGeometry.lean) · [Production reading and geometric divisor](checks/geometry/ProductionReads.lean) · [Strengthened divisor obligation](checks/geometry/StrongDivEx.lean)
+The original divisor has surface type `Empty`, while `geoOf Q` requires an inhabited surface. A different divisor now satisfies both `LamAre` and the full geometric condition for the stage kit class `Q D := IsKitOf (st D)`. Lean checked the section maps, their lattice and norm comparisons, and the strengthened `DivEx` obligation on all three production routes. The 5,691-module run above used the ablated construction. The `production-geometry` branch supplies the stronger divisor to the closing lemmas through `GeoCl.base` and transports it through `setDiv` with `GeoCl.step`. [Original witness obstruction](checks/geometry/StrongGeometry.lean) · [Production reading and geometric divisor](checks/geometry/ProductionReads.lean) · [Strengthened divisor obligation](checks/geometry/StrongDivEx.lean)
+
+The height check proves the divisor link using bounds on the assigned height. Both the link and this proof are independent of the particular formula `hExpl6` in their declaration dependencies. The construction still assigns `hExpl6` through `setDiv`. Identifying that formula with an independently defined arithmetic height remains open. The recorded builds and replays ran on one Linux machine. [Height interface](checks/geometry/HeightInterface.lean)
 
 [Reproduce the original, modified, and stronger-geometry checks](checks/geometry/README.md)
 

@@ -7,10 +7,9 @@ map supplies `GeoCl.base True.intro` and the same proof of `LamAre`.
 The original equivalence and both inverse laws are in
 `original/BaselineEquivalence.lean`.
 
-On this branch, `OAt none t X` reduces to a record with just that `LamAre`
+In the ablation, `OAt none t X` reduces to a record with just that `LamAre`
 field. A caller with a geometric requirement can use `OAt (some P) t X`.
-The following commands use the Lean and Mathlib versions pinned in the
-checkout. Start in the repository root on the experiment branch.
+The following commands use the pinned Lean and Mathlib. Start in the repository root.
 
 ```sh
 geometry_checks="$PWD/checks/geometry"
@@ -33,6 +32,54 @@ inhabited. The explicit divisor used in the construction has surface type
 `Empty`. The test proves the obstruction for this witness and every kit
 class `Q`. The replacement below uses a different divisor and proves the full
 predicate for `Q D := IsKitOf (st D)` on the three production routes.
+
+## Joining the geometry to the production parameters
+
+The `production-geometry` branch changes the three production parameters to
+`OX (some (geoCl (geoOf (fun D => IsKitOf (stages D)))))`. The constructor must prove
+`geoOf` for its divisor at the original row. `GeoCl.base` admits that proof
+and `GeoCl.step` transports it when `setDiv` changes the stored divisor data.
+`Closing.divEx_geometry` supplies this witness to both closing arguments.
+The final declaration path passes through `memberE_closing_alt_alt`,
+`divEx_geometry`, `closed_divEx`, `production_geometry`, and `production_reads`.
+All 4,330 affected modules passed and the stock checker replayed `Main`.
+The ablation and its original receipts remain at commit
+`d9177c4c87d7fc2ccfb8d94728f80de9f618ff1b`.
+
+A repetition on a fresh checkout can use the commands below. The Lake build
+will find the 34 witness modules in the `GeometryAudit` library. The checks
+inspect the positive slots, exercise the empty-slot control, verify the RH
+statement and exact axioms, and print a path through the RH proof term.
+The recorded incremental build starts with the verified ablation cache and
+recompiles every module affected by the joined changes. A fresh source
+checkout also builds the unchanged project imports. The tested production
+sources, checks, and toolchain pins are listed in `production-sources.sha256`.
+From the repository root, `shasum -a 256 -c checks/geometry/production-sources.sha256`
+verifies those files.
+
+```sh
+lake exe cache get
+lake build Main
+lake env leanchecker --verbose Main
+lake env bash -eu <<'SH'
+checks="$PWD/checks/geometry"
+out=$(mktemp -d)
+export LEAN_PATH="$out:$LEAN_PATH"
+lean -R "$checks" -o "$out/ProofDependencies.olean" "$checks/ProofDependencies.lean"
+lean -R "$checks" "$checks/HeightInterface.lean"
+lean -R "$checks" "$checks/ProductionParameterChecks.lean"
+lean -R "$checks" "$checks/CheckRH.lean"
+lean -R "$checks" "$checks/JoinedRH.lean"
+SH
+```
+
+`GeometryAudit.Height.link_of_bounds`
+takes the frame-number and variation bounds directly on `D.div.h`. The word
+facts supply its lower and upper bounds. The environment walk found 74,359
+reachable declarations from `LinkDIV_at` and 74,371 from the new proof.
+Both walks excluded `Formalism.BasicNotions.DV.hExpl6`. The production
+construction still assigns that formula in `setDiv`. An identification with
+an independently defined arithmetic height remains open.
 
 ## Replacement divisors and the fixed row core
 
@@ -179,22 +226,26 @@ cusp-form norm in this equality is the row's existing norm.
 
 `ReadingSectionMaps.lean` selects a complex basis from the row lattice
 generators and lifts those generators to the row and cusp spaces.
-Extending their compared sections linearly gives jointly injective
-section maps. `ReadingRows.exists_reads` proves regularity and the
-compatibility equation for every pair with `jM j x = φ f`.
+The common basis and dimension bounds make these lifts bases in their
+respective spaces. Linear independence of the compared sections gives an
+injective map into the product of section spaces. Each component is regular
+because the comparison images lie in its space of regular sections. `ReadingRows.exists_reads` proves regularity and the
+compatibility equation for every pair with `jM j x = φ f`. Both
+injectivity and compatibility apply to rows in `InR`. Outside that range,
+the construction chooses zero sections and proves their regularity.
 `ProductionReads.production_reads` supplies these maps and the full
 `FamOver.Reads` proof on the production core.
 
 `ProductionReads.production_geometry` uses that family to construct a
 divisor satisfying `DivT`, `MjAre`, the prescribed `kapR`, `LamAre`,
 and `geoOf (fun D => IsKitOf (st D))` together. The witness uses
-positive index `1`. `StrongDivEx.strong_parameters` proves `DivEx`
+positive index `1`. `GeometryAudit.ProductionReads.strong_parameters` proves `DivEx`
 for `prm0`, `prm1`, and `prmA` with the geometry slot set to
 `OX (some (geoOf (fun D => IsKitOf (st D))))`. These statements
-retain the project's `StepW Pinned` quantifiers. This stronger check
-is a separate module. The verified `Main` uses the ablation.
+retain the project's `StepW Pinned` quantifiers. This raw-slot theorem and the transported slot used by the joined branch
+are checked in `ProductionParameterChecks.lean`.
 
-To reproduce the local checks after building the ablation, run the following
+To reproduce the intermediate checks after building this branch, run the following
 from the repository root.
 
 ```sh
@@ -207,10 +258,10 @@ for module in CoreLevel ReplacementGeometry FixedCoreTie SourceFamily Production
   FormRegularity FormBoundary FormReconstruction FormDescent FormSpan FlagEvaluation \
   FormMultiplication CoreEmbedding SemilinearEvaluation FormComparison FormLaws FormPoints \
   FormRowData RowComparison FormsAssembly FamilyForms ReadingRealisation ReadingLattice \
-  ProductionReading FamilyReading ReadingSectionMaps ReadingRows ProductionReads StrongDivEx
+  ProductionReading FamilyReading ReadingSectionMaps ReadingRows ProductionReads StrongDivEx ProductionParameterChecks
 do
   lean -j2 --tstack=400000 -DautoImplicit=false -DmaxHeartbeats=4000000 \
-    -o "$out/$module.olean" "$checks/$module.lean"
+    -R "$checks" -o "$out/$module.olean" "$checks/$module.lean"
 done
 # Run each expected failure separately in this environment.
 # lean "$checks/controls/FamilyPointAttempt.lean"
