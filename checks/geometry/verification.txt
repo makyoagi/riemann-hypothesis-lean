@@ -410,3 +410,70 @@ d99da2b4e8df061eef159e6c76e39e93bdd5c93d908a4ba319757eec5ff3ec64  height-compari
 'GeometryAudit.HeightComparison.geometric_height_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
 'GeometryAudit.HeightComparison.closure_allows_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
 replayed HeightComparison
+
+Height assignment and divisor bounds
+
+Pinned Lean 4.33.1, Mathlib 0df444a360eaa60ab8c11dca51a86af692955474.
+Same Linux machine as the production rebuild. These checks import the previously
+compiled production modules. They do not modify Main or rebuild its source tree.
+The diagnostic below also runs against the compiled original Main.
+
+SHA-256 of the checked sources
+a06da6f3f75e7af8973e25a3e12d4fa9196138c55975424597b6ad3db1828b26  HeightSqueeze.lean
+960023afb11a5f7c82799e740212f4b6ba441410243c79f1ffe7210ce544221d  HeightShift.lean
+c72b79b5e289035d3334a58fe9f9395d37348ac4f86a93f8b60819f4d4f30061  ProductionHeightSqueeze.lean
+f9dacd63402ff0609e754ee73c2307d94e5695d9fa2044f077adb9b324a0bb4c  PairingHeightBound.lean
+59d8620ef91a8b6147396f18afa517f88440a99474f7bebf7193e29c7ddbe638  WordNormVariation.lean
+d568423b805db3fe9150840da588c5205e344a0f082d665b2fbd5911e81ad581  RealizedHeight.lean
+548cc4ac8b3268639633db344e82da15449cb610bf6bccd0528b7d455ef7645f  HeightRoute.lean
+
+Module                    lean exit   leanchecker exit
+HeightSqueeze             0           0
+HeightShift               0           0
+ProductionHeightSqueeze   0           0
+PairingHeightBound        0           0
+WordNormVariation         0           0
+RealizedHeight            0           0
+
+All printed theorem axiom lists in these six modules are
+[propext, Classical.choice, Quot.sound].
+The leanchecker invocations replay each named module with its compiled imports.
+PairingHeightBound's compile-time assertions walked 73,211 declarations from
+bound_of_arithmetic_inputs. The required divClausesR_of, height_chain_atR and
+htMap_le_of_bound were present. D7, GeoCl, setDiv, FamP.h_eq and hExpl6 were absent.
+
+Final compiler and replay output for the inhabited control
+'GeometryAudit.RealizedHeight.realized_control' depends on axioms: [propext, Classical.choice, Quot.sound]
+replaying RealizedHeight
+
+Fresh Lean process importing RealizedHeight, exit 0
+realized_control is available before the final riemannHypothesis declaration
+
+Final compiler and replay output for the word calculation
+'GeometryAudit.WordNorm.prime_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.WordNorm.formula_variation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.WordNorm.kernel_variation' depends on axioms: [propext, Classical.choice, Quot.sound]
+replaying WordNormVariation
+
+HeightRoute.lean on the unchanged original Main, Lean exit 0
+Formalism.BasicNotions.DV.hExpl6: reachable
+Formalism.MainNotions.FamP.h_eq: reachable
+Formalism.L2.DIV.linkDIV_at_words: reachable
+Formalism.L2.DIV.wordFacts_of: reachable
+Formalism.L2.DIV.divClausesR_of: reachable
+Formalism.L2.DIV.height_chain_atR: reachable
+Formalism.MainNotions.HeightShare.LData.h: absent
+1478219 declarations checked from riemannHypothesis
+
+HeightRoute.lean on the strengthened production Main, Lean exit 0
+Formalism.BasicNotions.DV.hExpl6: reachable
+Formalism.MainNotions.FamP.h_eq: reachable
+Formalism.L2.DIV.linkDIV_at_words: reachable
+Formalism.L2.DIV.wordFacts_of: reachable
+Formalism.L2.DIV.divClausesR_of: reachable
+Formalism.L2.DIV.height_chain_atR: reachable
+Formalism.MainNotions.HeightShare.LData.h: absent
+1487763 declarations checked from riemannHypothesis
+
+These are transitive references in declaration types and values. The absent
+constant is specifically the component-height function HeightShare.LData.h.

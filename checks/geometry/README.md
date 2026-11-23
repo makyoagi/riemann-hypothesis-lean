@@ -90,6 +90,60 @@ Both walks excluded `Formalism.BasicNotions.DV.hExpl6`. The production
 construction still assigns that formula in `setDiv`. An identification with
 an independently defined arithmetic height remains open.
 
+## Does assigning the formula prove the upper bound?
+
+In the release's `linkDIV_at_words`, `hh` identifies the stored height with the formula and `hW` supplies `WordFacts` at each word. The proof of the upper bound is the projection `fun u => (hW u).2.2`. The proof does use `hh` elsewhere, for the frame and the variation. One can read those uses separately in the same Lean term. [Divisor link in the release](../../src/Formalism/LocalToGlobal/Divisibility/RecBridge.lean#L327)
+
+Starting at the final `riemannHypothesis`, the original and strengthened declaration graphs both reach `hExpl6`, `FamP.h_eq`, `linkDIV_at_words`, `wordFacts_of`, `divClausesR_of` and `height_chain_atR`. The independent component-height function `HeightShare.LData.h` is absent in both walks. The walks follow references in types and values, across 1,478,219 declarations in the original and 1,487,763 in the strengthened build. [Graph diagnostic](HeightRoute.lean) · [Output from both builds](verification.txt#L458)
+
+Fix a production row, a word, and the constants in the proposed upper bound. As a function of the size constant `k`, the assigned height `hExpl6 D L X k u` is affine with positive slope. Increasing `k` raises the height by the same amount at every word. Lean constructs a value of `k` large enough to violate the upper estimate at the chosen word. The same divisor still supplies the transported geometry, the stored height still agrees with its formula by `rfl`, and every height difference is preserved. The resulting row fails `WordFacts` and fails `LinkDIV_at` for every frame exponent. The test applies to `prm0`, `prm1`, and `prmA` with the quantifiers of the production geometry construction. [Height calculation](HeightSqueeze.lean) · [Three production parameters](ProductionHeightSqueeze.lean)
+
+For the positive estimate, `bound_of_arithmetic_inputs` starts with the release's `DivInputsR`, the well-formedness of the two sides, invertible frames, and a nonzero pairing. Its left side contains the pairing height computed from its operator norms. Its right side is the numerical main term and error in `RecNums.rhs`. Lean combines the matrix and covolume estimates in `divClausesR_of`. The check walks all 73,211 declarations reachable from this derivation and excludes the entire `D7` row record, `setDiv`, `GeoCl`, `FamP.h_eq`, and `hExpl6`. This is an arithmetic estimate under explicit hypotheses. The separate identification of a word height with a self-intersection on the family's variety remains open. [Arithmetic derivation and dependency assertions](PairingHeightBound.lean)
+
+The converse can also be tested. For any valid divisor link with nonnegative exponent `Cabs`, raising every stored height by `s ≥ 0` preserves the entire link with error coefficient `C + s`. The lower bound becomes weaker, the frame number can only decrease, and the height differences stay equal. The proof checks all nine clauses of `LinkDIV_at`. The family record separately requires the exact equation `FamP.h_eq`. [Height-shift theorem](HeightShift.lean)
+
+The closed theorem `realized_control` exhibits an inhabited family from the modulus-one construction. It uses the release's family selection and divisor bridge to obtain witnesses on windows beyond every cutoff. A separate Lean invocation confirms that this theorem is available before the final declaration `riemannHypothesis` is imported. For each such row, Lean checks three outcomes on the same row data. [Realized family and controls](RealizedHeight.lean)
+
+| Stored word height | Error coefficient | Result |
+| --- | --- | --- |
+| The production formula at the family's own `Csz` | The coefficient `C` furnished by the bridge | The full divisor link holds. |
+| The production height plus one at every word | `C + 1` | The full link holds. Every stored height differs from the original formula at the fixed `Csz`. |
+| The formula at a suitably larger size constant, installed exactly | The original `C` | Every word-to-word height difference is preserved. The upper estimate fails at the distinguished word. |
+
+The shifted rows test the divisor link. The unchanged RH proof still uses the family with its original `Csz` and its exact `h_eq` field. [Source hashes, compiler results and declaration checks](verification.txt#L414)
+
+The family's scalar `cOf u` computes the change in the prime-log term from the distinguished word `u₀`. At every complex embedding `σ`, it satisfies `‖σ (cOf u)‖² · T(u) = T(u₀)`. Lean also proves an exact cancellation in each archimedean kernel sum. In the difference between two words, only indices `0 < i` and `i + 1 < k` of the first weight block contribute. Both endpoint terms and the entire second block cancel. The base value and the contribution of those interior terms still have to be derived from a word-indexed geometric bundle and its metric. [Prime term](WordNormVariation.lean#L25) · [Archimedean cancellation](WordNormVariation.lean#L58)
+
+To replay the height checks in a production checkout, run these commands at the repository root. The final diagnostic traverses the compiled RH declaration graph.
+
+```sh
+lake env bash -eu -o pipefail <<'SH'
+checks="$PWD/checks/geometry"
+modules=(ProofDependencies HeightComparison ProductionHeightCandidates HeightSqueeze HeightShift
+         ProductionHeightSqueeze PairingHeightBound WordNormVariation RealizedHeight HeightRoute)
+for module in "${modules[@]}"; do
+  awk '$1 == "import" && $2 ~ /^(Formalism|Development)\./ { print "+" $2 }' "$checks/$module.lean"
+done | sort -u | xargs lake build Main +ProductionReads
+out=$(mktemp -d)
+export LEAN_PATH="$out:$LEAN_PATH"
+for module in "${modules[@]}"; do
+  lean -j1 --tstack=400000 -DautoImplicit=false -R "$checks" -o "$out/$module.olean" "$checks/$module.lean"
+  leanchecker --verbose "$module"
+done
+lean -j1 --tstack=400000 -DautoImplicit=false --stdin <<'LEAN'
+import RealizedHeight
+import Lean.Elab.Command
+open Lean Elab Command
+run_cmd do
+  let e ← getEnv
+  unless e.contains ``GeometryAudit.RealizedHeight.realized_control do
+    throwError "Missing control theorem"
+  if e.contains `riemannHypothesis then throwError "Final Main theorem is already imported"
+  logInfo "realized_control is available before the final riemannHypothesis declaration"
+LEAN
+SH
+```
+
 ## The boundary on the production rows
 
 Fix the family's component divisor, Hermitian lattice and section map. If the sections generate the divisor's line bundle at every point, `model_formula_of_bpf` identifies the component height with the normalized arithmetic self-intersection of an induced model. The boundary determines where this argument can apply. [Component and model formula](FamilyComponentIntersection.lean)
@@ -102,6 +156,8 @@ Fix the family's component divisor, Hermitian lattice and section map. If the se
 `earlier_row_obstruction` rules out this self-intersection argument across all production rows with the given sections. Whether an independently defined arithmetic height equals the assigned word formula `hExpl6` remains open. [Row theorems](ProductionBoundary.lean) · [Compiler and kernel output](verification.txt#L356)
 
 For a specified family of bundles `B` indexed by words, `geometric_height_iff` reduces equality with `hExpl6` to two calculations. The heights must agree at one word, and their differences from that base value must agree at every word. Applying the criterion to the production family still requires a geometric assignment for those words and proofs of both identities. [Height comparison](HeightComparison.lean)
+
+Two related results in the release explain the remaining inputs. Given an induced model and a value satisfying `L.IsSelfInter a`, `arTop_of_induced` expresses the normalized arithmetic intersection in terms of `a` and finite-place corrections. In `SourceStatementOfSlope`, `slope_le` gives an inequality for a component volume slope. Applying either to this comparison would still require identifying the word's bundle and evaluating its height. [Induced-model formula](../../src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ArTopOfInduced.lean#L11) · [Component slope bound](../../src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/SourceStatementOfSlope.lean#L257)
 
 To reproduce the height comparison and boundary checks from the repository root, run the following with the pinned toolchain and Mathlib cache. Lake first builds the project imports. Lean then compiles the four audit files in dependency order and replays each module.
 
