@@ -101,12 +101,14 @@ Fix the family's component divisor, Hermitian lattice and section map. If the se
 
 `earlier_row_obstruction` rules out this self-intersection argument across all production rows with the given sections. Whether an independently defined arithmetic height equals the assigned word formula `hExpl6` remains open. [Row theorems](ProductionBoundary.lean) · [Compiler and kernel output](verification.txt#L356)
 
-To reproduce the boundary check from the repository root, run the following with the pinned toolchain and Mathlib cache. Lake first builds the project imports used by the three audit files. Lean then compiles the files in dependency order and replays each module.
+For a specified family of bundles `B` indexed by words, `geometric_height_iff` reduces equality with `hExpl6` to two calculations. The heights must agree at one word, and their differences from that base value must agree at every word. Applying the criterion to the production family still requires a geometric assignment for those words and proofs of both identities. [Height comparison](HeightComparison.lean)
+
+To reproduce the height comparison and boundary checks from the repository root, run the following with the pinned toolchain and Mathlib cache. Lake first builds the project imports. Lean then compiles the four audit files in dependency order and replays each module.
 
 ```sh
 lake env bash -eu -o pipefail <<'SH'
 checks=checks/geometry
-modules=(ProductionHeightCandidates FamilyComponentIntersection ProductionBoundary)
+modules=(HeightComparison ProductionHeightCandidates FamilyComponentIntersection ProductionBoundary)
 for module in "${modules[@]}"; do
   awk '$1 == "import" && $2 != "ProductionHeightCandidates" &&
        $2 != "FamilyComponentIntersection" { print "+" $2 }' "$checks/$module.lean"

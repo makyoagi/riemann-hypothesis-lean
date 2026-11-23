@@ -399,3 +399,14 @@ Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c
 'GeometryAudit.ProductionBoundary.earlier_row_obstruction' depends on axioms: [propext, Classical.choice, Quot.sound]
 replaying ProductionBoundary
 Lean compilation and leanchecker replay both exited 0.
+
+Word-height comparison criterion
+
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+d99da2b4e8df061eef159e6c76e39e93bdd5c93d908a4ba319757eec5ff3ec64  height-comparison/HeightComparison.lean
+'GeometryAudit.HeightComparison.formula_with_production_kap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.HeightComparison.formula_after_setDiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.HeightComparison.formula_difference' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.HeightComparison.geometric_height_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.HeightComparison.closure_allows_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+replayed HeightComparison
