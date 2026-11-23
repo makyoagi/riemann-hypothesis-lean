@@ -644,3 +644,31 @@ def RiemannHypothesis : Prop :=
 riemannHypothesis : RiemannHypothesis
 'riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]
 CheckRH Lean exit 0
+
+Word-indexed hyperplane powers on strengthened components
+
+Lean 4.33.1 and Mathlib 0df444a360eaa60ab8c11dca51a86af692955474.
+Same Linux verifier as the earlier production audit. The isolated build used
+pinned compiled imports and replaced AssignedWordVariation with the version
+that exports the equal-total-weight witness. The original assigned_differs
+statement and both existing ProductionHeightObstruction theorems still compile.
+The earlier AssignedWordVariation digest above refers to the version at 513ce3432.
+
+Source SHA-256
+5fdcfbacf6d75f1a3354c5eb6de6252d220b59fe22c4602afdce4313ae47f0e3  AssignedWordVariation.lean
+ef05a78ec08fa5059f7dc9ef52f909fecea2d8cc0069c813f58f26d405d187fd  ProductionHeightObstruction.lean
+01f16dd2b214b54a8055465a3f90965ac36f636cef0252673979fa72a81c5254  HyperplaneWordHeight.lean
+
+Module                       lean exit   leanchecker exit
+AssignedWordVariation        0           0
+ProductionHeightObstruction  0           0
+HyperplaneWordHeight         0           0
+
+'GeometryAudit.AssignedWordVariation.assigned_differs_same_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.HyperplaneWordHeight.power_induced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.HyperplaneWordHeight.realized_mismatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+The kernel replayed each of the three named modules against its compiled imports.
+Additional environment and dependency check, Lean exit 0
+Hyperplane bundle: 111796 reachable declarations; assigned formula, size constant, assignment equation and setDiv absent
+realized_mismatch is available before the final riemannHypothesis declaration

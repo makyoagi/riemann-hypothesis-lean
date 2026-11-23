@@ -199,6 +199,12 @@ At the original `F.Csz`, agreement on a modeled component of nonzero degree requ
 
 On sufficiently large rows, every level prime exceeds every individual weight. Prime divisibility then shows that even unequal level primes cannot make the two **assigned** heights equal. The theorem `realized_obstruction` gives an inhabited window beyond every cutoff. On its certified divisor, every fixed section component misses the assigned height on at least one of the same two words. Row one contains an actual component whose twisted height is zero at a word with nonzero assigned height. This disproves a uniform identification for this bundle construction. The quantifier is existential over allowed codes. Which words the original opaque choice selects is unverified. Identifying a different bundle with an independently defined, word-dependent archimedean metric remains open. [Level-prime calculation](AssignedWordVariation.lean) · [Counterexample and quantifiers](ProductionHeightObstruction.lean) · [Compiler and kernel output](verification.txt#L605)
 
+### Tensor powers of a modeled hyperplane bundle
+
+The projective embedding of each strengthened component supplies a hyperplane divisor. The release’s ample-model theorem gives an arithmetic model and a Hermitian line bundle for a positive multiple `q` of that divisor. Fix the model and metric once for the component. For a word of total weight `S`, raise the model bundle to the tensor power `S + 1` and divide the adelic divisor by the same model index `q`. The theorem `power_induced` proves that the resulting metric comes from this Hermitian tensor power. The dependency check followed 111,796 declarations from `bundle` and excluded `hExpl6`, `FamP.Csz`, `FamP.h_eq`, and `setDiv`. [Bundle and model certificate](HyperplaneWordHeight.lean)
+
+At the original size constant of one strengthened modulus-one family, two words on arbitrarily large inhabited windows have the same total weight and different assigned heights. Row one has an actual component. On every fixed component, those two words produce the same modeled bundle, so its normalized arithmetic height misses at least one assigned value. A matching height must depend on word data beyond total weight. Identifying a bundle that realizes `hExpl6` on this family remains open. [Two-word witness](AssignedWordVariation.lean) · [Height counterexample](HyperplaneWordHeight.lean) · [Compiler, replay and dependency checks](verification.txt#L648)
+
 To reproduce the height comparison and boundary checks from the repository root, run the following with the pinned toolchain and Mathlib cache. Lake first builds the project imports. Lean then compiles the audit files in dependency order and replays each module.
 
 ```sh
@@ -207,7 +213,7 @@ checks=checks/geometry
 modules=(HeightComparison ProductionHeightCandidates HeightSqueeze HeightShift
          FamilyComponentIntersection ProductionBoundary OriginalBundleHeight SectionMetricObstruction
          WordNormVariation LevelPrimeHeight ProductionLevelHeight ArchWeightTest ArchWordSwap
-         AssignedWordVariation ProductionSwapFamily ProductionHeightObstruction ProofDependencies)
+         AssignedWordVariation ProductionSwapFamily ProductionHeightObstruction HyperplaneWordHeight ProofDependencies)
 for module in "${modules[@]}"; do
   awk '$1 == "import" && $2 ~ /^(Formalism|Development|GroundTheory|PositivityTheory|ReciprocityTheory)\./ {
     print "+" $2
@@ -230,6 +236,22 @@ run_cmd do
     throwError "Missing height counterexample"
   if e.contains `riemannHypothesis then throwError "Final Main theorem is already imported"
   logInfo "realized_obstruction is available before the final riemannHypothesis declaration"
+LEAN
+lean -j1 --tstack=400000 -DautoImplicit=false --stdin <<'LEAN'
+import HyperplaneWordHeight
+import ProofDependencies
+open Lean Elab Command
+run_cmd do
+  let env ← getEnv
+  unless env.contains ``GeometryAudit.HyperplaneWordHeight.realized_mismatch do
+    throwError "Missing hyperplane height counterexample"
+  if env.contains `riemannHypothesis then throwError "Final Main theorem is already imported"
+  let used ← liftCoreM <| GeometryAudit.Dependencies.reachable env ``GeometryAudit.HyperplaneWordHeight.bundle
+  for n in [``Formalism.BasicNotions.DV.hExpl6, ``Formalism.MainNotions.FamP.Csz,
+            ``Formalism.MainNotions.FamP.h_eq, ``GlobalTheory.EX.OB.setDiv] do
+    if used.contains n then throwError "Unexpected bundle dependency {n}"
+  logInfo m!"Hyperplane bundle: {used.size} reachable declarations; assigned formula, size constant, assignment equation and setDiv absent"
+  logInfo "realized_mismatch is available before the final riemannHypothesis declaration"
 LEAN
 SH
 ```

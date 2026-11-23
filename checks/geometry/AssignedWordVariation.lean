@@ -70,16 +70,17 @@ private theorem multiplicity (D : D7) (L : SizeData₂ D) : ∃ n : ℕ, (n : �
   have hs : 0 ≤ s := Finset.sum_nonneg fun t _ => by exact_mod_cast ha.le.trans (L.aT_win t).1
   exact ⟨s.toNat, by rw [← Int.cast_natCast, Int.toNat_of_nonneg hs]; simp [s]⟩
 
-/-- A change of level prime cannot cancel the change of the archimedean sum for
-    the prescribed pair. This covers the library's zero-height fallback as well. -/
-theorem assigned_differs {eps : ℝ} (F : FamP eps) {x : ℝ} (hx : F.x1 < x) (i : F.Ix x)
+/-- The prescribed pair has the same total weight, distinct assigned heights
+    and strictly ordered archimedean contributions. -/
+theorem assigned_differs_same_weight {eps : ℝ} (F : FamP eps) {x : ℝ} (hx : F.x1 < x) (i : F.Ix x)
     (pair : ArchWordSwap.HasPair (F.D x i))
     (bound : ∀ (u v : (F.D x i).what₂.Word) ix, weight (F.D x i) u ix < ((F.D x i).mem v).A.T) :
-    ∃ u v, ((F.D x i).div.h u ≠ (F.D x i).div.h v) ∧ arch (F.L x i) u < arch (F.L x i) v := by
+    ∃ u v, totalWeight (F.D x i) u = totalWeight (F.D x i) v ∧
+      (F.D x i).div.h u ≠ (F.D x i).div.h v ∧ arch (F.L x i) u < arch (F.L x i) v := by
   let D := F.D x i
   let L := F.L x i
   obtain ⟨u, v, strict, same⟩ := ArchWordSwap.arch_separated D L pair
-  refine ⟨u, v, ?_, strict⟩
+  refine ⟨u, v, same, ?_, strict⟩
   intro ht
   have diff := HeightComparison.formula_difference D L (F.X x i) F.Csz u v
   rw [← F.h_eq x hx i u, ← F.h_eq x hx i v, ht, sub_self] at diff
@@ -117,6 +118,16 @@ theorem assigned_differs {eps : ℝ} (F : FamP eps) {x : ℝ} (hx : F.x1 < x) (i
   · exact prime_avoids D u u (bound u u) h
   · exact eq ((Nat.prime_dvd_prime_iff_eq pp pq).1 (pp.dvd_of_dvd_pow h))
 
+/-- A change of level prime cannot cancel the change of the archimedean sum for
+    the prescribed pair. This covers the library's zero-height fallback as well. -/
+theorem assigned_differs {eps : ℝ} (F : FamP eps) {x : ℝ} (hx : F.x1 < x) (i : F.Ix x)
+    (pair : ArchWordSwap.HasPair (F.D x i))
+    (bound : ∀ (u v : (F.D x i).what₂.Word) ix, weight (F.D x i) u ix < ((F.D x i).mem v).A.T) :
+    ∃ u v, ((F.D x i).div.h u ≠ (F.D x i).div.h v) ∧ arch (F.L x i) u < arch (F.L x i) v := by
+  obtain ⟨u, v, _, distinct, strict⟩ := assigned_differs_same_weight F hx i pair bound
+  exact ⟨u, v, distinct, strict⟩
+
 #print axioms weights_below_primes
+#print axioms assigned_differs_same_weight
 #print axioms assigned_differs
 end GeometryAudit.AssignedWordVariation
