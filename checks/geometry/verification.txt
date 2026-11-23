@@ -477,3 +477,94 @@ Formalism.MainNotions.HeightShare.LData.h: absent
 
 These are transitive references in declaration types and values. The absent
 constant is specifically the component-height function HeightShare.LData.h.
+
+RH import ablation of Formalism.SharpRestriction.Divisibility.HeightShare
+
+Pinned original source 7cbf7a0c32fca1badf05931879a37c3f8a2b03b4
+Strengthened production source at audit revision cf01a913050cd8b080a7dae80d8c68a664e03ba1
+Lean 4.33.1, Mathlib 0df444a360eaa60ab8c11dca51a86af692955474.
+Both runs used the same Linux machine. Compiled imports outside the
+affected set came from the corresponding pinned build.
+
+The previous import cone from HeightShare to Main contained 75 modules.
+The patch removes seven from that cone and adds the isolated size lemma
+as a new module. The build put invalid object files in the isolated library
+for all affected modules before adding unaffected cached imports. Fresh
+Lean compilations replaced the sentinels on the patched route to Main.
+A direct import of HeightShare still hit its sentinel after completion.
+
+                                         original   strengthened
+Freshly compiled affected modules          69/69        69/69
+Failed or pending affected modules             0            0
+Lean importing blocked HeightShare, exit       1            1
+Lean checking RHWithoutHeightShare, exit       0            0
+Modules in the check's imported environment 186123       186158
+leanchecker --verbose Main, exit               0            0
+
+Both blocked imports failed to read HeightShare.olean with "invalid header".
+Both checks of Main reported
+HeightShare.LData and HeightShare.LData.h absent; arithmetic formula and estimate declarations present
+riemannHypothesis axioms: [propext, Classical.choice, Quot.sound]
+Both targeted kernel replays reported "replaying Main". Each replay trusts
+the compiled imports. Independent reproduction remains pending.
+
+Matched negative control on the unpatched production build, Lean exit 1
+RHWithoutHeightShare.lean:9:0: error: Main imported the forbidden height module
+
+Reflexivity control on the patched production build, Lean exit 1
+import Main
+example : RiemannHypothesis := by rfl
+Tactic `rfl` failed: Expected the goal to be a binary relation
+⊢ RiemannHypothesis
+
+The former provider UniformSizeBoundOfOpenFamily also compiled (exit 0)
+against the original, unblocked dependencies and the newly compiled size
+module. This is a separate compatibility check outside the patched RH route.
+
+SHA-256 of the patch, check and resulting sources
+8d821fd741013c215ada430df388dbefcf708941d71eab0ccf489cab6562c473  controls/remove-height-import.patch
+f5aa7d47244b773f44365be388b8a03b273425e24367930e832cdc711d7d4e3a  controls/RHWithoutHeightShare.lean
+0eb15f7ad2731636d7b1226980b7b3caee46f478189333f2347698018df69b57  StThmB.lean
+c28cf2815588d35171dc01ba78a98b7da0cebbdf59956023a9704f8bbd8683ba  SlopeMaxB.lean
+3c92dad2299fc716abfa0698a33faafdb53da62fbc4baaf58aa68d282db96815  DiscriminantSizeOfFamily.lean
+63725e5c19d1416d9b7a01ebe42b4cc87752b55b60ffc5ab6ee1e71ea9240107  UniformSizeBoundOfOpenFamily.lean
+017645ca448f2fd1f6fd5c4c2cb2c6e96e472725be13f6e180ca6e1574360939  unchanged src/Main.lean
+
+Both freshly compiled Main.olean files match their respective pre-ablation
+Main.olean files byte for byte. SHA-256 in all four cases
+ce9a2006adda570c7404866ff3ceb4a7341c6c5d8ae7b56b6d8600b4c312d1ab
+The environment checks above distinguish the imported theories.
+
+SectionMetricObstruction.lean, Lean exit 0, leanchecker exit 0
+eead6e5fe914024d85f8f7b60ee077a6a0df2e4c8ca32860003dd2b63f018c32  SectionMetricObstruction.lean
+'GeometryAudit.SectionMetric.zero_after_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.SectionMetric.link_above_components' depends on axioms: [propext, Classical.choice, Quot.sound]
+replaying SectionMetricObstruction
+
+OriginalBundleHeight.lean, Lean exit 0, leanchecker exit 0
+82015ad0ae7c4534b599dbb1b2e57d5ad94d375fad60496f8cc19ba5d0309318  OriginalBundleHeight.lean
+'GeometryAudit.OriginalBundleHeight.no_bundle_on_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.OriginalBundleHeight.graft_height_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.OriginalBundleHeight.graft_agreement_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.OriginalBundleHeight.stored_agreement_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+replaying OriginalBundleHeight
+
+FamilyNormalization.lean, Lean exit 0, leanchecker exit 0
+7c1518d9ad1072124d401a5f07f34c958eca602fe82150a0a3210d73ebd07053  FamilyNormalization.lean
+'GeometryAudit.FamilyNormalization.same_sections' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.FamilyNormalization.same_component' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.FamilyNormalization.realized_two_normalizations' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+replaying FamilyNormalization
+The second family has one size constant in all windows. The positive
+change in its divisor-link error coefficient is quantified per tested row.
+
+JoinedRH.lean in the same height-blocked strengthened environment, Lean exit 0
+a07418c873f9465b6ed9d69f64fb6c6f50656432c8b51286bd8c3a24ac3c9192  JoinedRH.lean
+Kernel declaration path of length 15: riemannHypothesis → rhOfAll → allChi → UpperTheory.FinalTheorems.everyCharacter → UpperTheory.FinalTheorems.everyCharacter_of_row → UpperTheory.LiteratureTheorems.every_character_of_literature_of_vWin → UpperTheory.Lit.every_character_of_theta_integrals_local_matching → UpperTheory.Lit.nonempty_hyps_definite_side_of_closed_bound → GlobalTheory.Fc.S0.StageU.hypotheses_nonempty_of_unramified_exponents_alt → GlobalTheory.T.large_unramified_exponent_bundles_exist_alt → GlobalTheory.Fc.StageOneU.member_bundles_large_unramified_exponents_alt → GlobalTheory.T.member_exists_baseLattice_alt → GlobalTheory.Mem.Top.Bl.exists_baseLattice_of_prime_alt → GlobalTheory.Mem.Top.Bl.exists_baseLattice_of_pair_alt → GlobalTheory.Mem.Top.Closing.memberE_closing_alt_alt → GlobalTheory.Mem.Top.Closing.divEx_geometry
+Kernel declaration path of length 1: GlobalTheory.Mem.Top.Closing.divEx_geometry → GeometryAudit.ProductionReads.closed_divEx
+Kernel declaration path of length 1: GeometryAudit.ProductionReads.closed_divEx → GeometryAudit.ProductionReads.production_geometry
+Kernel declaration path of length 1: GeometryAudit.ProductionReads.production_geometry → GeometryAudit.ProductionReads.production_reads
+riemannHypothesis axioms: [propext, Classical.choice, Quot.sound]
+GlobalTheory.Mem.Top.DivRec.divEx_prov is absent from all 1487763 declarations reachable from riemannHypothesis

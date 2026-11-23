@@ -18,6 +18,10 @@ The production construction assigns the formula `hExpl6` through `setDiv`. Lean 
 
 **Can the family's section metric recover that height?** On every production row `1 ≤ j < m`, at least one component has a boundary point where all the row sections vanish. On that component the section metric admits no induced arithmetic model, and Lean proves `B.h = 0` by the library's fallback definition. On the final row `j = m`, every component has empty boundary. Base-point-freeness on that row and equality with `hExpl6` remain open. [Boundary proof](checks/geometry/ProductionBoundary.lean) · [Height argument and verification](checks/geometry/README.md#the-boundary-on-the-production-rows)
 
+**Does the formal proof need the component-height theory?** With the module defining `HeightShare.LData.h` blocked, Lean again accepted the unchanged RH theorem and the same three axioms on both the original and strengthened sources. Each run rebuilt 69 affected modules, including `Main`, and used pinned compiled imports for the remaining modules. The assigned word height and its arithmetic bounds remain in the proof. [Patch and reproduction commands](checks/geometry/README.md#rebuilding-rh-without-the-component-height-theory) · [Lean assertion](checks/geometry/controls/RHWithoutHeightShare.lean)
+
+The original seed admits no word-indexed bundle. On the explicit flag model used by the release every normalized arithmetic height is zero, even after the formula is installed. Lean also exhibits two complete families with the same sections and component heights, but different stored heights on inhabited rows. Their error allowances differ. Equality with the arithmetic height of a specified word-indexed bundle at the production normalization remains open. [Original witness calculation](checks/geometry/OriginalBundleHeight.lean) · [Two complete families](checks/geometry/FamilyNormalization.lean#L118)
+
 The recorded builds and kernel replays ran on one Linux machine. Independent reproduction is pending.
 
 [Reproduce the original, modified, and stronger-geometry checks](checks/geometry/README.md)

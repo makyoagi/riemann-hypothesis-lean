@@ -1,0 +1,64 @@
+--- /dev/null
++++ b/src/Formalism/SharpRestriction/Divisibility/SlopeExcess/DiscriminantSizeOfFamily.lean
+@@ -0,0 +1,19 @@
++import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLm
++
++noncomputable section
++
++namespace Formalism.MainNotions.DIV.Proofs
++
++open Formalism.BasicNotions Formalism.MainNotions
++
++theorem top2c2_dlSize (eps : ℝ) (Fm : FamP eps) : J.DlSize Fm := by
++  unfold J.DlSize
++  refine ⟨Fm.x1 + 1, fun x hx i => ?_⟩
++  have hx1 : Fm.x1 < x := by linarith
++  obtain ⟨-, -, -, -, -, -, hQD, -⟩ := Fm.sizes x hx1 i
++  obtain ⟨-, -, -, -, -, h, -⟩ := hQD
++  exact h
++
++end Formalism.MainNotions.DIV.Proofs
++
++end
+--- a/src/Formalism/SharpRestriction/Divisibility/SlopeExcess/UniformSizeBoundOfOpenFamily.lean
++++ b/src/Formalism/SharpRestriction/Divisibility/SlopeExcess/UniformSizeBoundOfOpenFamily.lean
+@@ -1,4 +1,5 @@
+ import Mathlib
++import Formalism.SharpRestriction.Divisibility.SlopeExcess.DiscriminantSizeOfFamily
+ import Formalism.SharpRestriction.Divisibility.AdmissibleRank.NormDecompositionCondOfJetConsequence
+ import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLbud
+ import Formalism.SharpRestriction.CuspSpanNormBounds.StandingHypothesesHoldFamily
+@@ -24,14 +25,6 @@
+     linarith
+   · unfold wj; rw [dif_neg h]
+
+-theorem top2c2_dlSize (eps : ℝ) (Fm : FamP eps) : J.DlSize Fm := by
+-  unfold J.DlSize
+-  refine ⟨Fm.x1 + 1, fun x hx i => ?_⟩
+-  have hx1 : Fm.x1 < x := by linarith
+-  obtain ⟨-, -, -, -, -, -, hQD, -⟩ := Fm.sizes x hx1 i
+-  obtain ⟨-, -, -, -, -, h, -⟩ := hQD
+-  exact h
+-
+ theorem uniform_size_bound_of_open_family {eps : ℝ} (Fm : FamP eps) (hT : TuSize Fm) (hG : DGamSize Fm)
+     (XF : ∀ x (hx : Fm.x1 < x) (i : Fm.Ix x), LiftErrorLocal.Loc (Fm.D x i) (Fm.ex x hx i).nch) (C1 C2 C3 : ℝ)
+     (hC : ∃ x0 : ℝ, ∀ x (hx : Fm.x1 < x), x0 ≤ x → ∀ i : Fm.Ix x,
+--- a/src/Formalism/LocalToGlobal/LatticeGeometry/PluckerHadamard/StThmB.lean
++++ b/src/Formalism/LocalToGlobal/LatticeGeometry/PluckerHadamard/StThmB.lean
+@@ -1,7 +1,6 @@
+ import Formalism.LocalToGlobal.LatticeGeometry.ShimuraSheafOfIndefiniteSubspace
+ import Formalism.LocalToGlobal.LatticeGeometry.ExtPtHt
+ import Formalism.LocalToGlobal.LatticeGeometry.ViewsC
+-import Formalism.SharpRestriction.Divisibility.HeightShare
+ import Formalism.SharpRestriction.Divisibility.ProductFirstParts
+
+ noncomputable section
+--- a/src/Formalism/LocalToGlobal/Divisibility/DivisibilityRemainder/ValueBounds/SlopeMaxB.lean
++++ b/src/Formalism/LocalToGlobal/Divisibility/DivisibilityRemainder/ValueBounds/SlopeMaxB.lean
+@@ -1,5 +1,5 @@
+ import Formalism.SharpRestriction.Divisibility.SlopeExcess.ConstRankBaseLePolyFourth
+-import Formalism.SharpRestriction.Divisibility.SlopeExcess.UniformSizeBoundOfOpenFamily
++import Formalism.SharpRestriction.Divisibility.SlopeExcess.DiscriminantSizeOfFamily
+ import Formalism.SharpRestriction.Divisibility.SlopeExcess.HeightBoundOfComponentBounds
+ import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLm
+ import Formalism.SharpRestriction.GlobalSchurBounds.GlobalLinkOfBranchIdentitiesAndMultiplicity

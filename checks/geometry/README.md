@@ -112,6 +112,8 @@ The closed theorem `realized_control` exhibits an inhabited family from the modu
 
 The shifted rows test the divisor link. The unchanged RH proof still uses the family with its original `Csz` and its exact `h_eq` field. [Source hashes, compiler results and declaration checks](verification.txt#L414)
 
+Lean also exhibits two complete families in the modulus-one character class. The second uses one size constant, `F.Csz + 1`, for the entire family. Both have identical section maps and component heights. Beyond every cutoff there is an inhabited window with a row where the second family's stored height is strictly higher at every word. Both rows satisfy the full divisor link. The increase in the error allowance can depend on the row. This gives a concrete example in which fixing the sections and their metrics leaves the stored height undetermined. [Family construction and existence theorem](FamilyNormalization.lean)
+
 The family's scalar `cOf u` computes the change in the prime-log term from the distinguished word `u₀`. At every complex embedding `σ`, it satisfies `‖σ (cOf u)‖² · T(u) = T(u₀)`. Lean also proves an exact cancellation in each archimedean kernel sum. In the difference between two words, only indices `0 < i` and `i + 1 < k` of the first weight block contribute. Both endpoint terms and the entire second block cancel. The base value and the contribution of those interior terms still have to be derived from a word-indexed geometric bundle and its metric. [Prime term](WordNormVariation.lean#L25) · [Archimedean cancellation](WordNormVariation.lean#L58)
 
 To replay the height checks in a production checkout, run these commands at the repository root. The final diagnostic traverses the compiled RH declaration graph.
@@ -120,7 +122,7 @@ To replay the height checks in a production checkout, run these commands at the 
 lake env bash -eu -o pipefail <<'SH'
 checks="$PWD/checks/geometry"
 modules=(ProofDependencies HeightComparison ProductionHeightCandidates HeightSqueeze HeightShift
-         ProductionHeightSqueeze PairingHeightBound WordNormVariation RealizedHeight HeightRoute)
+         ProductionHeightSqueeze PairingHeightBound WordNormVariation RealizedHeight FamilyNormalization HeightRoute)
 for module in "${modules[@]}"; do
   awk '$1 == "import" && $2 ~ /^(Formalism|Development)\./ { print "+" $2 }' "$checks/$module.lean"
 done | sort -u | xargs lake build Main +ProductionReads
@@ -144,6 +146,24 @@ LEAN
 SH
 ```
 
+## Rebuilding RH without the component-height theory
+
+`HeightShare.lean` defines `LData` and its normalized arithmetic height `LData.h`. Two imports bring this theory into the original RH build. One in `StThmB` can be dropped. The route through `SlopeMaxB` needs `top2c2_dlSize`, an estimate obtained by projecting an existing log-derivative bound from `Fm.sizes`. The patch moves that declaration with its name, type and proof intact into a small module. Both the old module and its RH caller import the new module. It leaves the formula `hExpl6`, the matrix estimates and the final RH declaration intact. [Four-file patch](controls/remove-height-import.patch)
+
+The test compares the original release and the branch with section maps. In each build it blocks the old compiled height module, rebuilds the affected imports leading to `Main`, and checks that the imported environment contains neither `LData` nor `LData.h`. The Lean assertion spells out Mathlib's zeta-zero statement and checks the exact axiom set of the final declaration. The assigned word height still occurs in the derivation. [Lean assertion](controls/RHWithoutHeightShare.lean) · [Verification record](verification.txt#L481)
+
+To reproduce the import test, start in a disposable checkout of either the pinned upstream source or this branch. Set `controls` to the absolute path of this branch's `checks/geometry/controls` directory. Lake can build the patched target from source.
+
+```sh
+git apply "$controls/remove-height-import.patch"
+lake exe cache get
+lake build Main
+lake env lean -j1 --tstack=400000 -DautoImplicit=false "$controls/RHWithoutHeightShare.lean"
+lake env leanchecker --verbose Main
+```
+
+In the patched production checkout, the `JoinedRH.lean` commands above also check the path from RH to `production_reads`. The dependency walk in this very environment excludes `divEx_prov` from all 1,487,763 reachable declarations. Running the module-absence assertion on the unpatched strengthened checkout provides the negative control. It should stop at the assertion that the height module was imported. A separate diagnostic above traces the arithmetic declarations actually used by the final proof.
+
 ## The boundary on the production rows
 
 Fix the family's component divisor, Hermitian lattice and section map. If the sections generate the divisor's line bundle at every point, `model_formula_of_bpf` identifies the component height with the normalized arithmetic self-intersection of an induced model. The boundary determines where this argument can apply. [Component and model formula](FamilyComponentIntersection.lean)
@@ -159,20 +179,26 @@ For a specified family of bundles `B` indexed by words, `geometric_height_iff` r
 
 Two related results in the release explain the remaining inputs. Given an induced model and a value satisfying `L.IsSelfInter a`, `arTop_of_induced` expresses the normalized arithmetic intersection in terms of `a` and finite-place corrections. In `SourceStatementOfSlope`, `slope_le` gives an inequality for a component volume slope. Applying either to this comparison would still require identifying the word's bundle and evaluating its height. [Induced-model formula](../../src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ArTopOfInduced.lean#L11) · [Component slope bound](../../src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/SourceStatementOfSlope.lean#L257)
 
-To reproduce the height comparison and boundary checks from the repository root, run the following with the pinned toolchain and Mathlib cache. Lake first builds the project imports. Lean then compiles the four audit files in dependency order and replays each module.
+The original seed `DivRec.x0` has variety type `Empty`, so a function assigning a bundle to each word would give an element of `Empty` at the distinguished word. The explicit `divXFl` graft used in the original construction does have a row-1 component. Its arithmetic intersection operation is identically zero. Lean reduces agreement with the word formula on that graft to checking whether the formula vanishes at every word at the supplied size constant. The reverse implication uses the graft's own row-1 component and section metric. The criterion holds after the exact `setDiv` assignment as well, at the same size constant and with the supplied lattice. [Original bundle calculation](OriginalBundleHeight.lean)
+
+On the strengthened branch, the zero-height component of each nonterminal row persists under every `GeoCl.step`. Starting with a certified row that satisfies the full divisor link and the formula, one can keep its section maps and all its component heights, raise the size constant, and increase the error coefficient so that the link still holds. Lean proves that the new stored height at the distinguished word exceeds every component height in rows 1 through `m`. This tests the freedom in the normalization. The identification at the original size constant for a specified word-indexed bundle remains open. [Transport and normalization theorems](SectionMetricObstruction.lean)
+
+To reproduce the height comparison and boundary checks from the repository root, run the following with the pinned toolchain and Mathlib cache. Lake first builds the project imports. Lean then compiles the audit files in dependency order and replays each module.
 
 ```sh
 lake env bash -eu -o pipefail <<'SH'
 checks=checks/geometry
-modules=(HeightComparison ProductionHeightCandidates FamilyComponentIntersection ProductionBoundary)
+modules=(HeightComparison ProductionHeightCandidates HeightSqueeze HeightShift
+         FamilyComponentIntersection ProductionBoundary OriginalBundleHeight SectionMetricObstruction)
 for module in "${modules[@]}"; do
-  awk '$1 == "import" && $2 != "ProductionHeightCandidates" &&
-       $2 != "FamilyComponentIntersection" { print "+" $2 }' "$checks/$module.lean"
-done | sort -u | xargs lake build
+  awk '$1 == "import" && $2 ~ /^(Formalism|Development|GroundTheory|PositivityTheory|ReciprocityTheory)\./ {
+    print "+" $2
+  }' "$checks/$module.lean"
+done | sort -u | xargs lake build +FamilySections
 out=$(mktemp -d)
 export LEAN_PATH="$out:$LEAN_PATH"
 for module in "${modules[@]}"; do
-  lean -R "$checks" -o "$out/$module.olean" "$checks/$module.lean"
+  lean -j1 --tstack=400000 -DautoImplicit=false -R "$checks" -o "$out/$module.olean" "$checks/$module.lean"
   leanchecker --verbose "$module"
 done
 SH
