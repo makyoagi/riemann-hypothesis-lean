@@ -26,16 +26,19 @@ theorem strong_divEx (slots : Slots) (rx : slots.Rx = RX) (st : ∀ D, StFams D)
   exact ⟨⟨geometry_heq (P := geoOf (fun D => IsKitOf (st D))) hp ht (hx ▸ hg),
     DivRec.lamAre_heq hp ht (hx ▸ hl)⟩⟩
 
+/-- The slot used by the closing argument transports genuine geometry through setDiv. -/
+theorem closed_divEx (slots : Slots) (rx : slots.Rx = RX)
+    (ox : slots.Ox = OX productionGeometry) : DivEx slots := by
+  apply (production_geometry slots rx ProductionGeometry.stages).trans (StepW.of_all ?_)
+  intro _ _ _ _ _ _ _ rows Z l
+  obtain ⟨Y, hd, hm, hk, hl, hg⟩ := rows Z l
+  refine ⟨Y, hd, hm, hk, fun O t hx hp ht => ?_⟩
+  rw [ox]
+  exact ⟨⟨geoCl_of (geometry_heq (P := productionPredicate) hp ht (hx ▸ hg)),
+    DivRec.lamAre_heq hp ht (hx ▸ hl)⟩⟩
+
 def strongSlots (s : Slots) (st : ∀ D, StFams D) : Slots :=
   {s with Ox := OX (some (geoOf (fun D => IsKitOf (st D))))}
 
-open GlobalTheory.Mem.LiteralAutomorphy in
-theorem strong_parameters (hL : GlobalTheory.Published.LocalLanglandsGL) (d : ℝ) (a : AtP) :
-    let st := ProductionGeometry.stages
-    DivEx (strongSlots (prm0 hL).s st) ∧ DivEx (strongSlots (prm1 hL d).s st) ∧
-      DivEx (strongSlots (prmA hL d a).s st) :=
-  ⟨strong_divEx _ rfl _ rfl, strong_divEx _ rfl _ rfl, strong_divEx _ rfl _ rfl⟩
-
 #print axioms strong_divEx
-#print axioms strong_parameters
 end GeometryAudit.ProductionReads

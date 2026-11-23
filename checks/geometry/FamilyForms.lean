@@ -37,17 +37,8 @@ theorem production_family_rows (slots : Slots) (rx : slots.Rx = RX) (st : ∀ D,
   obtain ⟨T, h, e, ⟨R⟩⟩ := row Z l
   exact ⟨familyTop h R.k, family_laws h R, e, ⟨family h R⟩⟩
 
-open GlobalTheory.Mem.LiteralAutomorphy in
-theorem production_parameters (hL : GlobalTheory.Published.LocalLanglandsGL) (d : ℝ) (a : AtP) :
-    let st := ProductionGeometry.stages
-    StepW Pinned (familyRows (prm0 hL).s st) ∧
-    StepW Pinned (familyRows (prm1 hL d).s st) ∧
-    StepW Pinned (familyRows (prmA hL d a).s st) :=
-  ⟨production_family_rows _ rfl _, production_family_rows _ rfl _, production_family_rows _ rfl _⟩
-
 end
 #print axioms rowComparison
 #print axioms family
 #print axioms geometry_of_reads
-#print axioms production_parameters
 end GeometryAudit.FamilyForms

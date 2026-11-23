@@ -1,3 +1,4 @@
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ProductionGeometrySlot
 import FamilyLaws
 import FamilySections
 
@@ -44,18 +45,8 @@ def familyOfComparison {D : D7} {T : Formalism.L2.Pj.Top D} (h : LawsP T) {st : 
     FamOver (IsKitOf st) (familyTop h R.k) (family_laws h R) 1 :=
   familyOfForms h R (family_points_and_lattices h R) P cmp
 
-noncomputable def stages (D : D7) : StFams D := (KitCheck.nonempty_stFams D).some
-
-open GlobalTheory.Mem.LiteralAutomorphy in
-theorem production_parameters (hL : GlobalTheory.Published.LocalLanglandsGL) (d : ℝ) (a : AtP) :
-    StepW Pinned (lawfulRows (prm0 hL).s stages) ∧
-    StepW Pinned (lawfulRows (prm1 hL d).s stages) ∧
-    StepW Pinned (lawfulRows (prmA hL d a).s stages) := by
-  exact ⟨production_lawful_rows _ rfl _, production_lawful_rows _ rfl _, production_lawful_rows _ rfl _⟩
-
 #print axioms familyOfComparison
 #print axioms has_algebraic_point
 #print axioms first_row_has_point
 #print axioms production_lawful_rows
-#print axioms production_parameters
 end GeometryAudit.ProductionGeometry

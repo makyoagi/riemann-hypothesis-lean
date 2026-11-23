@@ -1,5 +1,4 @@
 import SourceFamily
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GKeyFin
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CoverFieldOfWeberLev
 
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab
@@ -50,14 +49,6 @@ theorem production_parTie (slots : Slots) (hRx : slots.Rx = RX) : StepW Pinned (
 
 #print axioms production_parTie
 
-open GlobalTheory.Mem.LiteralAutomorphy in
-theorem production_parameters (hL : GlobalTheory.Published.LocalLanglandsGL) (d : ℝ) (a : AtP) :
-    StepW Pinned (tiedSourceRows (prm0 hL).s) ∧
-    StepW Pinned (tiedSourceRows (prm1 hL d).s) ∧
-    StepW Pinned (tiedSourceRows (prmA hL d a).s) :=
-  ⟨production_parTie _ rfl, production_parTie _ rfl, production_parTie _ rfl⟩
-
-#print axioms production_parameters
 
 -- A change of G can preserve the entire tie while making prov impossible.
 theorem production_tie_without_family (slots : Slots) (hRx : slots.Rx = RX) :

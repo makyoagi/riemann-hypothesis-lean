@@ -1,3 +1,4 @@
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ProductionGeometrySlot
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.MultW
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsUnlocalizedSaturatedState
@@ -41,28 +42,28 @@ theorem memberE_exBL_of_pair (hA : HypA) (hE : HypE) (hH : HypH) (hL : GlobalThe
     (toB : ∀ K B f T w Z Wt p0 t nch n xd c, N K B f T w Z Wt p0 t nch n xd c → Nonempty (NEb hL K B f T w Z Wt p0 t nch n xd c))
     (toN : ∀ K B f T w Z Wt p0 t nch n xd c, Ng K B f T w Z Wt p0 t nch n xd c →
       Nonempty (N K B f T w Z Wt p0 t nch n xd c) ∧ GoodO (w.D Z) nch xd)
-    (has3 : StepW Start (Has3 (prmR N SExt.none none).s))
-    (lv : LevelThreeCondition (prmR N SExt.none none).s) (lvg : LevelThreeCondition (prmR Ng SExt.none none).s)
-    (intersection_update_fsHerm_neg_one : PositionMv (prmR N SExt.none none).s)
-    (second : Pass KPx (IsBuiltE (prmR N SExt.none none).s) fun K B f T =>
-      ∃ w : ColW B f T, Start K B f T w ∧ Has3 (prmR Ng SExt.none none).s K B f T w)
-    (hMQ : MultQ (prmR N SExt.none none)) :
-    MemberE (prmR N SExt.none none).s ∧
-      GlobalTheory.Fc.ExBL KPx (IsBuiltE (prmR N SExt.none none).s) (IsGoodE (prmR N SExt.none none).s)
-        (IsLinked (prmR N SExt.none none)) := by
+    (has3 : StepW Start (Has3 (prmR N SExt.none productionGeometry).s))
+    (lv : LevelThreeCondition (prmR N SExt.none productionGeometry).s) (lvg : LevelThreeCondition (prmR Ng SExt.none productionGeometry).s)
+    (intersection_update_fsHerm_neg_one : PositionMv (prmR N SExt.none productionGeometry).s)
+    (second : Pass KPx (IsBuiltE (prmR N SExt.none productionGeometry).s) fun K B f T =>
+      ∃ w : ColW B f T, Start K B f T w ∧ Has3 (prmR Ng SExt.none productionGeometry).s K B f T w)
+    (hMQ : MultQ (prmR N SExt.none productionGeometry)) :
+    MemberE (prmR N SExt.none productionGeometry).s ∧
+      GlobalTheory.Fc.ExBL KPx (IsBuiltE (prmR N SExt.none productionGeometry).s) (IsGoodE (prmR N SExt.none productionGeometry).s)
+        (IsLinked (prmR N SExt.none productionGeometry)) := by
   have exp := GlobalTheory.T.automorphy_of_hypotheses hE.e1 hE.e2 hE.e3 hE.e4 hE.e5 hE.e6 hE.e7 hE.e8 hE.e9 hE.e10 hE.e11 hE.e12 hE.e13 hA.a6 hE.e14 hA.a22
     hE.e15 hE.e16 hE.e17 hE.e18 hE.e19 hE.e20 hE.e21 hE.e22 hE.e23 hE.e24 hE.e25 hN.pr hN.ser hL hN.parMem N
-    SExt.none none toB
+    SExt.none productionGeometry toB
   refine ⟨?_, ?_⟩
   · exact GlobalTheory.T.published_inputs_imply_conclusion hA.a1 hA.a2 hA.a3 hA.a11 hA.a10 hA.a6 hA.a12 hA.a13 hA.a14 hA.a15 hA.a16 hA.a17 hA.a18 hA.a8 hA.a6 hA.a7
       hA.a5 hA.a19 hA.a20 hA.a21 hL N Ng has3 lv lvg exp second toN
-  · exact GlobalTheory.T.geometric_parameter_uniform hH.h1.q12 hH.cover hA.a5 hA.a7 hA.a8 hA.a9 hA.a10 hA.a6 hA.a22 hA.a23 hA.a1 hL N none
-      (prmR N SExt.none none) rfl toB intersection_update_fsHerm_neg_one hMQ
+  · exact GlobalTheory.T.geometric_parameter_uniform hH.h1.q12 hH.cover hA.a5 hA.a7 hA.a8 hA.a9 hA.a10 hA.a6 hA.a22 hA.a23 hA.a1 hL N productionGeometry
+      (prmR N SExt.none productionGeometry) rfl toB intersection_update_fsHerm_neg_one hMQ
 
 theorem memberE_exBL_prm1 : HypA → HypE → HypH → ExistsUnlocalizedSaturatedState → ∀ hL : GlobalTheory.Published.LocalLanglandsGL, HypN hL → ∀ cDep : ℝ,
-    MultQ (prmR (NEo hL cDep) SExt.none none) → MemberE (prmR (NEo hL cDep) SExt.none none).s ∧
-      GlobalTheory.Fc.ExBL KPx (IsBuiltE (prmR (NEo hL cDep) SExt.none none).s)
-        (IsGoodE (prmR (NEo hL cDep) SExt.none none).s) (IsLinked (prmR (NEo hL cDep) SExt.none none)) := by
+    MultQ (prmR (NEo hL cDep) SExt.none productionGeometry) → MemberE (prmR (NEo hL cDep) SExt.none productionGeometry).s ∧
+      GlobalTheory.Fc.ExBL KPx (IsBuiltE (prmR (NEo hL cDep) SExt.none productionGeometry).s)
+        (IsGoodE (prmR (NEo hL cDep) SExt.none productionGeometry).s) (IsLinked (prmR (NEo hL cDep) SExt.none productionGeometry)) := by
   intro hA hE hH hW hL hN cDep hMQ
   have holdsW : WeightCaseCondition := GlobalTheory.T.weight_set_residue_characteristic hH.h1 hH.h2 hH.h3 hH.multW
   have datE : DatExt := GlobalTheory.T.fineAdelicDatum_extends_to_larger_field_of_hypotheses hH.cover hA.a5 hA.a6 hA.a7 hA.a8 hA.a9 hA.a10
@@ -70,10 +71,10 @@ theorem memberE_exBL_prm1 : HypA → HypE → HypH → ExistsUnlocalizedSaturate
   repeat (first | specialize h hA.a8 | specialize h hA.a9 | specialize h hA.a12 | specialize h hA.a5 | specialize h hA.a6 | specialize h hA.a7 | specialize h hA.a10 | specialize h hA.a22 | specialize h hH | specialize h hN.pr | specialize h hN.ser | specialize h hL | specialize h hN.arch | specialize h hN.pt)
   obtain ⟨sA, sMt, sRat, sCusp, -, -, -, sC, -, sl⟩ := h
   obtain ⟨fin, second⟩ := GlobalTheory.T.finite_level_and_second hH.cover (by first | exact hA.a5 | exact hA.a7) (by first | exact hA.a5 | exact hA.a7) hN.pr hN.ser datE holdsW hA.a9 hN.arch.pht hL sMt sRat sCusp cDep (sl cDep).2.2.2
-  have has3 := has3_neo_of_localLanglands hL cDep hW sA sMt sRat sCusp (sl cDep).1 (sl cDep).2.1 (sl cDep).2.2.1 sC fin SExt.none none
-  have lv := GlobalTheory.T.lv3Mv_prmR_NEo_and_NEog hL cDep SExt.none none
+  have has3 := has3_neo_of_localLanglands hL cDep hW sA sMt sRat sCusp (sl cDep).1 (sl cDep).2.1 (sl cDep).2.2.1 sC fin SExt.none productionGeometry
+  have lv := GlobalTheory.T.lv3Mv_prmR_NEo_and_NEog hL cDep SExt.none productionGeometry
   exact memberE_exBL_of_pair hA hE hH hL hN (NEo hL cDep) (NEog hL cDep) (fun _ _ _ _ _ _ _ _ _ _ _ _ _ h => ⟨h.1.1⟩)
-    (fun _ _ _ _ _ _ _ _ _ _ _ _ _ h => ⟨⟨h.1⟩, h.2.down⟩) has3 lv.1 lv.2 (GlobalTheory.T.movable_geometric hL cDep none)
-    (second SExt.none none) hMQ
+    (fun _ _ _ _ _ _ _ _ _ _ _ _ _ h => ⟨⟨h.1⟩, h.2.down⟩) has3 lv.1 lv.2 (GlobalTheory.T.movable_geometric hL cDep (some productionPredicate))
+    (second SExt.none productionGeometry) hMQ
 
 end GlobalTheory.Mem.Top.Bl

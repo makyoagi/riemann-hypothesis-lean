@@ -1,3 +1,4 @@
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ProductionGeometrySlot
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.BhattScholzeCrystallineLattices
 import Development.AbelianVarietyTheory.PublishedTheorems.DiscreteSeriesUnitary₂.DiscreteSeriesCoefficientsCuspidalIffOneSided
@@ -54,14 +55,14 @@ theorem hypsE₂ : S0.HypothesesUE → GlobalTheory.FunPr.Hypotheses₂ → Glob
   have hEv : EvLgG (GridA (max CF0 CF1)) := hCF1 _ (le_max_right _ _)
   have hOpen1 : S0.Open0 (prm1 hL (max CF0 CF1)) := GlobalTheory.T.open_first_parameters_of_hypothesesUE P hL (max CF0 CF1)
   have hMono := GlobalTheory.Glob.open_and_linked_of_stronger_extension hL (GlobalTheory.HeightCounting.Up.NEl hL (max CF0 CF1))
-    (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL (max CF0 CF1)) (GridA (max CF0 CF1))) SExt.none none
+    (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL (max CF0 CF1)) (GridA (max CF0 CF1))) SExt.none productionGeometry
     (fun _ _ _ _ _ _ _ _ _ _ _ _ _ x => ⟨x.1.1⟩)
   have hOpenA := hMono.2 hOpen1
-  have hFun := hCF0 (max CF0 CF1) (le_max_left _ _) hL (GlobalTheory.HeightCounting.Up.NEo hL (max CF0 CF1)) SExt.none none
+  have hFun := hCF0 (max CF0 CF1) (le_max_left _ _) hL (GlobalTheory.HeightCounting.Up.NEo hL (max CF0 CF1)) SExt.none productionGeometry
     (fun _ _ _ _ _ _ _ _ _ _ _ _ _ x => ⟨x.1⟩) hOpenA
   have hL3 := GlobalTheory.Glob.CovolRow.linked_bundles_l3_of_open P.discreteSeriesCover P.harishChandraModules P.cuspRapidDecay
     P.casselmanWallach P.rayClassFieldSt hX hL (NEa hL (GlobalTheory.HeightCounting.Up.NEo hL (max CF0 CF1)) (GridA (max CF0 CF1)))
-    SExt.none none (fun _ _ _ _ _ _ _ _ _ _ _ _ _ x => ⟨x.1.1.1⟩) hOpenA
+    SExt.none productionGeometry (fun _ _ _ _ _ _ _ _ _ _ _ _ _ x => ⟨x.1.1.1⟩) hOpenA
   exact GlobalTheory.Fc.S0.StageU.nonempty_hyps_of_classicalTheoremsUE P hRat hL (max CF0 CF1) (GridA (max CF0 CF1)) hEv (hN (max CF0 CF1)) hFun hL3
 
 theorem everyE₂ (P : S0.HypothesesUE) (F : GlobalTheory.FunPr.Hypotheses₂) (hA : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ThetaIntegralsAgree)

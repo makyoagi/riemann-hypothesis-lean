@@ -1,3 +1,4 @@
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ProductionGeometrySlot
 import Mathlib
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MemberBuiltLinkedGeometric
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsUnlocalizedSaturatedState
@@ -6,5 +7,5 @@ open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.Inhab Fo
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 open GlobalTheory.HeightCounting.Up
 set_option maxHeartbeats 1000000 in
-theorem _root_.GlobalTheory.T.member_built_linked_geometric : HypA → HypE → HypH → ExistsUnlocalizedSaturatedState → ∀ hL : GlobalTheory.Published.LocalLanglandsGL, HypN hL → ∀ cDep : ℝ, MultQ (prmR (NEo hL cDep) SExt.none none) → MemberE (prmR (NEo hL cDep) SExt.none none).s ∧ GlobalTheory.Fc.ExBL KPx (IsBuiltE (prmR (NEo hL cDep) SExt.none none).s) (IsGoodE (prmR (NEo hL cDep) SExt.none none).s) (IsLinked (prmR (NEo hL cDep) SExt.none none)) := by
+theorem _root_.GlobalTheory.T.member_built_linked_geometric : HypA → HypE → HypH → ExistsUnlocalizedSaturatedState → ∀ hL : GlobalTheory.Published.LocalLanglandsGL, HypN hL → ∀ cDep : ℝ, MultQ (prmR (NEo hL cDep) SExt.none productionGeometry) → MemberE (prmR (NEo hL cDep) SExt.none productionGeometry).s ∧ GlobalTheory.Fc.ExBL KPx (IsBuiltE (prmR (NEo hL cDep) SExt.none productionGeometry).s) (IsGoodE (prmR (NEo hL cDep) SExt.none productionGeometry).s) (IsLinked (prmR (NEo hL cDep) SExt.none productionGeometry)) := by
   first | exact @GlobalTheory.Mem.Top.Bl.memberE_exBL_prm1 | exact GlobalTheory.Mem.Top.Bl.memberE_exBL_prm1 | (intros; apply GlobalTheory.Mem.Top.Bl.memberE_exBL_prm1 <;> assumption)

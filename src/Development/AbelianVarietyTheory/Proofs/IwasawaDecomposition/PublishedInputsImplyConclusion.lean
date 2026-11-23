@@ -1,3 +1,5 @@
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ProductionGeometrySlot
+import StrongDivEx
 import Mathlib
 import Development.AbelianVarietyTheory.Statements.CuspFrameWeights.DiscreteSpectrumKFiniteDecomposition
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.HarishChandraFinite
@@ -36,9 +38,9 @@ open Formalism.BasicNotions.TH Formalism.L2.Theta GlobalTheory.Mem.Th
 
 namespace GlobalTheory.Mem.Top.Closing
 
-theorem divEx_lam (h1 : GlobalTheory.NT.RayField) (h2 : GlobalTheory.Published.PrincipalIdealSt) (h3 : GlobalTheory.Published.CMCurveGoodOutsidePrimeSt)
-    (R : RPosition) (N : NCondition) (S : SPosition) : DivEx ⟨R, N, S, OX none⟩ :=
-  GlobalTheory.Mem.Top.DivRec.divEx_of_ox h1 h2 h3 _ rfl
+theorem divEx_geometry (N : NCondition) (S : SPosition) :
+    DivEx ⟨RX, N, S, OX productionGeometry⟩ :=
+  GeometryAudit.ProductionReads.closed_divEx _ rfl rfl
 
 theorem goodE_of_builtE (hL : GlobalTheory.Published.LocalLanglandsGL) (N Ng : NExt hL) (S : SExt) (Γ : Option GeoP)
     (hN : ∀ K B f T w Z Wt p0 t nch n xd c, Ng K B f T w Z Wt p0 t nch n xd c →
@@ -63,15 +65,15 @@ theorem io_zero (𝒮 : Slots) (h : 𝒮.Rx = RX) : ∀ K B f T (w : ColW B f T)
   rw [h] at r
   exact (RXs.io r μ j hμ).1
 
-theorem memberE_closing : GlobalTheory.NT.RayField → GlobalTheory.Published.PrincipalIdealSt → GlobalTheory.Published.CMCurveGoodOutsidePrimeSt → GlobalTheory.Dec.DSInfChar → GlobalTheory.Published.HarishChandraFinite → GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.DiscreteSeriesUpqUnique → Formalism.L2.SG.RowsDef.RowsFinDim → HeckeCharacterZeroLocus.SiegelWeilU.SiegelWeilUnitaryConvergent → PI.BesselMapUniq.BesselMapUniq → Vol.DiscreteSeriesExist → Vol.FormalDegreeFormula₂ → StandardLattice.SiegelMassRatioCM → GlobalTheory.Published.WeilRepresentationUnitaryPair → GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.CasselmanWallach → GlobalTheory.Published.HarishChandraModules → (∀ (n : ℕ) (ε : Fin n → Bool) (lam : Fin n → ℝ), Formalism.QuantumDeterminants.IsHCParam lam → ∃ (H : Type) (_ : NormedAddCommGroup H) (_ : InnerProductSpace ℂ H) (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)), Formalism.MainNotions.S.IsDS ε lam σ) → (∀ (n : ℕ) (ε : Fin n → Bool) (lam : Fin n → ℝ), Formalism.QuantumDeterminants.IsHCParam lam → ∀ (H H' : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [NormedAddCommGroup H'] [InnerProductSpace ℂ H'] (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) (σ' : Matrix (Fin n) (Fin n) ℂ → (H' →L[ℂ] H')), Formalism.MainNotions.S.IsDS ε lam σ → Formalism.MainNotions.S.IsDS ε lam σ' → ∃ U : H ≃ₗᵢ[ℂ] H', ∀ g ∈ Formalism.MainNotions.S.UJset ε, ∀ v, U (σ g v) = σ' g (U v)) → (∀ (p q : ℕ) (T : GrpData p q) (lam : Ix p q → ℚ), IsParam lam → ∃ R : DSRep T, HasParam R lam) → ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N Ng : NExt hL), StepW Start (Has3 (prmR N SExt.none none).s) → LevelThreeCondition (prmR N SExt.none none).s → LevelThreeCondition (prmR Ng SExt.none none).s → ExportF KPx (IsBuiltE (prmR N SExt.none none).s) → Pass KPx (IsBuiltE (prmR N SExt.none none).s) (fun K B f T => ∃ w : ColW B f T, Start K B f T w ∧ Has3 (prmR Ng SExt.none none).s K B f T w) → (∀ K B f T w Z Wt p0 t nch n xd c, Ng K B f T w Z Wt p0 t nch n xd c → Nonempty (N K B f T w Z Wt p0 t nch n xd c) ∧ GoodO (w.D Z) nch xd) → MemberE (prmR N SExt.none none).s := by
+theorem memberE_closing : GlobalTheory.NT.RayField → GlobalTheory.Published.PrincipalIdealSt → GlobalTheory.Published.CMCurveGoodOutsidePrimeSt → GlobalTheory.Dec.DSInfChar → GlobalTheory.Published.HarishChandraFinite → GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.DiscreteSeriesUpqUnique → Formalism.L2.SG.RowsDef.RowsFinDim → HeckeCharacterZeroLocus.SiegelWeilU.SiegelWeilUnitaryConvergent → PI.BesselMapUniq.BesselMapUniq → Vol.DiscreteSeriesExist → Vol.FormalDegreeFormula₂ → StandardLattice.SiegelMassRatioCM → GlobalTheory.Published.WeilRepresentationUnitaryPair → GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Published.CasselmanWallach → GlobalTheory.Published.HarishChandraModules → (∀ (n : ℕ) (ε : Fin n → Bool) (lam : Fin n → ℝ), Formalism.QuantumDeterminants.IsHCParam lam → ∃ (H : Type) (_ : NormedAddCommGroup H) (_ : InnerProductSpace ℂ H) (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)), Formalism.MainNotions.S.IsDS ε lam σ) → (∀ (n : ℕ) (ε : Fin n → Bool) (lam : Fin n → ℝ), Formalism.QuantumDeterminants.IsHCParam lam → ∀ (H H' : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [NormedAddCommGroup H'] [InnerProductSpace ℂ H'] (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) (σ' : Matrix (Fin n) (Fin n) ℂ → (H' →L[ℂ] H')), Formalism.MainNotions.S.IsDS ε lam σ → Formalism.MainNotions.S.IsDS ε lam σ' → ∃ U : H ≃ₗᵢ[ℂ] H', ∀ g ∈ Formalism.MainNotions.S.UJset ε, ∀ v, U (σ g v) = σ' g (U v)) → (∀ (p q : ℕ) (T : GrpData p q) (lam : Ix p q → ℚ), IsParam lam → ∃ R : DSRep T, HasParam R lam) → ∀ (hL : GlobalTheory.Published.LocalLanglandsGL) (N Ng : NExt hL), StepW Start (Has3 (prmR N SExt.none productionGeometry).s) → LevelThreeCondition (prmR N SExt.none productionGeometry).s → LevelThreeCondition (prmR Ng SExt.none productionGeometry).s → ExportF KPx (IsBuiltE (prmR N SExt.none productionGeometry).s) → Pass KPx (IsBuiltE (prmR N SExt.none productionGeometry).s) (fun K B f T => ∃ w : ColW B f T, Start K B f T w ∧ Has3 (prmR Ng SExt.none productionGeometry).s K B f T w) → (∀ K B f T w Z Wt p0 t nch n xd c, Ng K B f T w Z Wt p0 t nch n xd c → Nonempty (N K B f T w Z Wt p0 t nch n xd c) ∧ GoodO (w.D Z) nch xd) → MemberE (prmR N SExt.none productionGeometry).s := by
   intro p1 p2 p3 s1 s2 s3 s4 s5 s6 s7 s8 s9 pv t1 t2 t3 t4 t5 t6 t7 hL N Ng h3 mv mv' ex ps hN
-  exact GlobalTheory.T.exists_member_of_construction_steps_secondPass p1 p2 p3 pv (prmR N SExt.none none).s (prmR Ng SExt.none none).s h3
-    (GlobalTheory.T.level_three_to_four s1 s2 s3 s4 s5 s6 s7 s8 s9 pv hL (prmR N SExt.none none) rfl mv)
-    (GlobalTheory.AmbCrd.ambEx_of_rx _ rfl) (divEx_lam p1 p2 p3 _ _ _)
+  exact GlobalTheory.T.exists_member_of_construction_steps_secondPass p1 p2 p3 pv (prmR N SExt.none productionGeometry).s (prmR Ng SExt.none productionGeometry).s h3
+    (GlobalTheory.T.level_three_to_four s1 s2 s3 s4 s5 s6 s7 s8 s9 pv hL (prmR N SExt.none productionGeometry) rfl mv)
+    (GlobalTheory.AmbCrd.ambEx_of_rx _ rfl) (divEx_geometry _ _)
     (GlobalTheory.T.exists_thetaData_trueRowsColumns_allCompatible t1 t2 t3 t4 t5 t6 t7 _ (io_zero _ rfl)) ex ps
-    (GlobalTheory.T.level_three_to_four s1 s2 s3 s4 s5 s6 s7 s8 s9 pv hL (prmR Ng SExt.none none) rfl mv')
-    (GlobalTheory.AmbCrd.ambEx_of_rx _ rfl) (divEx_lam p1 p2 p3 _ _ _)
+    (GlobalTheory.T.level_three_to_four s1 s2 s3 s4 s5 s6 s7 s8 s9 pv hL (prmR Ng SExt.none productionGeometry) rfl mv')
+    (GlobalTheory.AmbCrd.ambEx_of_rx _ rfl) (divEx_geometry _ _)
     (GlobalTheory.T.exists_thetaData_trueRowsColumns_allCompatible t1 t2 t3 t4 t5 t6 t7 _ (io_zero _ rfl))
-    (goodE_of_builtE hL N Ng SExt.none none hN)
+    (goodE_of_builtE hL N Ng SExt.none productionGeometry hN)
 
 end GlobalTheory.Mem.Top.Closing

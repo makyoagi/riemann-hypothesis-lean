@@ -1,3 +1,4 @@
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ProductionGeometrySlot
 import Mathlib
 import Development.AbelianVarietyTheory.Statements.CuspFrameWeights.DiscreteSpectrumKFiniteDecomposition
 import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.HarishChandraFinite
@@ -134,7 +135,7 @@ structure HypN (hL : GlobalTheory.Published.LocalLanglandsGL) : Prop where
   pt : PtSt hL
   parMem : AtMem hL (fun _ _ _ _ w Z _ _ _ _ _ c => ∀ Rw : RowSide (w.D Z), HEq Rw.locR c.a.nt.A.row.locR → GlobalTheory.IndefiniteRowSideFullHecke.CMTypeEmbeddings.GoodRowCuspParam (w.D Z) Rw)
 
-@[reducible] def prm0 (hL : GlobalTheory.Published.LocalLanglandsGL) : Prm hL := prmR (NEb hL) SExt.none none
+@[reducible] def prm0 (hL : GlobalTheory.Published.LocalLanglandsGL) : Prm hL := prmR (NEb hL) SExt.none productionGeometry
 
 def MultQ {hL : GlobalTheory.Published.LocalLanglandsGL} (p : Prm hL) : Prop :=
   GlobalTheory.Fc.EvP fun _ K => ∀ q : WPt p.s K, GlobalTheory.CuspMult.MultEq q.x.what₂.r.z.R.toRealDat

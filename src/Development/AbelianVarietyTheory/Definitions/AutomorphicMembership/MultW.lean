@@ -1,3 +1,4 @@
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ProductionGeometrySlot
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ParMem
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.SettingsFormsExistList
@@ -42,7 +43,7 @@ structure HypH : Prop where
 end
 
 @[reducible] def prm1 (hL : GlobalTheory.Published.LocalLanglandsGL) (cDep : ℝ) : Prm hL :=
-  prmR (GlobalTheory.HeightCounting.Up.NEl hL cDep) SExt.none none
+  prmR (GlobalTheory.HeightCounting.Up.NEl hL cDep) SExt.none productionGeometry
 
 end GlobalTheory.Mem.Top.Bl
 

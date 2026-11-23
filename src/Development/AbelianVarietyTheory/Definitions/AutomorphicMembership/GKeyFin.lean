@@ -1,3 +1,4 @@
+import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ProductionGeometrySlot
 import Mathlib
 import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.MultW
 import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.TwistPlacesOffPrimeQZero
@@ -19,7 +20,7 @@ def NEa (hL : GlobalTheory.Published.LocalLanglandsGL) (N : NExt hL) (A : AtP) :
   N K B f T w Z Wt p0 t nch n xd c × PLift (A K B f T)
 
 @[reducible] def prmA (hL : GlobalTheory.Published.LocalLanglandsGL) (cDep : ℝ) (A : AtP) : Prm hL :=
-  prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEl hL cDep) A) SExt.none none
+  prmR (NEa hL (GlobalTheory.HeightCounting.Up.NEl hL cDep) A) SExt.none productionGeometry
 
 abbrev GKey (P : Pre) : Type :=
   HeightOneSpectrum (𝓞 P.host.F) × HeightOneSpectrum (𝓞 P.host.E) × (Fin P.R.m → HChar P.host.E)

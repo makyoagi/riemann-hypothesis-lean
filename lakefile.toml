@@ -59,3 +59,18 @@ globs = ["Supplements.+"]
 [[lean_lib]]
 name = "Main"
 roots = ["Statements", "Main"]
+
+[[lean_lib]]
+name = "GeometryAudit"
+srcDir = "../checks/geometry"
+roots = [
+  "CoreEmbedding", "FamilyForms", "FamilyLaws", "FamilyReading",
+  "FamilySections", "FamilyTop", "FixedCoreTie", "FlagEvaluation",
+  "FormBoundary", "FormComparison", "FormDescent", "FormLaws",
+  "FormMultiplication", "FormPoints", "FormReconstruction", "FormRegularity",
+  "FormRowData", "FormSpan", "FormsAssembly", "LocalPointLift",
+  "ModelComparison", "ProductionGeometry", "ProductionReading", "ProductionReads",
+  "ProductionTie", "ReadingLattice", "ReadingRealisation", "ReadingRows",
+  "ReadingSectionMaps", "ReplacementGeometry", "RowComparison", "SemilinearEvaluation",
+  "SourceFamily", "StrongDivEx",
+]

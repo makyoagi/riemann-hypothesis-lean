@@ -57,15 +57,7 @@ theorem production_geometry (slots : Slots) (rx : slots.Rx = RX) (stages : ∀ D
     (FamilySections.cusp_of_reads Φ _ ι reg reads)
     (FamilySections.family_iso R (forms h R (rowComparison h R)))
 
-open GlobalTheory.Mem.LiteralAutomorphy in
-theorem production_parameters (hL : GlobalTheory.Published.LocalLanglandsGL) (d : ℝ) (a : AtP) :
-    let st := ProductionGeometry.stages
-    StepW Pinned (geometricRows (prm0 hL).s st) ∧ StepW Pinned (geometricRows (prm1 hL d).s st) ∧
-      StepW Pinned (geometricRows (prmA hL d a).s st) :=
-  ⟨production_geometry _ rfl _, production_geometry _ rfl _, production_geometry _ rfl _⟩
-
 #print axioms saturation
 #print axioms production_reads
 #print axioms production_geometry
-#print axioms production_parameters
 end GeometryAudit.ProductionReads
