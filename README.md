@@ -10,7 +10,7 @@ This fork tests one objection to the formalization by Levent Alpöge with Claude
 - On this branch the RH construction uses `OAt none`, a record with just `LamAre`. Both `anyGeometry` and the original `OAt.geo` are absent from the environment that imports `Main`. [Witness check](checks/geometry/AblatedWitness.lean) · [Environment check](checks/geometry/CheckAblatedMain.lean)
 - The unchanged final theorem checks against Mathlib's explicit statement about zeta zeros. Its axioms are `propext`, `Classical.choice`, and `Quot.sound`. The rebuild used pinned cached imports outside the affected modules. [Statement check](checks/geometry/CheckRH.lean) · [Recorded verification](checks/geometry/verification.txt)
 
-A separate test asks what happens if the stronger `geoOf Q` is required. It implies an inhabited surface, whereas the divisor used here has surface type `Empty`. A construction satisfying that stronger condition would need a different witness. [Stronger geometry check](checks/geometry/StrongGeometry.lean)
+The original divisor has surface type `Empty`, while `geoOf Q` requires an inhabited surface. A different divisor now satisfies both `LamAre` and the full geometric condition for the stage kit class `Q D := IsKitOf (st D)`. Lean checked the section maps, their lattice and norm comparisons, and the strengthened `DivEx` obligation on all three production routes. The RH build above uses the ablated construction. [Original witness obstruction](checks/geometry/StrongGeometry.lean) · [Production reading and geometric divisor](checks/geometry/ProductionReads.lean) · [Strengthened divisor obligation](checks/geometry/StrongDivEx.lean)
 
 [Reproduce the original, modified, and stronger-geometry checks](checks/geometry/README.md)
 

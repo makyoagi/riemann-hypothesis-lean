@@ -31,7 +31,210 @@ are absent from the environment imported by `Main` and that the axiom set of
 `geoOf Q`, even under `GeoCl`, implies that the divisor's surface type is
 inhabited. The explicit divisor used in the construction has surface type
 `Empty`. The test proves the obstruction for this witness and every kit
-class `Q`. A construction using a different witness is a separate question.
+class `Q`. The replacement below uses a different divisor and proves the full
+predicate for `Q D := IsKitOf (st D)` on the three production routes.
+
+## Replacement divisors and the fixed row core
+
+`CoreLevel.lean` checks `A = 1` directly for the core in `prm0`, `prm1`
+and `prmA`. The same file works on the original and ablated checkouts.
+`ReplacementGeometry.lean` proves `DivEx` with the prescribed surfaces and
+arithmetic different. Its two-level construction preserves the four original
+row obligations, including `LamAre`. It fails the full geometric predicate
+for every kit class. Its geometry declares all divisor classes nef, whereas
+the negative hyperplane class on the projective line has degree −1.
+
+`FixedCoreTie.lean` constructs a source family using the core's prescribed
+`Dw j` and `Xo j` at every required signature and the base level.
+`SourceFamily.lean` proves an equivalence on the RH row interface. There
+exists a lawful extension of that core with an exponent-one pinned source
+family satisfying the full `ParTie` exactly when `CurveOver` holds for the
+core's host over the existing `fieldLL D` at level
+`Nat.lcm (D.host.g 0 * D.host.g 1) 15`. `curve_of_closure` proves that
+this same field condition is necessary even when a full geometric witness
+uses a larger positive exponent or is transported through `GeoCl`.
+
+`ProductionTie.lean` proves `StepW Pinned (tiedSourceRows slots)` whenever
+`slots.Rx = RX`. This has the quantifier order used by the RH divisor
+construction. For each preliminary base, the project supplies a finite
+set of algebraic Weber values at the required level. The `large₂`
+clause allows the coefficient field to be required to contain that set.
+The resulting `CurveOver` gives a pinned source family. The signature
+construction uses the row core's own `Dw j` and uses its `Xo j` at the
+base level for every `j` in `InR`.
+`production_parameters` instantiates the theorem for `prm0`, `prm1`,
+and `prmA`.
+
+`production_tie_without_family` gives a lawful
+extension of that same row core satisfying the full tie for which every
+`FamOver Q P h c` is empty. This extension accepts every level in
+`P.G.P.levIn`. The `prov` equality in a family would identify this
+test with divisibility by a positive integer `n` at each index, which
+excludes `n + 1`. The example rules out that choice of `G`;
+the strong geometry permits a different choice. The forms package
+also has core-specific obligations: `FormsAre.base` equates its weight
+families with `recB h.toLawsCore` and `FormsAre.cmp` compares their
+evaluations via the prescribed `ParTie`.
+
+## Building the top from the kits
+
+`FamilyTop.lean` transports the same source family, with its pin and
+tie, across any equality of lawful tops' cores. At the RH construction's
+`StepW` quantifiers, `production_rowKits` supplies all kits on `ngTrue`
+and their membership in the project's `IsKitOf st`. This holds for any
+given system of stages `st`. The project supplies such systems via
+`KitCheck.nonempty_stFams`.
+
+The new top takes its provisional package and row indices from those
+kits and retains the original tower. Lean checks that its core is the
+original core and that it satisfies the entire `FamOver.prov` field,
+including coverage of indefinite data. For this top, `familyTop_laws_iff`
+reduces `LawsP` to one point-existence condition. For every algebraic
+tower point in range, a point of the kit's local model must have the
+same valued field and an isometry of its lattice preserving the period
+pairing for every degeneration datum at the tower point. The same
+condition is necessary for every choice of relation on these packages,
+indices and towers.
+
+`LocalPointLift.lean` supplies a kit point over exactly the same valued
+field for every algebraic tower point in that statement. The construction
+uses the full `ParTie.same` equality, the inclusion of coefficient fields,
+and the selected kit's integral model at a place above the residue prime.
+In `ModelComparison.lean`, the two integral models can have different
+coefficient fields. The proof adjoins the second field inside the common
+valued field, uses one semistable uniformisation, and identifies the two
+period pairings. `FamilyLaws.family_points_and_lattices` applies this
+comparison to a kit point chosen over the same generic moduli point.
+It works for every degeneration datum there. `FamilyLaws.family_laws`
+then proves the entire `LawsP` record for the family-derived top.
+
+`FamilySections.family_iso` proves invariance under isomorphisms of the
+input Hermitian spaces for this kit construction. `cusp_of_reads`
+derives the divisor's cusp vanishing from the family's own `Reads` proof:
+the row-lattice generators have cusp-form readings, they span the row,
+and vanishing along the boundary is linear.
+
+`ProductionGeometry.production_parameters` supplies these lawful family-derived
+tops over the prescribed cores in all three RH parameter branches, at the
+project's `StepW` quantifiers. Each indefinite row has an algebraic tower
+point at every place of its coefficient field. Row one has such a place
+and point by `first_row_has_point`.
+
+For every in-range row and weight, `FormRegularity.regular_off_boundary`
+proves that the actual comparison `cmpAt` of a core cusp form is regular
+off the boundary. `FormBoundary.global_cusp_value` proves it is a global
+section and vanishes on the boundary. The proof extends the core's own
+uniformisation to the family's coefficient field. Multiplication by the
+key section preserves analytic cuspidality, and the compactification
+theorem extends that value over the boundary. Conversely, a tuple of global
+sections of the prescribed weight determines a unique untwisted rule
+over the family's coefficient field (`FormReconstruction.unique_untwisted_rule`).
+For such a rule, boundary vanishing of the twisted values implies analytic
+cuspidality in any lawful uniformisation under the dimension and weight
+hypotheses in `FormDescent.reconstructed_cusp`. For every in-range row
+and weight, `FormSpan.span_global_cusp` then proves the exact span
+required by `FormsPkg.cmp_span` for this comparison over `D.what₂.LL`.
+`FormMultiplication.multiplicative_comparison` proves the product identity
+for this evaluation on all core rules at each in-range row.
+`FormComparison.evaluated_eq` identifies the semilinear map with `cmpAt`.
+`FormLaws.independent_comparison` proves that independent tuples in the
+row cusp space stay independent after evaluation over the target field.
+`FamilyForms.rowComparison` in `RowComparison.lean` supplies all three
+comparison fields at every row, using the zero cusp space outside the range.
+
+`FormPoints.kit_point_nonempty` supplies a point on the kit for every
+in-range row and every coefficient-field place, including the last row.
+`pointMap_img` identifies the map with the row's prescribed image whenever
+`j < D.R.m`, exactly the range required by `FormsAre.pts`.
+`FormRowData.theta_eq` identifies both theta spaces with the row's own.
+`integral_iff` proves that testing nonnegativity at the constructed points
+recovers the row's entire integral lattice, for every row and weight.
+This is the lattice in `FormsAre.base`. The lattice comparison in
+`Reads` concerns a separate map to `D.what₂.Mj j`.
+
+`FormsAssembly.forms` constructs the full `FormsOver` package.
+`forms_base` uses `integral_iff` to identify its valuation-defined lattice
+with the core lattice. The weight spaces and both norms come from the row.
+`FamilyForms.family` instantiates the comparison and gives a `FamOver`
+for `IsKitOf st`. Its `production_parameters` theorem supplies such a
+family over the production core for each of `prm0`, `prm1`, and `prmA`
+under the project's `StepW Pinned` quantifiers.
+
+## Constructing `Reads` and the stronger divisor
+
+`ReadingRealisation.lean` lifts the analytic evaluation through the row
+embedding on the subspace where its image lies in that embedding's range.
+`ReadingLattice.lean` restricts this subspace to the prescribed level.
+Its `core_cusp` theorem proves the project's `MjCusp` predicate. The
+image contains the full row lattice and spans the complex row, core point
+valuations characterize the preimage of the lattice, and `norm_jTop`
+together with `MjTie.eW_norm` gives the norm identity with volume
+`volRec`. The realization preserves linear independence after extension
+to the complex numbers.
+
+`ProductionReading.lean` obtains the required analytic inputs and
+weight from each production row. `FamilyReading.family_sat` transports
+the realization to the assembled family's `MjSat` predicate. The
+cusp-form norm in this equality is the row's existing norm.
+
+`ReadingSectionMaps.lean` selects a complex basis from the row lattice
+generators and lifts those generators to the row and cusp spaces.
+Extending their compared sections linearly gives jointly injective
+section maps. `ReadingRows.exists_reads` proves regularity and the
+compatibility equation for every pair with `jM j x = φ f`.
+`ProductionReads.production_reads` supplies these maps and the full
+`FamOver.Reads` proof on the production core.
+
+`ProductionReads.production_geometry` uses that family to construct a
+divisor satisfying `DivT`, `MjAre`, the prescribed `kapR`, `LamAre`,
+and `geoOf (fun D => IsKitOf (st D))` together. The witness uses
+positive index `1`. `StrongDivEx.strong_parameters` proves `DivEx`
+for `prm0`, `prm1`, and `prmA` with the geometry slot set to
+`OX (some (geoOf (fun D => IsKitOf (st D))))`. These statements
+retain the project's `StepW Pinned` quantifiers. This stronger check
+is a separate module. The verified `Main` uses the ablation.
+
+To reproduce the local checks after building the ablation, run the following
+from the repository root.
+
+```sh
+lake env bash -eu <<'SH'
+checks="$PWD/checks/geometry"
+out=$(mktemp -d)
+export LEAN_PATH="$out:$LEAN_PATH"
+for module in CoreLevel ReplacementGeometry FixedCoreTie SourceFamily ProductionTie \
+  FamilyTop LocalPointLift ModelComparison FamilyLaws FamilySections ProductionGeometry \
+  FormRegularity FormBoundary FormReconstruction FormDescent FormSpan FlagEvaluation \
+  FormMultiplication CoreEmbedding SemilinearEvaluation FormComparison FormLaws FormPoints \
+  FormRowData RowComparison FormsAssembly FamilyForms ReadingRealisation ReadingLattice \
+  ProductionReading FamilyReading ReadingSectionMaps ReadingRows ProductionReads StrongDivEx
+do
+  lean -j2 --tstack=400000 -DautoImplicit=false -DmaxHeartbeats=4000000 \
+    -o "$out/$module.olean" "$checks/$module.lean"
+done
+# Run each expected failure separately in this environment.
+# lean "$checks/controls/FamilyPointAttempt.lean"
+# lean "$checks/controls/FamilyLatticeAttempt.lean"
+SH
+```
+
+The negative control can be run with
+`lake env lean checks/geometry/controls/FixedFieldAttempt.lean`. It uses
+the project's sufficient Weber-value criterion on the `prm0` rows. Lean
+checks the host-root membership and level positivity, then leaves
+`WeberIn` in the fixed coefficient field as the goal at `assumption`.
+This attempt takes a coefficient field fixed in advance. Its failure is
+consistent with the positive `StepW` result above, which constructs the
+family and its section maps on a lawful extension of the RH core.
+
+The second negative control, `controls/FamilyPointAttempt.lean`,
+tries to use the old top's local point as the witness for the new top.
+Lean reports a type mismatch between the two packages' point types
+at `Exists.intro η`. The positive proof in `LocalPointLift.lean` constructs a
+point in the new package. The third control, `controls/FamilyLatticeAttempt.lean`,
+uses that proof and discharges the field equality. Lean then displays
+the lattice isometry and its pairing identity as the unsolved goal at
+`assumption`. `FamilyLaws.lean` proves both conditions together using the model comparison.
 
 To run the baseline checks, continue in the same shell. The original
 equivalence uses the declarations from the pinned mirror revision.

@@ -33,3 +33,214 @@ Checked exact axiom set: [propext, Classical.choice, Quot.sound]
 
 Kernel replay of modified Main with imported modules trusted
 replaying Main
+
+Local stronger-geometry checks against the compiled ablation
+CoreLevel.lean also passed on the original pinned checkout.
+  prm0_level, prm1_level, prmA_level                              exit 0
+  ReplacementGeometry.lean                                        exit 0
+  FixedCoreTie.lean                                                exit 0
+  SourceFamily.lean                                                exit 0
+  ProductionTie.lean                                               exit 0
+  FamilyTop.lean                                                   exit 0
+  LocalPointLift.lean                                              exit 0
+  ModelComparison.lean                                             exit 0
+  FamilyLaws.lean                                                  exit 0
+  FamilySections.lean                                              exit 0
+  ProductionGeometry.lean                                        exit 0
+  FormRegularity.lean                                            exit 0
+  FormBoundary.lean                                              exit 0
+  FormReconstruction.lean                                        exit 0
+  FormDescent.lean                                               exit 0
+  FormSpan.lean                                                  exit 0
+ProductionTie.lean independently recompiled using the pinned ablated imports.
+Local and remote source SHA-256 ef54f523eebc5b9e9a8ccf25bf77b1ff619076915de6f1dba1470ef4ca12f5f2
+FamilyTop.lean SHA-256 943bba808e8774b6062521aa82dcd8544dd6a38d4269e00a5bcaea085eaa9f39
+LocalPointLift.lean SHA-256 e9f3b81305d7b3158fe23112b3b7b035b444f3e07921bd74f2ab6a1738cf1772
+ModelComparison.lean SHA-256 cd9ab9dbcbf66271239e4514a9a054130db3d50d6afcc2e7deb6e2098aef1233
+FamilyLaws.lean SHA-256 9eabbe10843593f1e48c9bdbd1cc0dadd43d3268855aeff9a5fee54ff86a2b3a
+FamilySections.lean SHA-256 7aa8133b2959dbae5b8ee22ce02a7b35cff0a9f60d4dd08da3c2ed6f70c1408f
+ProductionGeometry.lean SHA-256 a5053f62d8919508791eb1dc9315121ee0e8f076c453cbf5be51fb784ddc153e
+FormRegularity.lean SHA-256 10d8fa8caf470673136d0ebee7c40d6259c48f5f927ed0e00f00c254ca682853
+FormBoundary.lean SHA-256 6838b76c91dcb87851d331a26c6785726b59cbaeeabceea93c925073e1809b06
+FormReconstruction.lean SHA-256 9716ad57e3cc6b0b93c5bdf1008f15ef0be105ea79a97f19f66732ae90fa1e3a
+FormDescent.lean SHA-256 76edb274e251a233a803662004d922f62eb48715207298da039caffd02d0c82d
+FormSpan.lean local and remote SHA-256 4f4856489167d89be6a7050de714d41fdf1b4346f3e25c3e2850f6d5ec8a3f4b
+
+FlagEvaluation.lean                                                exit 0
+  SHA-256 e618a7e9fd9ea7c94b2cd55c6e20214031505e1ad3e24135cf327a7aef663686
+FormMultiplication.lean                                            exit 0
+  SHA-256 d5172ad234f1e9a0e7e7db47b404afc4ed478715cb4f704ffcd68ac3c287da5f
+FormPoints.lean                                                    exit 0
+  SHA-256 faff045b2d352b41d4d4f1a3a2140936c519b6eb0b78e1e2462fe4b81f62b541
+FormRowData.lean                                                   exit 0
+  SHA-256 3a3550aab8d08caa95f1b7c476392a5b42e4d2e1c6cacd5f05838ecadc6270bb
+
+CoreEmbedding.lean                                                     exit 0
+  SHA-256 0a8f9aab20541ca1a3045cb18a1e9502e333382bd29a1f9a922622827a098675
+SemilinearEvaluation.lean                                              exit 0
+  SHA-256 b2cd2565036020f351813d29316de557ddaf7d20f2576430d44676a02ffbf35e
+FormComparison.lean                                                    exit 0
+  SHA-256 6ebcbf9c59cb1da81dce11fa7f82aec13b1c6cd23a8c6d65d4de30077be98076
+FormLaws.lean                                                          exit 0
+  SHA-256 d40de9f76ea13b121d77b2e2937dc4a1c256683e7c770df6b87d34ada026ab47
+
+RowComparison.lean                                                 exit 0
+  SHA-256 9b3036f60e6ceca60a0d12b9e911de8af430f7a4bcc70a2f4ce1c4ab88e4c026
+
+Independent leanchecker replay of the comparison modules, imports trusted  exit 0
+  replaying FormSpan
+  replaying FormMultiplication
+  replaying FormComparison
+  replaying FormLaws
+  replaying RowComparison
+
+FormsAssembly.lean                                                 exit 0
+  SHA-256 f21952b22a5cc9a0bac857df7d5360e1e8c4bd0e41cd3b7d8ab67cfe6205f590
+  GeometryAudit.FamilyForms.forms_are
+FamilyForms.lean                                                   exit 0
+  SHA-256 c46eec161ffe7f430c64e91647a03ab7999574905dde7fc36272fee25be9aec2
+  GeometryAudit.FamilyForms.family
+  GeometryAudit.FamilyForms.geometry_of_reads
+  GeometryAudit.FamilyForms.production_parameters
+  All reported [propext, Classical.choice, Quot.sound].
+
+ReadingRealisation.lean                                            exit 0
+  SHA-256 48a4ff5e3534e9df280201c0c67e719e5542f69ea2c159db804e91ef6a38dd6e
+  GeometryAudit.ReadingRealisation.normed_realisation
+ReadingLattice.lean                                                exit 0
+  SHA-256 a3dcdd96883b448a24559c3a02faa6fffa04dc343387f6f4183cbfe866638f4c
+  GeometryAudit.ReadingRealisation.integral_realisation
+  GeometryAudit.ReadingRealisation.core_cusp
+ProductionReading.lean                                             exit 0
+  SHA-256 45619ac4885fc055194247f0b0ee5b4e892a514056a98e78bb30d07c428d08df
+  GeometryAudit.ReadingRealisation.production_core_cusp
+  GeometryAudit.ReadingRealisation.production_weight
+FamilyReading.lean                                                 exit 0
+  SHA-256 efb95f1bfa20eef43d6dee65403770761fc388680bc05c6779cc39261b8e04c5
+  GeometryAudit.ReadingRealisation.family_sat
+ReadingSectionMaps.lean                                            exit 0
+  SHA-256 ade4b097b070d949318dc76f86cb46785d59e83467ba8a93e37673100d8ed551
+  GeometryAudit.ReadingSections.sections_of_generators
+ReadingRows.lean                                                   exit 0
+  SHA-256 02eb00a4b03c6549467d84d0e8aa63c42fa289049ad4ee0a419568c4bc4bcf92
+  GeometryAudit.ReadingSections.exists_reads
+ProductionReads.lean                                               exit 0
+  SHA-256 48d59371a342ff88e8ab8900a14bebd668f3fad0992f1ddb774fd2e5aad30e87
+  GeometryAudit.ProductionReads.saturation
+  GeometryAudit.ProductionReads.production_reads
+  GeometryAudit.ProductionReads.production_geometry
+  GeometryAudit.ProductionReads.production_parameters
+StrongDivEx.lean                                                   exit 0
+  SHA-256 eeba1dcc5f72e3dfa9a5ae35bbcce15bdc0918f6e280aac101def04352691af0
+  GeometryAudit.ProductionReads.strong_divEx
+  GeometryAudit.ProductionReads.strong_parameters
+  All of the listed reading and divisor declarations reported
+  [propext, Classical.choice, Quot.sound].
+
+Independent leanchecker replay with imported modules trusted       exit 0
+  replaying ReadingLattice (earlier version, SHA-256 1fe00a3d11ffbf1901608a6f5d515c0ae1262a1060099c6ed01b4260d5845185)
+  replaying ReadingRealisation
+  replaying FamilyForms
+  replaying FormsAssembly
+
+Exact-module kernel replay on the final source hashes, imports trusted   exit 0
+The pinned LeanChecker.replayFromImports implementation checked:
+  ReadingLattice
+  ProductionReading
+  FamilyReading
+  ReadingSectionMaps
+  ReadingRows
+  ProductionReads
+Separate invocation on StrongDivEx                                     exit 0
+
+Combined import of Main, StrongDivEx, and Mathlib.NumberTheory.LSeries.RiemannZeta
+                                                                       exit 0
+  Explicit equality with the Mathlib zero statement checked by rfl.
+  example : RiemannHypothesis := riemannHypothesis
+  'riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]
+  'GeometryAudit.ProductionReads.strong_parameters' depends on axioms: [propext, Classical.choice, Quot.sound]
+  Main uses the ablated construction. The stronger divisor theorem is a separate check.
+
+New checked declarations include
+  GeometryAudit.Replacement.two_level_replacement
+  GeometryAudit.Replacement.lawful_top_without_family
+  GeometryAudit.FixedCore.parTie_of_pinned_source
+  GeometryAudit.Source.rh_rows_tied_iff
+  GeometryAudit.Source.curve_of_closure
+  GeometryAudit.Production.production_parTie
+  GeometryAudit.Production.production_parameters
+  GeometryAudit.Production.production_tie_without_family
+  GeometryAudit.FamilyTop.transfer_same_family
+  GeometryAudit.FamilyTop.kitClass_ex
+  GeometryAudit.FamilyTop.kitClass_loc
+  GeometryAudit.FamilyTop.familyTop_prov
+  GeometryAudit.FamilyTop.familyTop_laws_iff
+  GeometryAudit.FamilyTop.localPoints_of_other_relation
+  GeometryAudit.FamilyTop.production_rowKits
+  GeometryAudit.FamilyTop.familyOfForms
+  GeometryAudit.LocalPoint.lift_to_model
+  GeometryAudit.LocalPoint.lift_generic_frame
+  GeometryAudit.LocalPoint.kit_point_over_frame
+  GeometryAudit.LocalPoint.family_point_same_field
+  GeometryAudit.ModelComparison.compare_over_trait
+  GeometryAudit.ModelComparison.compare_at_point
+  GeometryAudit.FamilyLaws.family_points_and_lattices
+  GeometryAudit.FamilyLaws.family_laws
+  GeometryAudit.FamilySections.family_iso
+  GeometryAudit.FamilySections.cusp_of_reads
+  GeometryAudit.ProductionGeometry.familyOfComparison
+  GeometryAudit.ProductionGeometry.has_algebraic_point
+  GeometryAudit.ProductionGeometry.first_row_has_point
+  GeometryAudit.ProductionGeometry.production_lawful_rows
+  GeometryAudit.ProductionGeometry.production_parameters
+  GeometryAudit.FormRegularity.regular_off_boundary
+  GeometryAudit.FormRegularity.global_cusp_iff_boundary
+  GeometryAudit.FormBoundary.global_cusp_value
+  GeometryAudit.FormReconstruction.unique_untwisted_rule
+  GeometryAudit.FormDescent.reconstructed_cusp
+  GeometryAudit.FormSpan.span_global_cusp
+  GeometryAudit.FormComparison.coefficientMap_pinned
+  GeometryAudit.FormComparison.evaluated_eq
+  GeometryAudit.FamilyForms.rowComparison
+  GeometryAudit.FormLaws.independent_comparison
+  GeometryAudit.FormMultiplication.multiplicative_comparison
+  GeometryAudit.FormPoints.kit_point_nonempty
+  GeometryAudit.FormPoints.pointMap_img
+  GeometryAudit.FormRowData.integral_iff
+  GeometryAudit.FormRowData.value_mul
+  GeometryAudit.FormRowData.theta_eq
+For each, Lean reported [propext, Classical.choice, Quot.sound].
+
+Independent leanchecker replay of the three new modules, imports trusted    exit 0
+  replaying ModelComparison
+  replaying FamilyLaws
+  replaying FamilySections
+Remote SHA-256 matched the three local sources listed above.
+
+Earlier independent leanchecker replay, with imported modules trusted    exit 0
+  replaying RowParTie
+  replaying ReplacementGeometry
+  replaying FixedCoreTie
+  replaying CoreLevel
+RowParTie.lean and SourceFamily.lean were byte-identical in this run.
+SHA-256 79c574d8c989ef17ddb5a156f93aa73cd129a946b4787b2475d2f24c0642ff01
+
+Negative control, controls/FixedFieldAttempt.lean                   exit 1
+  Tactic `assumption` failed
+  ⊢ GlobalTheory.FinalJoin.WeberIn l.what₂.r.z.core.Q.H (fieldLL D)
+      ((D.host.g 0 * D.host.g 1).lcm 15)
+
+Negative control, controls/FamilyPointAttempt.lean                  exit 1
+  FamilyPointAttempt.lean:11:10: error: Application type mismatch
+  At Exists.intro η, Lean found a point of T.G.P.loc at T.G.dat j.
+  The goal requires a point of (familyG h R.k).P.loc at (familyG h R.k).dat j.
+
+Negative control, controls/FamilyLatticeAttempt.lean                exit 1
+  FamilyLatticeAttempt.lean:14:2: error: Tactic `assumption` failed
+  η and sameField are in context, constructed by family_point_same_field.
+  For an arbitrary degeneration datum A, Lean requires an isomorphism e
+  from the kit lattice at η to A.Ylat, linear over 𝓞 D.host.E, such that
+  A.beta (e a) (e b) equals the kit's pairing at η for every a and b.
+  Source SHA-256 f38865041f5f3e4a89977391b39ebae586f9498b8ca6d1488864cf50126369c8
+  FamilyLaws.family_points_and_lattices discharges this comparison
+  using the two-model theorem and classical choice as reported above.
