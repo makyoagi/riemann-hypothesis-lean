@@ -1,5 +1,5 @@
 import Main
-import Lean.Util.FoldConsts
+import ProofDependencies
 
 open GlobalTheory.Mem GlobalTheory.Mem.Top GlobalTheory.Mem.Top.Bl
 
@@ -45,5 +45,14 @@ run_cmd do
   unless axs.size == expected.size && expected.all axs.contains do
     throwError "Unexpected axioms: {axs}"
   logInfo m!"riemannHypothesis axioms: {axs}"
+
+run_cmd do
+  let env ← getEnv
+  let root := ``riemannHypothesis
+  let emptyLemma := ``GlobalTheory.Mem.Top.DivRec.divEx_prov
+  let reachable ← liftCoreM <| GeometryAudit.Dependencies.reachable env root
+  if reachable.contains emptyLemma then
+    throwError "{root} reaches the empty-slot lemma {emptyLemma}"
+  logInfo m!"{emptyLemma} is absent from all {reachable.size} declarations reachable from {root}"
 
 end GeometryAudit.Joined

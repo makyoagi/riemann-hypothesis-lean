@@ -48,8 +48,11 @@ The ablation and its original receipts remain at commit
 
 A repetition on a fresh checkout can use the commands below. The Lake build
 will find the 34 witness modules in the `GeometryAudit` library. The checks
-inspect the positive slots, exercise the empty-slot control, verify the RH
-statement and exact axioms, and print a path through the RH proof term.
+inspect the positive slots, exercise the empty-slot control, and verify the RH
+statement and exact axioms. `JoinedRH.lean` prints a path to the section maps.
+It also walks the full set of declarations reachable from `riemannHypothesis`
+through their types and values. The check fails if that set contains
+`GlobalTheory.Mem.Top.DivRec.divEx_prov`.
 The recorded incremental build starts with the verified ablation cache and
 recompiles every module affected by the joined changes. A fresh source
 checkout also builds the unchanged project imports. The tested production

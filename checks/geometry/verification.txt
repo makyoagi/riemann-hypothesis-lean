@@ -293,7 +293,7 @@ line 101 in stab_le_cptPart when instance search for R1Space (finU E n) reached 
 set_option synthInstance.maxHeartbeats 400000 scoped to that line compiled.
 The theorem type and the source expression passed to exact are identical.
 
-Source manifest: checks/geometry/production-sources.sha256 (69 files)
+Source manifest at commit 3f06629e5: checks/geometry/production-sources.sha256 (69 files)
   SHA-256 23d9ed5dbcc954258e22f9d13e910838df79f01e08c4f67cce621c4fb86af17a
   All manifest entries checked against the Linux build tree.
   src/Main.lean SHA-256 017645ca448f2fd1f6fd5c4c2cb2c6e96e472725be13f6e180ca6e1574360939,
@@ -334,5 +334,20 @@ riemannHypothesis axioms: [propext, Classical.choice, Quot.sound]
 
 leanchecker --verbose Main    exit 0
 replaying Main
+
+Empty-slot dependency assertion, pinned Lean 4.33.1 on the same Linux host
+
+JoinedRH.lean against the production Main from 3f06629e5       exit 0
+  Source SHA-256 a07418c873f9465b6ed9d69f64fb6c6f50656432c8b51286bd8c3a24ac3c9192
+  GlobalTheory.Mem.Top.DivRec.divEx_prov is absent from all 1487763 declarations reachable from riemannHypothesis
+  The positive path to production_reads and the exact axiom check also passed.
+  Revised production-sources.sha256: cf0d95578df384bd1ac2811a28a4057858bd81fad26a4faca2fdd3c5197522a1
+  All 69 source hashes matched the tested inputs.
+
+Same assertion against the ablated Main from d9177c4c8         exit 1 (expected)
+  rh-divex-prov-ablation-control.lean:6:0: error: riemannHypothesis reaches the empty-slot lemma GlobalTheory.Mem.Top.DivRec.divEx_prov
+  To isolate this control, use the ablation's compiled imports and the same
+  ProofDependencies.olean. Import Main and ProofDependencies, open Lean Elab Command,
+  and evaluate the final run_cmd block from JoinedRH.lean verbatim.
 
 All recorded runs used one machine. Independent reproduction is pending.
