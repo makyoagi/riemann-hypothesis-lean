@@ -90,6 +90,12 @@ Both walks excluded `Formalism.BasicNotions.DV.hExpl6`. The production
 construction still assigns that formula in `setDiv`. An identification with
 an independently defined arithmetic height remains open.
 
+## Does the height comparison hold by reflexivity?
+
+**Nielsen’s claim in §8 that the height comparison holds by reflexivity is false.** She also distinguishes the assignment from the subsequent derivation of inequalities about the formula. The assignment holds by `rfl`, and the proof derives its upper bound from an arithmetic estimate on row-side data. [Nielsen, §§7–8](https://philpapers.org/rec/NIEIOT-2) · [Inhabited counterexample](RealizedHeight.lean) · [Arithmetic derivation](PairingHeightBound.lean)
+
+On the last row every component has empty boundary. Identifying the assigned formula `hExpl6` with an independent arithmetic height remains open. The section-metric calculation on this row still needs a proof that the sections generate at every interior point and an evaluation of the arithmetic self-intersection. [Boundary results](#the-boundary-on-the-production-rows) · [Base value and variation criterion](HeightComparison.lean)
+
 ## Does assigning the formula prove the upper bound?
 
 In the release's `linkDIV_at_words`, `hh` identifies the stored height with the formula and `hW` supplies `WordFacts` at each word. The proof of the upper bound is the projection `fun u => (hW u).2.2`. The proof does use `hh` elsewhere, for the frame and the variation. One can read those uses separately in the same Lean term. [Divisor link in the release](../../src/Formalism/LocalToGlobal/Divisibility/RecBridge.lean#L327)
@@ -150,7 +156,7 @@ SH
 
 `HeightShare.lean` defines `LData` and its normalized arithmetic height `LData.h`. Two imports bring this theory into the original RH build. One in `StThmB` can be dropped. The route through `SlopeMaxB` needs `top2c2_dlSize`, an estimate obtained by projecting an existing log-derivative bound from `Fm.sizes`. The patch moves that declaration with its name, type and proof intact into a small module. Both the old module and its RH caller import the new module. It leaves the formula `hExpl6`, the matrix estimates and the final RH declaration intact. [Four-file patch](controls/remove-height-import.patch)
 
-The test compares the original release and the branch with section maps. In each build it blocks the old compiled height module, rebuilds the affected imports leading to `Main`, and checks that the imported environment contains neither `LData` nor `LData.h`. The Lean assertion spells out Mathlib's zeta-zero statement and checks the exact axiom set of the final declaration. The assigned word height still occurs in the derivation. [Lean assertion](controls/RHWithoutHeightShare.lean) · [Verification record](verification.txt#L481)
+With `HeightShare` blocked, Lean rebuilt **69 of 69 affected modules on the original sources and 69 of 69 on the strengthened sources**. In both runs `RHWithoutHeightShare` passed, `leanchecker` replayed `Main`, and a direct import of the blocked module failed. The assertion checked Mathlib’s explicit zeta-zero statement, the absence of `HeightShare.LData` and `HeightShare.LData.h`, and the exact axioms `propext`, `Classical.choice`, and `Quot.sound`. Both proofs still use the assigned word height and its arithmetic bounds. The matching check on the unpatched strengthened build exited 1 with `Main imported the forbidden height module`. Both runs used pinned compiled imports outside the affected modules and ran on the same Linux machine. Independent reproduction is pending. [Lean assertion](controls/RHWithoutHeightShare.lean) · [Build and control output](verification.txt#L481-L512)
 
 To reproduce the import test, start in a disposable checkout of either the pinned upstream source or this branch. Set `controls` to the absolute path of this branch's `checks/geometry/controls` directory. Lake can build the patched target from source.
 
@@ -162,7 +168,7 @@ lake env lean -j1 --tstack=400000 -DautoImplicit=false "$controls/RHWithoutHeigh
 lake env leanchecker --verbose Main
 ```
 
-In the patched production checkout, the `JoinedRH.lean` commands above also check the path from RH to `production_reads`. The dependency walk in this very environment excludes `divEx_prov` from all 1,487,763 reachable declarations. Running the module-absence assertion on the unpatched strengthened checkout provides the negative control. It should stop at the assertion that the height module was imported. A separate diagnostic above traces the arithmetic declarations actually used by the final proof.
+In the patched production checkout, the `JoinedRH.lean` commands above also check the path from RH to `production_reads`. The dependency walk in this environment excludes `divEx_prov` from all 1,487,763 reachable declarations. To reproduce the negative control, run the same `RHWithoutHeightShare.lean` command on the unpatched strengthened checkout after building `Main`. [Control output](verification.txt#L511-L512)
 
 ## The boundary on the production rows
 
