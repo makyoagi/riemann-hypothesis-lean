@@ -181,15 +181,17 @@ Two related results in the release explain the remaining inputs. Given an induce
 
 The original seed `DivRec.x0` has variety type `Empty`, so a function assigning a bundle to each word would give an element of `Empty` at the distinguished word. The explicit `divXFl` graft used in the original construction does have a row-1 component. Its arithmetic intersection operation is identically zero. Lean reduces agreement with the word formula on that graft to checking whether the formula vanishes at every word at the supplied size constant. The reverse implication uses the graft's own row-1 component and section metric. The criterion holds after the exact `setDiv` assignment as well, at the same size constant and with the supplied lattice. [Original bundle calculation](OriginalBundleHeight.lean)
 
-On the strengthened branch, the zero-height component of each nonterminal row persists under every `GeoCl.step`. Starting with a certified row that satisfies the full divisor link and the formula, one can keep its section maps and all its component heights, raise the size constant, and increase the error coefficient so that the link still holds. Lean proves that the new stored height at the distinguished word exceeds every component height in rows 1 through `m`. This tests the freedom in the normalization. The identification at the original size constant for a specified word-indexed bundle remains open. [Transport and normalization theorems](SectionMetricObstruction.lean)
+On the strengthened branch, the zero-height component of each nonterminal row persists under every `GeoCl.step`. Starting with a certified row that satisfies the full divisor link and the formula, one can keep its section maps and all its component heights, raise the size constant, and increase the error coefficient so that the link still holds. Lean proves that the new stored height at the distinguished word exceeds every component height in rows 1 through `m`. The next test keeps the family's size constant fixed. [Transport and normalization theorems](SectionMetricObstruction.lean)
 
 ### A level-prime twist at the production normalization
 
 Fix a component of the strengthened family. Start with its section metric and twist its finite metrics by the logarithms of the absolute values of the word's level prime, with multiplicity `W = ∑ t, L.aT t`. This choice uses the prime and the row multiplicities, and keeps the original archimedean metric. A walk from the definition of the candidate height checks 111,154 declarations and excludes `hExpl6`, `FamP.Csz`, `FamP.h_eq` and `setDiv`. If the component admits an arithmetic model and has nonzero geometric degree, its normalized height changes by exactly `−W · log T(u)`. On every nonterminal row at least one component lacks a model, and its twisted height is zero for every word under the library's fallback convention. [Definition and intersection calculation](LevelPrimeHeight.lean) · [Application to strengthened components](ProductionLevelHeight.lean) · [Dependency assertion](LevelHeightDependencies.lean)
 
-At the original `F.Csz`, two equalities remain for this candidate on a modeled component of nonzero degree. First, the untwisted section bundle's arithmetic height must equal `hExpl6(u₀) + W · log T(u₀)` at the distinguished word. Second, the sum of `kerPlace` over rows and embeddings must have the same value at every word. The difference of those sums is exactly the word-to-word change in the error. Substituting a word's Harish-Chandra parameter into the library's theta-weight constructor gives the same theta weight. The audit has no evaluation of the base self-intersection or proof of constancy of the kernel sum on the production words. [Fixed-normalization calculation](ProductionLevelHeight.lean)
+At the original `F.Csz`, agreement on a modeled component of nonzero degree requires two equalities. The untwisted section bundle's arithmetic height must equal `hExpl6(u₀) + W · log T(u₀)` at the distinguished word, and the sum of `kerPlace` over rows and embeddings must have the same value at every word. The difference of those sums is exactly the word-to-word change in the error. [Fixed-normalization calculation](ProductionLevelHeight.lean)
 
-There is an exact arithmetic test for the remaining archimedean condition. Collect the positive integral weights `ν` of each word with their multiplicities. Write `S = ∑ ν` and `P = ∏ ν^ν`. The kernel sum is `log P − S · (1 + L.logOm)`. For two words with the same `S`, the condition is the integer equality `P(u) = P(v)`. For unequal totals, it fixes exactly one value of the row's `L.logOm`. No pair on a realized production row has been shown here to violate either test. [Exact weight tests](ArchWeightTest.lean)
+**The finite level-prime twist fails on an inhabited production family at its own size constant.** The release accepts an injective code of the prescribed size. The construction chooses one containing the words `100…` and `010…`, uses the production family constructor `designS`, and obtains the strengthened geometric certificate on every in-range row. The theorem carries the production parameter record `κ` and the equality `F.Csz = κ.C.Csz`. The two words have equal total weight. Moving the single set bit changes the distribution of the positive integral weights and strictly changes the sum of the archimedean terms. No choice of the base self-intersection can remove that difference. [Family construction](ProductionSwapFamily.lean) · [Strict inequality](ArchWordSwap.lean) · [Exact weight formula](ArchWeightTest.lean)
+
+On sufficiently large rows, every level prime exceeds every individual weight. Prime divisibility then shows that even unequal level primes cannot make the two **assigned** heights equal. The theorem `realized_obstruction` gives an inhabited window beyond every cutoff. On its certified divisor, every fixed section component misses the assigned height on at least one of the same two words. Row one contains an actual component whose twisted height is zero at a word with nonzero assigned height. This disproves a uniform identification for this bundle construction. The quantifier is existential over allowed codes. Which words the original opaque choice selects is unverified. Identifying a different bundle with an independently defined, word-dependent archimedean metric remains open. [Level-prime calculation](AssignedWordVariation.lean) · [Counterexample and quantifiers](ProductionHeightObstruction.lean) · [Compiler and kernel output](verification.txt#L605)
 
 To reproduce the height comparison and boundary checks from the repository root, run the following with the pinned toolchain and Mathlib cache. Lake first builds the project imports. Lean then compiles the audit files in dependency order and replays each module.
 
@@ -198,7 +200,8 @@ lake env bash -eu -o pipefail <<'SH'
 checks=checks/geometry
 modules=(HeightComparison ProductionHeightCandidates HeightSqueeze HeightShift
          FamilyComponentIntersection ProductionBoundary OriginalBundleHeight SectionMetricObstruction
-         WordNormVariation LevelPrimeHeight ProductionLevelHeight ArchWeightTest ProofDependencies)
+         WordNormVariation LevelPrimeHeight ProductionLevelHeight ArchWeightTest ArchWordSwap
+         AssignedWordVariation ProductionSwapFamily ProductionHeightObstruction ProofDependencies)
 for module in "${modules[@]}"; do
   awk '$1 == "import" && $2 ~ /^(Formalism|Development|GroundTheory|PositivityTheory|ReciprocityTheory)\./ {
     print "+" $2
@@ -211,6 +214,17 @@ for module in "${modules[@]}"; do
   leanchecker --verbose "$module"
 done
 lean -j1 --tstack=400000 -DautoImplicit=false -R "$checks" "$checks/LevelHeightDependencies.lean"
+lean -j1 --tstack=400000 -DautoImplicit=false --stdin <<'LEAN'
+import ProductionHeightObstruction
+import Lean.Elab.Command
+open Lean Elab Command
+run_cmd do
+  let e ← getEnv
+  unless e.contains ``GeometryAudit.ProductionHeightObstruction.realized_obstruction do
+    throwError "Missing height counterexample"
+  if e.contains `riemannHypothesis then throwError "Final Main theorem is already imported"
+  logInfo "realized_obstruction is available before the final riemannHypothesis declaration"
+LEAN
 SH
 ```
 

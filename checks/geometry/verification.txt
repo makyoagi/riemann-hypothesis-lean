@@ -601,3 +601,46 @@ Formalism.MainNotions.FamP.Csz absent from 111154 declarations reachable from Ge
 Formalism.MainNotions.FamP.h_eq absent from 111154 declarations reachable from GeometryAudit.ProductionLevelHeight.height
 GlobalTheory.EX.OB.setDiv absent from 111154 declarations reachable from GeometryAudit.ProductionLevelHeight.height
 LevelHeightDependencies Lean exit 0
+
+Two production words at the family’s native size constant
+Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)
+Mathlib 0df444a360eaa60ab8c11dca51a86af692955474.
+One Linux machine. Compiled each audit module with -j1 --tstack=400000 -DautoImplicit=false using the pinned strengthened project imports. Replayed each compiled module with leanchecker --verbose. Source hashes are SHA-256.
+The family constructor selects a permitted injective binary code. The theorem carries the production parameter record, its size-constant equality, and a strengthened divisor certificate on the exhibited row.
+
+47a40d904189dbce86ac617f1c35e823f11452fc04769bc4747bfebf4b697ef1  ArchWordSwap.lean
+'GeometryAudit.ArchWordSwap.arch_separated' depends on axioms: [propext, Classical.choice, Quot.sound]
+ArchWordSwap Lean exit 0
+replaying ArchWordSwap
+ArchWordSwap leanchecker exit 0
+
+c5069906a8c6e3d272906325f9c68b6688ada68a6f0fad8b05445f10883a025d  AssignedWordVariation.lean
+'GeometryAudit.AssignedWordVariation.weights_below_primes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.AssignedWordVariation.assigned_differs' depends on axioms: [propext, Classical.choice, Quot.sound]
+AssignedWordVariation Lean exit 0
+replaying AssignedWordVariation
+AssignedWordVariation leanchecker exit 0
+
+fa06fe5dfb7c5101f15ce40631cd90dd9b90407d04a252538381e047a8bc6af8  ProductionSwapFamily.lean
+'GeometryAudit.ProductionSwapFamily.realized_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+ProductionSwapFamily Lean exit 0
+replaying ProductionSwapFamily
+ProductionSwapFamily leanchecker exit 0
+
+ef05a78ec08fa5059f7dc9ef52f909fecea2d8cc0069c813f58f26d405d187fd  ProductionHeightObstruction.lean
+'GeometryAudit.ProductionHeightObstruction.finite_twist_misses' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GeometryAudit.ProductionHeightObstruction.realized_obstruction' depends on axioms: [propext, Classical.choice, Quot.sound]
+ProductionHeightObstruction Lean exit 0
+replaying ProductionHeightObstruction
+ProductionHeightObstruction leanchecker exit 0
+
+realized_obstruction is available before the final riemannHypothesis declaration
+Height counterexample environment check exit 0
+
+CheckRH.lean, rerun against the strengthened Main with the original production import path.
+c318bcefc693de82cea4546a47573dd33436ed2f5fc858d8c1205e569483aae9  CheckRH.lean
+def RiemannHypothesis : Prop :=
+∀ (s : ℂ), riemannZeta s = 0 → (¬∃ n, s = -2 * (↑n + 1)) → s ≠ 1 → s.re = 1 / 2
+riemannHypothesis : RiemannHypothesis
+'riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]
+CheckRH Lean exit 0
